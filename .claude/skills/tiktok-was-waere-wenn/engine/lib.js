@@ -240,3 +240,15 @@ function alarmClock(x,y,s=1,t=0,ring=0){ const sh=ring?Math.sin(t*60)*6:0; retur
 function box(x,y,s=1,col='#c98f4e'){ return `<g transform="translate(${x},${y}) scale(${s})"><rect x="-50" y="-50" width="100" height="100" rx="6" fill="${col}"/><rect x="-50" y="-50" width="100" height="18" fill="#000" opacity=".12"/><rect x="-8" y="-50" width="16" height="100" fill="#f3e2b8" opacity=".6"/></g>`; }
 function desk(x,y,w=520){ return `<g transform="translate(${x},${y})"><rect x="${-w/2}" y="0" width="${w}" height="30" rx="8" fill="${PAL.wood}"/><rect x="${-w/2+20}" y="30" width="24" height="200" fill="${PAL.woodD}"/><rect x="${w/2-44}" y="30" width="24" height="200" fill="${PAL.woodD}"/>
   <rect x="-110" y="-200" width="220" height="150" rx="12" fill="#1b1e3a" stroke="#353b6e" stroke-width="6"/><rect x="-96" y="-186" width="192" height="122" rx="6" fill="#26306a"/><rect x="-20" y="-50" width="40" height="50" fill="#353b6e"/></g>`; }
+
+/* ---------- Erweiterung: Überwachung ---------- */
+function robotEye(x,y,r,t,o={}){ // großes Kamera-/Roboterauge; o.pupil 0..1 (Größe), o.blink 0..1, o.col
+  const col=o.col||PAL.red, pr=r*(0.18+0.22*(o.pupil??0.5)), bl=o.blink||0, lx=(o.look||0)*r*0.25;
+  return `<g transform="translate(${x},${y})"><circle r="${r*1.5}" fill="${col}" opacity=".08" filter="url(#blur8)"/>
+  <circle r="${r}" fill="#0b0c18" stroke="#3b4180" stroke-width="${r*0.08}"/><circle r="${r*0.78}" fill="none" stroke="${col}" stroke-opacity=".35" stroke-width="${r*0.03}"/>
+  <circle cx="${lx}" r="${r*0.62}" fill="${col}" opacity=".25"/><circle cx="${lx}" r="${r*0.45}" fill="${col}" filter="url(#glow)"/><circle cx="${lx}" r="${pr}" fill="#07070f"/>
+  <circle cx="${lx-r*0.18}" cy="${-r*0.2}" r="${r*0.09}" fill="#fff" opacity=".8"/>
+  ${bl>0?`<rect x="${-r*1.1}" y="${-r*1.1}" width="${r*2.2}" height="${r*1.1*bl}" fill="#0b0c18"/><rect x="${-r*1.1}" y="${r*1.1*(1-bl)}" width="${r*2.2}" height="${r*1.1*bl}" fill="#0b0c18"/>`:''}</g>`; }
+function drone(x,y,s=1,t=0,col=PAL.red){ const sp=Math.sin(t*60)*30; return `<g transform="translate(${x},${y}) scale(${s})"><rect x="-70" y="-14" width="140" height="28" rx="14" fill="#3b4180"/><rect x="-24" y="-30" width="48" height="40" rx="12" fill="#2a2f57"/>
+  <circle cx="0" cy="14" r="12" fill="${col}" filter="url(#glowS)"/><rect x="-100" y="-34" width="60" height="6" rx="3" fill="#8a8fb0" transform="rotate(${sp},-70,-31)"/><rect x="40" y="-34" width="60" height="6" rx="3" fill="#8a8fb0" transform="rotate(${-sp},70,-31)"/>
+  <path d="M0,22 L-120,260 L120,260Z" fill="${col}" opacity=".07"/></g>`; }
