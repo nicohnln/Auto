@@ -227,7 +227,7 @@
         1,
         0.5
       ],
-      "text": "Eine Idee: Die Roboter arbeiten, und du bekommst trotzdem Geld. Grundeinkommen.",
+      "text": "Eine Idee: Die Roboter arbeiten, und du bekommst trotzdem Geld. Das nennt man Grundeinkommen.",
       "hl": {
         "trotzdem": "green",
         "grundeinkommen": "yellow"
@@ -292,7 +292,7 @@
         1,
         0.6
       ],
-      "text": "Und das Überraschende: Die Leute haben nicht weniger gearbeitet. Sie waren einfach … zufriedener.",
+      "text": "Und das Überraschende: Die Leute haben nicht weniger gearbeitet. Sie waren einfach zufriedener.",
       "hl": {
         "überraschende": "yellow",
         "nicht": "red",

@@ -33,8 +33,8 @@ def norm(s):
 def split_sentences(text):
     out = []
     for p in re.split(r"(?<=[.?!…])\s+", text.strip()):
-        if out and not norm(p):
-            out[-1] += " " + p
+        if out and (not norm(p) or len([w for w in p.split() if norm(w)]) <= 1):
+            out[-1] += " " + p  # Satzzeichen oder Ein-Wort-Satz an vorigen Satz hängen (Modell braucht Kontext)
         elif p:
             out.append(p)
     return out
@@ -60,6 +60,9 @@ def score(target, words):
     """Wortgenauigkeit 0..1 zwischen Skripttext und Whisper-Transkript."""
     a = [norm(w) for w in target.split() if norm(w)]
     b = [norm(w["w"]) for w in words if norm(w["w"])]
+    if any(x.isdigit() for x in b):  # Whisper schreibt Zahlwörter als Ziffern -> nicht als Fehler zählen
+        b = [x for x in b if not x.isdigit()]
+        a = [x for x in a if not re.search(r"(hundert|tausend|zehn|zig|zwölf|elf)$", x)]
     sm = difflib.SequenceMatcher(a=a, b=b, autojunk=False)
     return sm.ratio()
 
