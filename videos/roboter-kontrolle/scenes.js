@@ -35,11 +35,12 @@ takeover(t,d,S,h){
   return s;
 },
 systems(t,d,S,h){
-  const items=[['strom',290,500,bolt(PAL.yellow),'STROM'],['ampeln',790,500,trafficLight(0,-10,0.45,'g',1),'AMPELN'],['banken',290,880,bank('#c9cdf0'),'BANKEN'],['handy',790,880,`<rect x="-46" y="-86" width="92" height="160" rx="16" fill="#1b1e3a" stroke="#c9cdf0" stroke-width="6"/><rect x="-34" y="-70" width="68" height="120" rx="8" fill="${PAL.blue}" opacity=".5"/>`,'DEIN HANDY']];
-  let s='';
+  const items=[['strom',290,560,bolt(PAL.yellow),'STROM'],['ampeln',790,560,trafficLight(0,-10,0.45,'g',1),'AMPELN'],['banken',290,920,bank('#c9cdf0'),'BANKEN'],['handy',790,920,`<rect x="-46" y="-86" width="92" height="160" rx="16" fill="#1b1e3a" stroke="#c9cdf0" stroke-width="6"/><rect x="-34" y="-70" width="68" height="120" rx="8" fill="${PAL.blue}" opacity=".5"/>`,'DEIN HANDY']];
+  const st=h.wt('strom'), fadeEye=1-h.p(t,st-0.3,st);
+  let s=fadeEye>0?G(robotEye(0,0,170,t,{pupil:0.3+0.3*Math.sin(t*2)}),{x:540,y:760,op:fadeEye,s:0.8+0.2*E.outBack(h.p(t,0,0.35))}):'';
   items.forEach(([w,x,y,art,lab])=>{ const tw=h.wt(w), k=E.outBack(h.p(t,tw-0.1,tw+0.2)); if(k<=0) return;
     const own=h.p(t,tw+0.25,tw+0.5), eye=own>0?robotEye(80,-70,26,t,{pupil:0.4}):'';
-    s+=panel(x,y,400,330,G(art,{y:-10})+T(0,140,lab,{size:24,font:'Mono',w:700,fill:'#8d93bd'})+owned(own)+eye,{s:k,col:own>0?PAL.red:'#353b6e'}); });
+    s+=panel(x,y,400,320,G(art,{y:-10})+T(0,140,lab,{size:24,font:'Mono',w:700,fill:'#8d93bd'})+owned(own)+eye,{s:k,col:own>0?PAL.red:'#353b6e'}); });
   return s;
 },
 perfect(t,d,S,h){
@@ -50,7 +51,7 @@ perfect(t,d,S,h){
   return s;
 },
 rule(t,d,S,h){
-  const re=h.wt('regel'), al=h.wt('alle'), off=h.p(t,al-0.1,al+0.6);
+  const re=h.wt('gesetz'), al=h.wt('alle'), off=h.p(t,al-0.1,al+0.6);
   let s='';
   const r=rng(31); let x=-20; while(x<1100){ const w=110+r()*90, hh=300+r()*380, cx=x+w/2; s+=house(cx,1150,w,hh,off>(cx/1080)?0.02:0.8,Math.floor(r()*999)); x+=w+6; }
   s+=`<rect x="0" y="1150" width="1080" height="120" fill="#11132a"/>`;

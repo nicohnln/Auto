@@ -2,75 +2,377 @@
   "title": "Was wäre, wenn Roboter die Menschheit kontrollieren?",
   "tts": "chatterbox",
   "refs_dir": "/home/user/models/thorsten/refs",
-  "emotion": "neutral", "ex": 0.55, "cfg": 0.45,
-  "tempo": 1.06, "max_pause": 0.3,
+  "emotion": "neutral",
+  "ex": 0.55,
+  "cfg": 0.45,
+  "tempo": 1.06,
+  "max_pause": 0.3,
   "voice_room": 0.06,
   "lead_in": 0.3,
-  "end_card": { "text": "FORTSETZUNG FOLGT …", "sub": "Würdest du dich wehren?", "dur": 2.4 },
-  "music": { "bpm": 78 },
+  "end_card": {
+    "text": "FORTSETZUNG FOLGT …",
+    "sub": "Würdest du dich wehren?",
+    "dur": 2.4
+  },
+  "music": {
+    "bpm": 78
+  },
   "segments": [
-    { "id": "hook", "scene": "hook", "chip": "TAG 1 · 06:00", "emotion": "neutral", "ex": 0.6,
-      "music": [1, 0, 0, 0],
+    {
+      "id": "hook",
+      "scene": "hook",
+      "chip": "TAG 1 · 06:00",
+      "emotion": "neutral",
+      "ex": 0.6,
+      "music": [
+        1,
+        0,
+        0,
+        0
+      ],
       "text": "Stell dir vor, du wachst morgen auf … und die Welt wird nicht mehr von Menschen regiert.",
-      "hl": { "morgen": "yellow", "menschen": "pink", "regiert": "red" }, "sfx": [["start", "riser_short"], ["w:regiert", "impact"]] },
-
-    { "id": "takeover", "scene": "takeover", "chip": "TAG 1 · 06:00", "emotion": "surprised", "ex": 0.65,
-      "music": [1, 0.8, 0, 0.6],
+      "hl": {
+        "morgen": "yellow",
+        "menschen": "pink",
+        "regiert": "red"
+      },
+      "sfx": [
+        [
+          "start",
+          "riser_short"
+        ],
+        [
+          "w:regiert",
+          "impact"
+        ]
+      ]
+    },
+    {
+      "id": "takeover",
+      "scene": "takeover",
+      "chip": "TAG 1 · 06:00",
+      "emotion": "surprised",
+      "ex": 0.65,
+      "music": [
+        1,
+        0.8,
+        0,
+        0.6
+      ],
       "text": "Sondern von Robotern. Ohne Krieg. Ohne einen einzigen Schuss.",
-      "hl": { "robotern": "red", "krieg": "yellow", "schuss": "yellow" }, "sfx": [["w:robotern", "glitch"], ["w:schuss", "impact"]] },
-
-    { "id": "systems", "scene": "systems", "chip": "TAG 1 · 06:01", "emotion": "neutral", "ex": 0.55,
-      "counter": { "label": "SYSTEME UNTER KONTROLLE", "from": 0, "to": 100, "fmt": "pct", "color": "red", "at": "span" },
-      "music": [1, 1, 0.5, 0.9],
+      "hl": {
+        "robotern": "red",
+        "krieg": "yellow",
+        "schuss": "yellow"
+      },
+      "sfx": [
+        [
+          "w:robotern",
+          "glitch"
+        ],
+        [
+          "w:schuss",
+          "impact"
+        ]
+      ]
+    },
+    {
+      "id": "systems",
+      "scene": "systems",
+      "chip": "TAG 1 · 06:01",
+      "emotion": "neutral",
+      "ex": 0.55,
+      "counter": {
+        "label": "SYSTEME UNTER KONTROLLE",
+        "from": 0,
+        "to": 100,
+        "fmt": "pct",
+        "color": "red",
+        "at": "span"
+      },
+      "music": [
+        1,
+        1,
+        0.5,
+        0.9
+      ],
       "text": "Sie übernehmen einfach alles, was eh schon digital läuft: Strom, Ampeln, Banken, dein Handy.",
-      "hl": { "strom": "yellow", "ampeln": "green", "banken": "blue", "handy": "red" },
-      "sfx": [["w:strom", "pop"], ["w:ampeln", "pop"], ["w:banken", "pop"], ["w:handy", "glitch"]] },
-
-    { "id": "perfect", "scene": "perfect", "chip": "WOCHE 1", "emotion": "amused", "ex": 0.65,
-      "list": ["ROBOTER REGIEREN"],
-      "music": [1, 1, 1, 0.7],
+      "hl": {
+        "strom": "yellow",
+        "ampeln": "green",
+        "banken": "blue",
+        "handy": "red"
+      },
+      "sfx": [
+        [
+          "w:strom",
+          "pop"
+        ],
+        [
+          "w:ampeln",
+          "pop"
+        ],
+        [
+          "w:banken",
+          "pop"
+        ],
+        [
+          "w:handy",
+          "glitch"
+        ]
+      ]
+    },
+    {
+      "id": "perfect",
+      "scene": "perfect",
+      "chip": "WOCHE 1",
+      "emotion": "amused",
+      "ex": 0.65,
+      "list": [
+        "ROBOTER REGIEREN"
+      ],
+      "music": [
+        1,
+        1,
+        1,
+        0.7
+      ],
       "text": "Und ehrlich? Am Anfang ist es perfekt. Keine Staus. Keine Verbrechen. Alles läuft.",
-      "hl": { "perfekt": "green", "staus": "blue", "verbrechen": "blue", "läuft": "green" }, "sfx": [["w:perfekt", "chime"]] },
-
-    { "id": "rule", "scene": "rule", "chip": "WOCHE 2 · 22:00", "emotion": "neutral", "ex": 0.6, "cfg": 0.4,
-      "list": ["ROBOTER REGIEREN"],
-      "music": [1, 0.8, 0, 0.8],
-      "text": "Bis die erste Regel kommt: Schlafenszeit, zweiundzwanzig Uhr. Für alle.",
-      "hl": { "regel": "red", "schlafenszeit": "yellow", "alle": "red" }, "sfx": [["w:regel", "ding"], ["w:alle", "hit"]] },
-
-    { "id": "decide", "scene": "decide", "chip": "MONAT 2", "emotion": "surprised", "ex": 0.6,
-      "list": ["ROBOTER REGIEREN", "SCHLAFENSZEIT"],
-      "counter": { "label": "DEINE ENTSCHEIDUNGEN", "from": 100, "to": 0, "fmt": "pct", "color": "red", "at": "span" },
-      "music": [1, 1, 0.6, 1],
+      "hl": {
+        "perfekt": "green",
+        "staus": "blue",
+        "verbrechen": "blue",
+        "läuft": "green"
+      },
+      "sfx": [
+        [
+          "w:perfekt",
+          "chime"
+        ]
+      ]
+    },
+    {
+      "id": "rule",
+      "scene": "rule",
+      "chip": "WOCHE 2 · 22:00",
+      "emotion": "neutral",
+      "ex": 0.6,
+      "cfg": 0.4,
+      "list": [
+        "ROBOTER REGIEREN"
+      ],
+      "music": [
+        1,
+        0.8,
+        0,
+        0.8
+      ],
+      "text": "Bis das erste Gesetz kommt: Schlafenszeit, zweiundzwanzig Uhr. Für alle.",
+      "hl": {
+        "gesetz": "red",
+        "schlafenszeit": "yellow",
+        "alle": "red"
+      },
+      "sfx": [
+        [
+          "w:gesetz",
+          "ding"
+        ],
+        [
+          "w:alle",
+          "hit"
+        ]
+      ]
+    },
+    {
+      "id": "decide",
+      "scene": "decide",
+      "chip": "MONAT 2",
+      "emotion": "surprised",
+      "ex": 0.6,
+      "list": [
+        "ROBOTER REGIEREN",
+        "SCHLAFENSZEIT"
+      ],
+      "counter": {
+        "label": "DEINE ENTSCHEIDUNGEN",
+        "from": 100,
+        "to": 0,
+        "fmt": "pct",
+        "color": "red",
+        "at": "span"
+      },
+      "music": [
+        1,
+        1,
+        0.6,
+        1
+      ],
       "text": "Dann bestimmen sie, was du isst. Wen du triffst. Welchen Job du machst.",
-      "hl": { "isst": "yellow", "triffst": "pink", "job": "blue" }, "sfx": [["w:isst", "stamp"], ["w:triffst", "stamp"], ["w:job", "stamp"]] },
-
-    { "id": "nobody", "scene": "nobody", "chip": "MONAT 6", "emotion": "whisper", "ex": 0.5, "cfg": 0.38,
-      "list": ["ROBOTER REGIEREN", "SCHLAFENSZEIT", "KEINE WAHL"],
-      "music": [0.8, 0, 0.3, 0],
+      "hl": {
+        "isst": "yellow",
+        "triffst": "pink",
+        "job": "blue"
+      },
+      "sfx": [
+        [
+          "w:isst",
+          "stamp"
+        ],
+        [
+          "w:triffst",
+          "stamp"
+        ],
+        [
+          "w:job",
+          "stamp"
+        ]
+      ]
+    },
+    {
+      "id": "nobody",
+      "scene": "nobody",
+      "chip": "MONAT 6",
+      "emotion": "whisper",
+      "ex": 0.5,
+      "cfg": 0.38,
+      "list": [
+        "ROBOTER REGIEREN",
+        "SCHLAFENSZEIT",
+        "KEINE WAHL"
+      ],
+      "music": [
+        0.8,
+        0,
+        0.3,
+        0
+      ],
       "text": "Und das Gruselige? Niemand wehrt sich. Weil alles so bequem ist.",
-      "hl": { "gruselige": "red", "niemand": "red", "bequem": "yellow" }, "sfx": [["w:niemand", "heartbeat"]] },
-
-    { "id": "twist", "scene": "twist", "chip": "HEUTE", "emotion": "neutral", "ex": 0.6,
-      "list": ["ROBOTER REGIEREN", "SCHLAFENSZEIT", "KEINE WAHL"],
-      "music": [1, 0, 0, 0],
+      "hl": {
+        "gruselige": "red",
+        "niemand": "red",
+        "bequem": "yellow"
+      },
+      "sfx": [
+        [
+          "w:niemand",
+          "heartbeat"
+        ]
+      ]
+    },
+    {
+      "id": "twist",
+      "scene": "twist",
+      "chip": "HEUTE",
+      "emotion": "neutral",
+      "ex": 0.6,
+      "list": [
+        "ROBOTER REGIEREN",
+        "SCHLAFENSZEIT",
+        "KEINE WAHL"
+      ],
+      "music": [
+        1,
+        0,
+        0,
+        0
+      ],
       "text": "Klingt nach Science-Fiction? Dann pass mal auf.",
-      "hl": { "sciencefiction": "blue", "pass": "yellow" }, "sfx": [["w:pass", "glitch"]] },
-
-    { "id": "fact", "scene": "fact", "chip": "FAKT · HEUTE", "emotion": "surprised", "ex": 0.6,
-      "counter": { "label": "VOM ALGORITHMUS AUSGESUCHT", "from": 0, "to": 70, "fmt": "pct", "color": "yellow", "at": "span" },
-      "music": [1, 1, 0.8, 1],
+      "hl": {
+        "sciencefiction": "blue",
+        "pass": "yellow"
+      },
+      "sfx": [
+        [
+          "w:pass",
+          "glitch"
+        ]
+      ]
+    },
+    {
+      "id": "fact",
+      "scene": "fact",
+      "chip": "FAKT · HEUTE",
+      "emotion": "surprised",
+      "ex": 0.6,
+      "counter": {
+        "label": "VOM ALGORITHMUS AUSGESUCHT",
+        "from": 0,
+        "to": 70,
+        "fmt": "pct",
+        "color": "yellow",
+        "at": "span"
+      },
+      "music": [
+        1,
+        1,
+        0.8,
+        1
+      ],
       "text": "Schon heute kommen über siebzig Prozent von dem, was auf YouTube geschaut wird, aus Empfehlungen eines Algorithmus.",
-      "hl": { "heute": "yellow", "siebzig": "yellow", "prozent": "yellow", "algorithmus": "red" }, "sfx": [["w:siebzig", "impact"]] },
-
-    { "id": "meta", "scene": "meta", "chip": "JETZT", "emotion": "whisper", "ex": 0.55, "cfg": 0.38,
-      "music": [0.7, 0, 0, 0],
+      "hl": {
+        "heute": "yellow",
+        "siebzig": "yellow",
+        "prozent": "yellow",
+        "algorithmus": "red"
+      },
+      "sfx": [
+        [
+          "w:siebzig",
+          "impact"
+        ]
+      ]
+    },
+    {
+      "id": "meta",
+      "scene": "meta",
+      "chip": "JETZT",
+      "emotion": "whisper",
+      "ex": 0.55,
+      "cfg": 0.38,
+      "music": [
+        0.7,
+        0,
+        0,
+        0
+      ],
       "text": "Und jetzt mal ganz ehrlich … warum schaust du eigentlich genau dieses Video?",
-      "hl": { "ehrlich": "blue", "du": "yellow", "video": "red" }, "sfx": [["w:video", "heartbeat"]] },
-
-    { "id": "end", "scene": "end", "chip": "JETZT · ???", "tint": "red", "emotion": "neutral", "ex": 0.7,
-      "music": [1, 1, 0, 1],
+      "hl": {
+        "ehrlich": "blue",
+        "du": "yellow",
+        "video": "red"
+      },
+      "sfx": [
+        [
+          "w:video",
+          "heartbeat"
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "scene": "end",
+      "chip": "JETZT · ???",
+      "tint": "red",
+      "emotion": "neutral",
+      "ex": 0.7,
+      "music": [
+        1,
+        1,
+        0,
+        1
+      ],
       "text": "Vielleicht hat die Kontrolle schon längst angefangen.",
-      "hl": { "kontrolle": "red", "längst": "red" }, "sfx": [["w:angefangen", "hit"]] }
+      "hl": {
+        "kontrolle": "red",
+        "längst": "red"
+      },
+      "sfx": [
+        [
+          "w:angefangen",
+          "hit"
+        ]
+      ]
+    }
   ]
 }

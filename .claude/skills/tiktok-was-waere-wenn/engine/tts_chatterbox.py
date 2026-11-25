@@ -64,7 +64,9 @@ def score(target, words):
         b = [x for x in b if not x.isdigit()]
         a = [x for x in a if not re.search(r"(hundert|tausend|zehn|zig|zwölf|elf)$", x)]
     sm = difflib.SequenceMatcher(a=a, b=b, autojunk=False)
-    return sm.ratio()
+    # zusätzlich zeichenweise vergleichen (Bindestrich-/Getrenntschreibung wie "Science Fiction" ist kein Fehler)
+    cr = difflib.SequenceMatcher(a="".join(a), b="".join(b), autojunk=False).ratio()
+    return max(sm.ratio(), cr if cr > 0.9 else 0)
 
 
 def map_words(text, wwords, offset):
