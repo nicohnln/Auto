@@ -42,10 +42,10 @@ def split_sentences(text):
 
 def pause_after(s):
     s = s.rstrip("“”\"' ")
-    if s.endswith("…"): return 0.5
-    if s.endswith("?"): return 0.32
+    if s.endswith("…"): return 0.42
+    if s.endswith("?"): return 0.28
     if s.endswith("!"): return 0.26
-    return 0.28
+    return 0.24
 
 
 def trim(y, sr, top_db=38, pad=0.05):
@@ -100,6 +100,37 @@ def map_words(text, wwords, offset):
             continue
         out.append({"text": tok, "n": n, "t": a + offset, "e": b + offset})
     return out
+
+
+def squeeze(y, words, max_gap=0.3, top_db=35):
+    """Kürzt Stillen innerhalb eines Satzes auf max_gap; verschiebt die Wortzeiten entsprechend."""
+    iv = librosa.effects.split(y, top_db=top_db, frame_length=1024, hop_length=256)
+    cuts = []
+    for (a0, a1), (b0, b1) in zip(iv, iv[1:]):
+        gap = (b0 - a1) / SR
+        if gap > max_gap:
+            c0 = a1 / SR + max_gap / 2; cuts.append((c0, c0 + gap - max_gap))
+    if not cuts:
+        return y, words
+    keep, pos = [], 0
+    for c0, c1 in cuts:
+        keep.append(y[pos:int(c0 * SR)]); pos = int(c1 * SR)
+    keep.append(y[pos:])
+    def shift(t):
+        return t - sum(min(c1, t) - c0 for c0, c1 in cuts if t > c0)
+    words = [{**w, "t": shift(w["t"]), "e": shift(w["e"])} for w in words]
+    return np.concatenate(keep), words
+
+
+def tempo(y, f):
+    """Tonhöhenerhaltende Tempoänderung (ffmpeg atempo, WSOLA)."""
+    if abs(f - 1) < 1e-3:
+        return y
+    a, b = "/tmp/_cb_t_in.wav", "/tmp/_cb_t_out.wav"
+    torchaudio.save(a, torch.tensor(y).unsqueeze(0), SR)
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", a, "-af", f"atempo={f}", b], check=True)
+    z, _ = librosa.load(b, sr=SR)
+    return z
 
 
 def radio(y):
@@ -164,6 +195,12 @@ def main(proj):
                 json.dump({"words": ww, "score": q}, open(js_p, "w"), ensure_ascii=False)
             y, _ = librosa.load(wav_p, sr=SR)
             ww = json.load(open(js_p))["words"]
+            if ww:  # Nachgeräusche/Artefakte nach dem letzten Wort (und vor dem ersten) abschneiden
+                a = max(0.0, ww[0]["t"] - 0.08); b = min(len(y) / SR, ww[-1]["e"] + 0.2)
+                y = y[int(a * SR):int(b * SR)]
+                ww = [{**w, "t": w["t"] - a, "e": w["e"] - a} for w in ww]
+                fade = int(0.04 * SR); y[-fade:] *= np.linspace(1, 0, fade)
+            y, ww = squeeze(y, ww, seg.get("max_pause", sc.get("max_pause", 0.3)))
             if seg.get("fx") == "radio":
                 y = radio(y)
             words += map_words(sent, ww, cur)
@@ -178,8 +215,17 @@ def main(proj):
     if end:
         timeline["end_card"] = {**end, "start": cur}
         pcm.append(np.zeros(int(end.get("dur", 2.5) * SR), np.float32)); cur += end.get("dur", 2.5)
+    y = np.concatenate(pcm)
+    f = sc.get("tempo", 1.0)  # z. B. 1.07 = 7 % schneller, Tonhöhe bleibt
+    if abs(f - 1) > 1e-3:
+        y = tempo(y, f)
+        for s in timeline["segments"]:
+            s["start"] /= f; s["end"] /= f
+            for w in s["words"]: w["t"] /= f; w["e"] /= f
+        if end: timeline["end_card"]["start"] /= f
+        cur = len(y) / SR
     timeline["duration"] = cur
-    y = np.concatenate(pcm); y = y / (np.max(np.abs(y)) + 1e-9) * 0.89
+    y = y / (np.max(np.abs(y)) + 1e-9) * 0.89
     out = os.path.join(proj, "build")
     with wave.open(os.path.join(out, "voice.wav"), "wb") as w:
         w.setnchannels(1); w.setsampwidth(2); w.setframerate(SR); w.writeframes((y * 32767).astype(np.int16).tobytes())

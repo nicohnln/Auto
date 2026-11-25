@@ -44,7 +44,7 @@ dream(t,d,S,h){
   return s;
 },
 salary(t,d,S,h){
-  const ge=h.wt('gehalt'), z=h.p(t,ge-0.1,ge+0.4);
+  const ge=h.wt('gehalt'), z=clamp((t-ge+0.15)/0.55,0,1);
   let s=spotlight(540,760,460,.5);
   const v=fmtVal(2450*(1-E.out(z)),'eur');
   s+=G(`<rect x="-260" y="-320" width="520" height="640" rx="16" fill="#f3f4fb"/>`+T(0,-240,'GEHALTSABRECHNUNG',{size:34,fill:'#22264a'})+
