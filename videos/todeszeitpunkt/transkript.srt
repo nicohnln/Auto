@@ -1,43 +1,43 @@
 1
-00:00:00,263 --> 00:00:04,763
+00:00:00,300 --> 00:00:04,800
 Stell dir vor, du wachst morgen auf … und über deinem Kopf läuft ein Countdown.
 
 2
-00:00:05,111 --> 00:00:09,143
+00:00:05,509 --> 00:00:08,809
 Bei jedem Menschen. Er zeigt genau, wie lange du noch zu leben hast.
 
 3
-00:00:09,491 --> 00:00:14,085
+00:00:09,332 --> 00:00:15,532
 Und ehrlich? Bei den meisten steht da eine riesige Zahl. Fünfzig, sechzig Jahre.
 
 4
-00:00:14,433 --> 00:00:18,617
+00:00:16,165 --> 00:00:19,885
 Aber dann siehst du deinen besten Freund. Und bei ihm steht: drei Wochen.
 
 5
-00:00:18,965 --> 00:00:25,113
+00:00:21,097 --> 00:00:26,557
 Plötzlich ist alles anders. Leute kündigen ihren Job, reisen um die Welt, rufen ihre Eltern an.
 
 6
-00:00:25,554 --> 00:00:30,463
+00:00:27,043 --> 00:00:32,963
 Andere werden übermütig. Wer weiß, dass er erst mit neunzig stirbt, fühlt sich unbesiegbar.
 
 7
-00:00:30,744 --> 00:00:33,805
+00:00:33,521 --> 00:00:36,061
 Aber weißt du was? Eine Zahl kennst du eigentlich schon.
 
 8
-00:00:34,139 --> 00:00:39,042
+00:00:36,664 --> 00:00:41,374
 Ein Mensch in Deutschland lebt im Schnitt etwas mehr als viertausend Wochen. Nur viertausend.
 
 9
-00:00:39,707 --> 00:00:42,608
+00:00:42,367 --> 00:00:45,497
 Und eine Pflegerin hat aufgeschrieben, was Sterbende am meisten bereuen.
 
 10
-00:00:42,804 --> 00:00:47,591
+00:00:46,181 --> 00:00:52,001
 Nicht, zu wenig gearbeitet zu haben. Sondern, nicht ihr eigenes Leben gelebt zu haben.
 
 11
-00:00:47,939 --> 00:00:50,408
+00:00:52,577 --> 00:00:55,277
 Also … wie viele von deinen Wochen hast du schon verschenkt?
