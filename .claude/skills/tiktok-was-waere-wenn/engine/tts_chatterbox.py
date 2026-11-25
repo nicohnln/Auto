@@ -31,12 +31,24 @@ def norm(s):
 
 
 def split_sentences(text):
-    out = []
-    for p in re.split(r"(?<=[.?!…])\s+", text.strip()):
-        if out and (not norm(p) or len([w for w in p.split() if norm(w)]) <= 1):
-            out[-1] += " " + p  # Satzzeichen oder Ein-Wort-Satz an vorigen Satz hängen (Modell braucht Kontext)
-        elif p:
+    """Sätze einzeln sprechen lassen, aber sehr kurze (≤2 Wörter) mit dem Nachbarn verbinden:
+    allein wiederholt das Modell sie gern ("Und ehrlich? Und ehrlich?")."""
+    parts = [p for p in re.split(r"(?<=[.?!…])\s+", text.strip()) if p]
+    nw = lambda p: len([w for w in p.split() if norm(w)])
+    out, carry = [], ""
+    for p in parts:
+        if not norm(p):
+            if out: out[-1] += " " + p
+            else: carry += p + " "
+            continue
+        p = carry + p; carry = ""
+        if nw(p) <= 2:
+            carry = p + " "  # an den nächsten Satz hängen
+        else:
             out.append(p)
+    if carry:
+        if out: out[-1] += " " + carry.strip()
+        else: out.append(carry.strip())
     return out
 
 
@@ -144,6 +156,18 @@ def tempo(y, f):
     return z
 
 
+def processed(y, ps, tf):
+    """Satz so bearbeiten, wie er am Ende klingt (Absenkung + Tempo) – für die Prüfung."""
+    if abs(ps) < 0.01 and abs(tf - 1) < 1e-3:
+        return y
+    torchaudio.save("/tmp/_cb_q.wav", torch.tensor(y).unsqueeze(0), SR)
+    af = f"atempo={tf}" if abs(tf - 1) > 1e-3 else "anull"
+    subprocess.run(f"rubberband -q --fine -F -p {ps} /tmp/_cb_q.wav /tmp/_cb_q2.wav && ffmpeg -v error -y -i /tmp/_cb_q2.wav -af {af} /tmp/_cb_q3.wav",
+                   shell=True, check=True, stderr=subprocess.DEVNULL)
+    z, _ = librosa.load("/tmp/_cb_q3.wav", sr=SR)
+    return z
+
+
 def radio(y):
     tmp_in, tmp_out = "/tmp/_cb_in.wav", "/tmp/_cb_out.wav"
     torchaudio.save(tmp_in, torch.tensor(y).unsqueeze(0), SR)
@@ -168,8 +192,9 @@ def main(proj):
 
     # Stimmstil "doku" = wie die Referenzvideos: tiefe (~100 Hz), ruhige, schnelle Erzählerstimme
     style = sc.get("voice_style", "doku")
-    STY = {"doku": {"suffix": "_d4", "ex_scale": 0.72, "cfg": 0.5, "tempo": 1.10, "pitch": -2.0},
-           "emotional": {"suffix": "", "ex_scale": 1.0, "cfg": 0.45, "tempo": 1.06, "pitch": 0.0}}[style]
+    STY = {"doku": {"suffix": "_d4", "ex_scale": 0.72, "cfg": 0.5, "tempo": 1.14, "pitch": -2.5, "pause": 0.82},
+           "emotional": {"suffix": "", "ex_scale": 1.0, "cfg": 0.45, "tempo": 1.06, "pitch": 0.0, "pause": 1.0}}[style]
+    PF = STY["pause"]  # Faktor für Satzpausen (Doku: straffer, wie die Referenzen)
     suffix = sc.get("ref_suffix", STY["suffix"])
     sc.setdefault("tempo", STY["tempo"])
     lead = sc.get("lead_in", 0.3)
@@ -187,10 +212,21 @@ def main(proj):
         sentences = split_sentences(seg["text"])
         for k, sent in enumerate(sentences):
             key = hashlib.md5(f"cb|{emo}{suffix}|{ex}|{cfg}|{sent}".encode()).hexdigest()[:10]
+            qa_key = f"{sc.get('voice_pitch', STY['pitch'])}|{sc.get('tempo', STY['tempo'])}|93"
             wav_p, js_p = (os.path.join(cache, f"{seg['id']}_{k}_{key}.{x}") for x in ("wav", "json"))
             if os.path.exists(js_p) and stretched(json.load(open(js_p))["words"]):
                 print(f"  {seg['id']}[{k}] Cache verdächtig (gedehntes Wort) -> neu erzeugen")
                 os.remove(js_p)
+            if os.path.exists(js_p) and json.load(open(js_p)).get("qa") != qa_key:
+                # gespeicherten Satz in der End-Fassung nachhören
+                yc, _ = librosa.load(wav_p, sr=SR)
+                yq = processed(yc, sc.get("voice_pitch", STY["pitch"]), sc.get("tempo", STY["tempo"]))
+                sq = score(sent, transcribe(librosa.resample(yq, orig_sr=SR, target_sr=16000)))
+                if sq < 0.93:
+                    print(f"  {seg['id']}[{k}] Cache in End-Fassung undeutlich ({sq:.2f}) -> neu erzeugen")
+                    os.remove(js_p)
+                else:
+                    d = json.load(open(js_p)); d["qa"] = qa_key; json.dump(d, open(js_p, "w"), ensure_ascii=False)
             if not os.path.exists(js_p):
                 if model is None:
                     print("Lade Chatterbox …"); model = ChatterboxMultilingualTTS.from_local(MODEL_DIR, "cpu")
@@ -202,22 +238,28 @@ def main(proj):
                     w = model.generate(sent, language_id="de", audio_prompt_path=ref, exaggeration=ex, cfg_weight=cfg)
                     y = librosa.resample(w.squeeze(0).numpy(), orig_sr=model.sr, target_sr=SR)
                     y, _ = trim(y, SR)
+                    # Prüfung auf der Fassung, die man am Ende hört (abgesenkt + beschleunigt)
+                    yq = processed(y, sc.get("voice_pitch", STY["pitch"]), sc.get("tempo", STY["tempo"]))
+                    wq = transcribe(librosa.resample(yq, orig_sr=SR, target_sr=16000))
                     ww = transcribe(librosa.resample(y, orig_sr=SR, target_sr=16000))
-                    sc_ = score(sent, ww)
+                    sc_ = min(score(sent, ww), score(sent, wq))
                     dur = len(y) / SR
                     # Halluzinations-/Abbruchcheck: plausible Sprechdauer (ca. 1.6–4.5 Wörter/s)
                     rate = n_words / max(dur, 0.1)
                     ok_rate = 1.3 < rate < 4.8 or n_words <= 2
-                    sus = stretched(ww)
-                    q = sc_ - (0 if ok_rate else 0.3) - (0.4 if sus else 0)
-                    print(f"  {seg['id']}[{k}] Versuch {attempt + 1}: Genauigkeit {sc_:.2f}, {rate:.1f} W/s, {dur:.1f}s" + (" (gedehntes Wort!)" if sus else ""))
+                    # Wiederholung: mehr gehörte Wörter als im Skript (Zahlen zählen nicht)
+                    heard = len([w for w in wq if norm(w["w"]) and not norm(w["w"]).isdigit()])
+                    rep = heard > n_words + 1 and heard > n_words * 1.2
+                    sus = stretched(ww) or rep
+                    q = sc_ - (0 if ok_rate else 0.3) - (0.4 if sus else 0) - (0.6 if rep else 0)
+                    print(f"  {seg['id']}[{k}] Versuch {attempt + 1}: Genauigkeit {sc_:.2f}, {rate:.1f} W/s, {dur:.1f}s" + (" (Wiederholung!)" if rep else (" (gedehntes Wort!)" if sus else "")))
                     if best is None or q > best[0]:
                         best = (q, y, ww)
                     if sc_ >= 0.92 and ok_rate and not sus:
                         break
                 q, y, ww = best
                 torchaudio.save(wav_p, torch.tensor(y).unsqueeze(0), SR)
-                json.dump({"words": ww, "score": q}, open(js_p, "w"), ensure_ascii=False)
+                json.dump({"words": ww, "score": q, "qa": qa_key}, open(js_p, "w"), ensure_ascii=False)
             y, _ = librosa.load(wav_p, sr=SR)
             ww = json.load(open(js_p))["words"]
             if ww:  # Nachgeräusche/Artefakte nach dem letzten Wort (und vor dem ersten) abschneiden
@@ -231,8 +273,8 @@ def main(proj):
             words += map_words(sent, ww, cur)
             pcm.append(y.astype(np.float32)); cur += len(y) / SR
             if k < len(sentences) - 1:
-                p = pause_after(sent); pcm.append(np.zeros(int(p * SR), np.float32)); cur += p
-        g = seg.get("gap_after", pause_after(sentences[-1]))
+                p = pause_after(sent) * PF; pcm.append(np.zeros(int(p * SR), np.float32)); cur += p
+        g = seg.get("gap_after", pause_after(sentences[-1]) * PF)
         pcm.append(np.zeros(int(g * SR), np.float32)); cur += g
         timeline["segments"].append({**{k: v for k, v in seg.items() if k != "text"}, "text": seg["text"],
                                      "start": seg_start, "end": cur, "words": words})

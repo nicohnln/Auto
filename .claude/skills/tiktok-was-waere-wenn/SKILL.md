@@ -14,14 +14,18 @@ Alles wird lokal erzeugt: Grafik, Musik, SFX und die Stimme.
 - Einmalige Einrichtung: `engine/setup_chatterbox.sh` (lädt venv, Modelle und Referenzen; ~7 GB). Netzwerk: `huggingface.co`, `us.aws.cdn.hf.co`.
 - **Stimmstil `"voice_style": "doku"` (Standard, Wunsch des Creators: „wie in den Referenzen“).** Die Referenzstimmen wurden gemessen: tiefe Männerstimme (~97–110 Hz), ruhig und kontrolliert (~3,7 Halbtöne Melodie-Schwankung), schnell (~170 Wörter/min), präsent und trocken. Umsetzung:
   - Referenzen 4 Halbtöne tiefer, Formanten erhalten (Rubber Band, Dateien `*_d4.wav`)
-  - Emotionsstärke ×0,72, `cfg` ≥ 0,5, Tempo 1,10
+  - Emotionsstärke ×0,72, `cfg` ≥ 0,5
   - Präsenz-EQ und harte Kompression ohne Raumhall
-  - Am Ende wird die Stimme um weitere 2 Halbtöne abgesenkt (`voice_pitch`, Formanten und Timing bleiben gleich).
-  - Ergebnis: ~97–100 Hz, 3,7 Halbtöne Schwankung.
+  - Am Ende wird die Stimme um weitere 2,5 Halbtöne abgesenkt (`voice_pitch`, Formanten und Timing bleiben gleich), Tempo 1,14, Satzpausen ×0,82.
+  - Gemessen im Endmix: ~101–104 Hz, 166 Wörter/min, 2,8 dB Lautstärke-Dynamik (Referenzen: 97–106 Hz, 169–178 W/min, 2,3–2,4 dB).
   - Bestätigt durch eine vierte Referenz des Creators (Geld-Erklärvideo, schwarz-weiß): tiefe Männerstimme ~95–100 Hz, 174 Wörter/min, sehr gleichmäßige Lautstärke (2,3 dB Dynamik).
   Die Referenzstimmen selbst werden **nicht** geklont (Rechte der anderen Creator). Alternative: `"voice_style": "emotional"` (höher, mehr Schwankung).
 - Pro Segment `emotion` passend zum Inhalt wählen, außerdem `ex` (Emotionsstärke 0.5–0.75) und `cfg` (0.35–0.45; niedriger = ruhiger). Neutral erzählen, `surprised` bei Wendungen, `amused` bei positiven Stellen, `whisper` bei persönlichen oder unheimlichen Momenten.
 - Qualitätskontrolle läuft automatisch: Whisper hört jeden Satz nach, bei Fehlern wird neu generiert. Die Wort-Zeitstempel kommen ebenfalls aus Whisper.
+  - Geprüft wird die **End-Fassung** (abgesenkt und beschleunigt), Schwelle 0,93.
+  - **Wiederholungen** werden erkannt (mehr gehörte Wörter als im Skript) und nie genommen, genauso **gedehnte Wörter** (versteckte Wiederholung).
+  - Sätze mit höchstens 2 Wörtern werden mit dem Nachbarsatz zusammen gesprochen. Allein wiederholt das Modell sie gern.
+  - Ändern sich Stil-Parameter, werden gespeicherte Sätze automatisch in der neuen End-Fassung nachgehört.
 - Dauer: ca. 5× Echtzeit auf 4 CPU-Kernen (60 s Audio ≈ 6–10 min).
 
 ## 1. Stil-DNA (aus den 3 Referenzvideos analysiert)
