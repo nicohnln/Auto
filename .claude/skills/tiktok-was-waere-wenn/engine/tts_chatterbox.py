@@ -85,6 +85,8 @@ def stretched(words):
     """Erkennt versteckte Wiederholungen/Gestammel: Whisper packt sie oft in ein einziges, viel zu langes Wort."""
     for w in words:
         n = len(norm(w["w"]))
+        if any(ch.isdigit() for ch in w["w"]):
+            continue  # Ziffern sind gesprochen lange Wörter ("2024" = "Zweitausendvierundzwanzig")
         if n and (w["e"] - w["t"]) > max(0.95, 0.12 * n + 0.4):
             return True
     return False

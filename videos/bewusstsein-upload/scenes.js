@@ -54,7 +54,8 @@ digital(t,d,S,h){
   const he=h.wt('herzschlag'), de=h.wt('denkst'), al=h.wt('alles');
   let s=monitor(540,660,560,440,pixelFace(0,0,1.15,t,t>de?'neutral':'think'));
   const k=E.outBack(h.p(t,he-0.1,he+0.2));
-  if(k>0) s+=G(heartLine(0,0,320,t,PAL.red,0).replace(/<path d="[^"]*" stroke="#ff3355" stroke-width="5"/,'<path d="M-160,0 L160,0" stroke="#ff3355" stroke-width="5"'),{x:540,y:1060,s:k});
+  if(k>0) s+=G(`<rect x="-200" y="-70" width="400" height="140" rx="14" fill="#1a0d1c" stroke="${PAL.red}" stroke-width="4"/>`+T(-180,-38,'PULS',{size:20,font:'Mono',w:700,fill:PAL.red,anchor:'start'})+T(180,-38,'0',{size:20,font:'Mono',w:700,fill:PAL.red,anchor:'end'})+
+    `<rect x="-170" y="12" width="340" height="12" rx="6" fill="${PAL.red}" opacity=".35"/><rect x="-170" y="15" width="340" height="6" rx="3" fill="${PAL.red}"/>`,{x:540,y:1060,s:k});
   if(t>al) for(let i=0;i<6;i++){ const p=h.p(t,al+i*0.08,al+i*0.08+0.6), a=i/6*Math.PI*2; s+=G(`<rect x="-46" y="-36" width="92" height="72" rx="6" fill="#f3f4fb"/><rect x="-38" y="-28" width="76" height="46" fill="${['#4ea8ff','#ff7aa8','#38f27e','#ffd23f','#b78bff','#ff9b42'][i]}" opacity=".7"/>`,{x:540+Math.cos(a)*lerp(420,330,p),y:660+Math.sin(a)*lerp(380,300,p),s:E.outBack(p)*0.9,r:(i-3)*6}); }
   return s;
 },
