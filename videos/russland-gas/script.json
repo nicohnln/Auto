@@ -1,0 +1,321 @@
+{
+  "title": "Was wäre, wenn Deutschland wieder Gas aus Russland importieren würde?",
+  "tts": "orpheus",
+  "voice": "thomas",
+  "max_pause": 0.55,
+  "lead_in": 0.3,
+  "end_card": {
+    "text": "FORTSETZUNG FOLGT …",
+    "sub": "Was ist dir wichtiger? Schreib's in die Kommentare.",
+    "dur": 2.4
+  },
+  "music": {
+    "bpm": 78
+  },
+  "segments": [
+    {
+      "id": "hook",
+      "scene": "hook",
+      "chip": "TAG 1 · 06:00",
+      "music": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "text": "Stell dir vor, morgen früh fließt durch die Ostsee wieder russisches Gas nach Deutschland.",
+      "hl": {
+        "ostsee": "blue",
+        "russisches": "red",
+        "gas": "yellow",
+        "deutschland": "yellow"
+      },
+      "sfx": [
+        [
+          "start",
+          "riser_short"
+        ],
+        [
+          "w:gas",
+          "whoosh"
+        ]
+      ]
+    },
+    {
+      "id": "cheap",
+      "scene": "cheap",
+      "chip": "WOCHE 1",
+      "music": [
+        1,
+        0.8,
+        1,
+        0.6
+      ],
+      "text": "Und ehrlich? Für viele klingt das erstmal gut. Die Preise fallen, Heizen wird billiger.",
+      "say": "Und ehrlich? <chuckle> Für viele klingt das erstmal gut. Die Preise fallen, Heizen wird billiger.",
+      "hl": {
+        "gut": "green",
+        "fallen": "green",
+        "billiger": "green"
+      },
+      "sfx": [
+        [
+          "w:billiger",
+          "coin"
+        ]
+      ]
+    },
+    {
+      "id": "industry",
+      "scene": "industry",
+      "chip": "MONAT 2",
+      "list": [
+        "GAS FLIESST"
+      ],
+      "music": [
+        1,
+        1,
+        1,
+        0.8
+      ],
+      "text": "Fabriken, die wegen der hohen Energiekosten ins Ausland wollten, bleiben vielleicht doch hier.",
+      "hl": {
+        "fabriken": "blue",
+        "ausland": "red",
+        "hier": "green"
+      },
+      "sfx": [
+        [
+          "w:hier",
+          "stamp"
+        ]
+      ]
+    },
+    {
+      "id": "price",
+      "scene": "price",
+      "chip": "MONAT 2",
+      "list": [
+        "GAS FLIESST"
+      ],
+      "music": [
+        1,
+        0.4,
+        0,
+        0
+      ],
+      "text": "Aber dann kommt die eigentliche Frage: Zu welchem Preis?",
+      "hl": {
+        "eigentliche": "yellow",
+        "preis": "red"
+      },
+      "sfx": [
+        [
+          "w:preis",
+          "impact"
+        ]
+      ]
+    },
+    {
+      "id": "history",
+      "scene": "history",
+      "chip": "RÜCKBLICK · 2021",
+      "counter": {
+        "label": "GAS AUS RUSSLAND · 2021",
+        "from": 0,
+        "to": 55,
+        "fmt": "pct",
+        "color": "red",
+        "at": "span"
+      },
+      "music": [
+        1,
+        1,
+        0.6,
+        0.8
+      ],
+      "text": "Denn genau das hatten wir schon. 2021 kam mehr als die Hälfte unseres Gases aus Russland.",
+      "say": "Denn genau das hatten wir schon. Zweitausendeinundzwanzig kam mehr als die Hälfte unseres Gases aus Russland.",
+      "hl": {
+        "schon": "yellow",
+        "2021": "yellow",
+        "hälfte": "red",
+        "russland": "red"
+      },
+      "sfx": [
+        [
+          "w:hälfte",
+          "stamp"
+        ]
+      ]
+    },
+    {
+      "id": "decision",
+      "scene": "decision",
+      "chip": "FEBRUAR 2022",
+      "tint": "red",
+      "music": [
+        1,
+        0.8,
+        0,
+        0.6
+      ],
+      "text": "Dann kam Russlands Angriff auf die Ukraine. Und Deutschland entschied: Wir wollen weg vom russischen Gas. Nord Stream 2 ging nie in Betrieb.",
+      "say": "Dann kam Russlands Angriff auf die Ukraine. <sigh> Und Deutschland entschied: Wir wollen weg vom russischen Gas. Nord Stream zwei ging nie in Betrieb.",
+      "hl": {
+        "angriff": "red",
+        "ukraine": "yellow",
+        "deutschland": "yellow",
+        "weg": "red",
+        "nie": "red"
+      },
+      "sfx": [
+        [
+          "w:angriff",
+          "hit"
+        ],
+        [
+          "w:entschied",
+          "stamp"
+        ]
+      ]
+    },
+    {
+      "id": "crisis",
+      "scene": "crisis",
+      "chip": "2022 · ENERGIEKRISE",
+      "counter": {
+        "label": "GASPREIS EUROPA · € PRO MWH",
+        "from": 20,
+        "to": 340,
+        "fmt": "int",
+        "color": "red",
+        "at": "span"
+      },
+      "music": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "text": "Gleichzeitig lieferte Russland immer weniger. Und der Gaspreis explodierte.",
+      "hl": {
+        "weniger": "red",
+        "gaspreis": "yellow",
+        "explodierte": "red"
+      },
+      "sfx": [
+        [
+          "w:explodierte",
+          "impact"
+        ]
+      ]
+    },
+    {
+      "id": "pipes",
+      "scene": "pipes",
+      "chip": "HEUTE · OSTSEE",
+      "counter": {
+        "label": "INTAKTE NORD-STREAM-RÖHREN",
+        "from": 4,
+        "to": 1,
+        "fmt": "int",
+        "color": "red",
+        "at": "w:eine"
+      },
+      "music": [
+        1,
+        0.6,
+        0.4,
+        0.4
+      ],
+      "text": "Und heute? Von den vier Nord-Stream-Röhren ist nach den Explosionen nur noch eine intakt.",
+      "hl": {
+        "vier": "blue",
+        "explosionen": "red",
+        "eine": "yellow"
+      },
+      "sfx": [
+        [
+          "w:explosionen",
+          "impact"
+        ]
+      ]
+    },
+    {
+      "id": "eu",
+      "scene": "eu",
+      "chip": "EU · PLAN",
+      "music": [
+        1,
+        1,
+        0.6,
+        0.8
+      ],
+      "text": "Und die EU will russisches Gas bis spätestens Ende 2027 komplett stoppen.",
+      "say": "Und die EU will russisches Gas bis spätestens Ende zweitausendsiebenundzwanzig komplett stoppen.",
+      "hl": {
+        "eu": "blue",
+        "2027": "yellow",
+        "stoppen": "red"
+      },
+      "sfx": [
+        [
+          "w:stoppen",
+          "stamp"
+        ]
+      ]
+    },
+    {
+      "id": "sides",
+      "scene": "sides",
+      "chip": "DIE DEBATTE",
+      "music": [
+        1,
+        1,
+        0.8,
+        1
+      ],
+      "text": "Befürworter sagen: Billige Energie rettet unsere Industrie. Kritiker sagen: Wir machen uns wieder erpressbar.",
+      "hl": {
+        "befürworter": "green",
+        "billige": "green",
+        "kritiker": "red",
+        "erpressbar": "red"
+      },
+      "sfx": [
+        [
+          "w:befürworter",
+          "pop"
+        ],
+        [
+          "w:kritiker",
+          "pop"
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "scene": "end",
+      "chip": "DEINE ENTSCHEIDUNG",
+      "music": [
+        1,
+        0.8,
+        0,
+        0.6
+      ],
+      "text": "Also … was ist dir wichtiger: billiges Gas … oder Unabhängigkeit?",
+      "hl": {
+        "billiges": "yellow",
+        "gas": "yellow",
+        "unabhängigkeit": "blue"
+      },
+      "sfx": [
+        [
+          "w:unabhängigkeit",
+          "heartbeat"
+        ]
+      ]
+    }
+  ]
+}
