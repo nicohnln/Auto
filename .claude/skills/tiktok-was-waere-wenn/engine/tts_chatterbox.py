@@ -168,8 +168,8 @@ def main(proj):
 
     # Stimmstil "doku" = wie die Referenzvideos: tiefe (~100 Hz), ruhige, schnelle Erzählerstimme
     style = sc.get("voice_style", "doku")
-    STY = {"doku": {"suffix": "_d4", "ex_scale": 0.72, "cfg": 0.5, "tempo": 1.10},
-           "emotional": {"suffix": "", "ex_scale": 1.0, "cfg": 0.45, "tempo": 1.06}}[style]
+    STY = {"doku": {"suffix": "_d4", "ex_scale": 0.72, "cfg": 0.5, "tempo": 1.10, "pitch": -2.0},
+           "emotional": {"suffix": "", "ex_scale": 1.0, "cfg": 0.45, "tempo": 1.06, "pitch": 0.0}}[style]
     suffix = sc.get("ref_suffix", STY["suffix"])
     sc.setdefault("tempo", STY["tempo"])
     lead = sc.get("lead_in", 0.3)
@@ -250,6 +250,12 @@ def main(proj):
         if end: timeline["end_card"]["start"] /= f
         cur = len(y) / SR
     timeline["duration"] = cur
+    ps = sc.get("voice_pitch", STY["pitch"])  # Feinabsenkung in Halbtönen, Formanten/Timing bleiben erhalten
+    if abs(ps) > 0.01:
+        a, b = "/tmp/_cb_p_in.wav", "/tmp/_cb_p_out.wav"
+        torchaudio.save(a, torch.tensor(y).unsqueeze(0), SR)
+        subprocess.run(["rubberband", "-q", "--fine", "-F", "-p", str(ps), a, b], check=True)
+        z, _ = librosa.load(b, sr=SR); y = np.pad(z, (0, max(0, len(y) - len(z))))[:len(y)]
     y = y / (np.max(np.abs(y)) + 1e-9) * 0.89
     out = os.path.join(proj, "build")
     with wave.open(os.path.join(out, "voice.wav"), "wb") as w:

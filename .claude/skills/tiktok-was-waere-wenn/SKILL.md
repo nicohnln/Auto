@@ -16,7 +16,9 @@ Alles wird lokal erzeugt: Grafik, Musik, SFX und die Stimme.
   - Referenzen 4 Halbtöne tiefer, Formanten erhalten (Rubber Band, Dateien `*_d4.wav`)
   - Emotionsstärke ×0,72, `cfg` ≥ 0,5, Tempo 1,10
   - Präsenz-EQ und harte Kompression ohne Raumhall
-  - Ergebnis: ~101 Hz, 3,7 Halbtöne Schwankung.
+  - Am Ende wird die Stimme um weitere 2 Halbtöne abgesenkt (`voice_pitch`, Formanten und Timing bleiben gleich).
+  - Ergebnis: ~97–100 Hz, 3,7 Halbtöne Schwankung.
+  - Bestätigt durch eine vierte Referenz des Creators (Geld-Erklärvideo, schwarz-weiß): tiefe Männerstimme ~95–100 Hz, 174 Wörter/min, sehr gleichmäßige Lautstärke (2,3 dB Dynamik).
   Die Referenzstimmen selbst werden **nicht** geklont (Rechte der anderen Creator). Alternative: `"voice_style": "emotional"` (höher, mehr Schwankung).
 - Pro Segment `emotion` passend zum Inhalt wählen, außerdem `ex` (Emotionsstärke 0.5–0.75) und `cfg` (0.35–0.45; niedriger = ruhiger). Neutral erzählen, `surprised` bei Wendungen, `amused` bei positiven Stellen, `whisper` bei persönlichen oder unheimlichen Momenten.
 - Qualitätskontrolle läuft automatisch: Whisper hört jeden Satz nach, bei Fehlern wird neu generiert. Die Wort-Zeitstempel kommen ebenfalls aus Whisper.
