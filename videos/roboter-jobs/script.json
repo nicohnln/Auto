@@ -2,74 +2,369 @@
   "title": "Was wäre, wenn Roboter alle Arbeitsplätze übernehmen?",
   "tts": "chatterbox",
   "refs_dir": "/home/user/models/thorsten/refs",
-  "emotion": "neutral", "ex": 0.55, "cfg": 0.45,
+  "emotion": "neutral",
+  "ex": 0.55,
+  "cfg": 0.45,
   "voice_room": 0.06,
   "lead_in": 0.3,
-  "end_card": { "text": "FORTSETZUNG FOLGT …", "sub": "Was würdest du mit deiner Zeit machen?", "dur": 2.4 },
-  "music": { "bpm": 80 },
+  "end_card": {
+    "text": "FORTSETZUNG FOLGT …",
+    "sub": "Was würdest du mit deiner Zeit machen?",
+    "dur": 2.4
+  },
+  "music": {
+    "bpm": 80
+  },
   "segments": [
-    { "id": "hook", "scene": "hook", "chip": "TAG 1 · 07:58", "emotion": "neutral", "ex": 0.6,
-      "music": [1, 0, 0, 0],
+    {
+      "id": "hook",
+      "scene": "hook",
+      "chip": "TAG 1 · 07:58",
+      "emotion": "neutral",
+      "ex": 0.6,
+      "music": [
+        1,
+        0,
+        0,
+        0
+      ],
       "text": "Stell dir vor, du kommst morgen zur Arbeit … und an deinem Platz sitzt ein Roboter.",
-      "hl": { "morgen": "yellow", "roboter": "red" }, "sfx": [["start", "riser_short"], ["w:roboter", "impact"]] },
-
-    { "id": "robot", "scene": "robot", "chip": "TAG 1 · 07:59", "emotion": "neutral", "ex": 0.5,
-      "music": [1, 0.6, 0, 0.4],
+      "hl": {
+        "morgen": "yellow",
+        "roboter": "red"
+      },
+      "sfx": [
+        [
+          "start",
+          "riser_short"
+        ],
+        [
+          "w:roboter",
+          "impact"
+        ]
+      ]
+    },
+    {
+      "id": "robot",
+      "scene": "robot",
+      "chip": "TAG 1 · 07:59",
+      "emotion": "neutral",
+      "ex": 0.5,
+      "music": [
+        1,
+        0.6,
+        0,
+        0.4
+      ],
       "text": "Er macht keine Pause. Er wird nie krank. Und er kostet fast nichts.",
-      "hl": { "pause": "blue", "krank": "pink", "nichts": "yellow" }, "sfx": [["w:pause", "beep"], ["w:krank", "beep"], ["w:nichts", "coin"]] },
-
-    { "id": "all", "scene": "all", "chip": "TAG 1 · 12:00", "emotion": "surprised", "ex": 0.7,
-      "counter": { "label": "JOBS IN DEUTSCHLAND", "from": 46000000, "to": 0, "fmt": "int", "color": "red", "at": "span" },
-      "music": [1, 1, 0.4, 0.8],
-      "text": "Und das passiert nicht nur dir. Lkw-Fahrer, Kassierer, Übersetzer … alle auf einmal.",
-      "hl": { "dir": "yellow", "lkwfahrer": "blue", "kassierer": "green", "übersetzer": "pink", "alle": "red" },
-      "sfx": [["w:lkwfahrer", "pop"], ["w:kassierer", "pop"], ["w:übersetzer", "pop"], ["w:alle", "impact"]] },
-
-    { "id": "dream", "scene": "dream", "chip": "TAG 2 · 11:30", "emotion": "amused", "ex": 0.7,
-      "music": [1, 1, 1, 0.8],
-      "text": "Und ehrlich? Erstmal klingt das wie ein Traum. Nie wieder Wecker.",
-      "hl": { "ehrlich": "yellow", "traum": "green", "wecker": "red" }, "sfx": [["w:traum", "chime"], ["w:wecker", "glitch"]] },
-
-    { "id": "salary", "scene": "salary", "chip": "MONAT 1", "emotion": "neutral", "ex": 0.65, "cfg": 0.4,
-      "counter": { "label": "DEIN GEHALT", "from": 2450, "to": 0, "fmt": "eur", "color": "red", "at": "w:gehalt" },
-      "music": [1, 0.6, 0, 0.6],
+      "hl": {
+        "pause": "blue",
+        "krank": "pink",
+        "nichts": "yellow"
+      },
+      "sfx": [
+        [
+          "w:pause",
+          "beep"
+        ],
+        [
+          "w:krank",
+          "beep"
+        ],
+        [
+          "w:nichts",
+          "coin"
+        ]
+      ]
+    },
+    {
+      "id": "all",
+      "scene": "all",
+      "chip": "TAG 1 · 12:00",
+      "emotion": "surprised",
+      "ex": 0.7,
+      "counter": {
+        "label": "JOBS IN DEUTSCHLAND",
+        "from": 46000000,
+        "to": 0,
+        "fmt": "int",
+        "color": "red",
+        "at": "span"
+      },
+      "music": [
+        1,
+        1,
+        0.4,
+        0.8
+      ],
+      "text": "Und das passiert nicht nur dir. Lastwagenfahrer, Kassierer, Übersetzer … alle auf einmal.",
+      "hl": {
+        "dir": "yellow",
+        "lastwagenfahrer": "blue",
+        "kassierer": "green",
+        "übersetzer": "pink",
+        "alle": "red"
+      },
+      "sfx": [
+        [
+          "w:lastwagenfahrer",
+          "pop"
+        ],
+        [
+          "w:kassierer",
+          "pop"
+        ],
+        [
+          "w:übersetzer",
+          "pop"
+        ],
+        [
+          "w:alle",
+          "impact"
+        ]
+      ]
+    },
+    {
+      "id": "dream",
+      "scene": "dream",
+      "chip": "TAG 2 · 11:30",
+      "emotion": "amused",
+      "ex": 0.7,
+      "music": [
+        1,
+        1,
+        1,
+        0.8
+      ],
+      "text": "Und ehrlich? Erstmal klingt das wie ein Traum. Nie wieder einen Wecker stellen.",
+      "hl": {
+        "ehrlich": "yellow",
+        "traum": "green",
+        "wecker": "red"
+      },
+      "sfx": [
+        [
+          "w:traum",
+          "chime"
+        ],
+        [
+          "w:wecker",
+          "glitch"
+        ]
+      ]
+    },
+    {
+      "id": "salary",
+      "scene": "salary",
+      "chip": "MONAT 1",
+      "emotion": "neutral",
+      "ex": 0.65,
+      "cfg": 0.4,
+      "counter": {
+        "label": "DEIN GEHALT",
+        "from": 2450,
+        "to": 0,
+        "fmt": "eur",
+        "color": "red",
+        "at": "w:gehalt"
+      },
+      "music": [
+        1,
+        0.6,
+        0,
+        0.6
+      ],
       "text": "Aber dann merkst du: Kein Job heißt … kein Gehalt.",
-      "hl": { "job": "blue", "gehalt": "red" }, "sfx": [["w:gehalt", "error"]] },
-
-    { "id": "buy", "scene": "buy", "chip": "MONAT 2", "emotion": "surprised", "ex": 0.65,
-      "music": [1, 1, 0.6, 1],
+      "hl": {
+        "job": "blue",
+        "gehalt": "red"
+      },
+      "sfx": [
+        [
+          "w:gehalt",
+          "error"
+        ]
+      ]
+    },
+    {
+      "id": "buy",
+      "scene": "buy",
+      "chip": "MONAT 2",
+      "emotion": "surprised",
+      "ex": 0.65,
+      "music": [
+        1,
+        1,
+        0.6,
+        1
+      ],
       "text": "Und wenn keiner mehr Geld hat … wer kauft dann eigentlich noch das, was die Roboter bauen?",
-      "hl": { "keiner": "red", "wer": "yellow", "roboter": "blue" }, "sfx": [["w:wer", "impact"]] },
-
-    { "id": "ubi", "scene": "ubi", "chip": "DIE IDEE", "emotion": "neutral", "ex": 0.55,
-      "list": ["JOBS WEG", "GEHALT WEG"],
-      "music": [1, 0.8, 1, 0.5],
+      "hl": {
+        "keiner": "red",
+        "wer": "yellow",
+        "roboter": "blue"
+      },
+      "sfx": [
+        [
+          "w:wer",
+          "impact"
+        ]
+      ]
+    },
+    {
+      "id": "ubi",
+      "scene": "ubi",
+      "chip": "DIE IDEE",
+      "emotion": "neutral",
+      "ex": 0.55,
+      "list": [
+        "JOBS WEG",
+        "GEHALT WEG"
+      ],
+      "music": [
+        1,
+        0.8,
+        1,
+        0.5
+      ],
       "text": "Eine Idee: Die Roboter arbeiten, und du bekommst trotzdem Geld. Grundeinkommen.",
-      "hl": { "trotzdem": "green", "grundeinkommen": "yellow" }, "sfx": [["w:grundeinkommen", "coin"]] },
-
-    { "id": "study", "scene": "study", "chip": "STUDIE · 2021–2024", "emotion": "surprised", "ex": 0.6,
-      "list": ["JOBS WEG", "GEHALT WEG"],
-      "counter": { "label": "JEDEN MONAT · DREI JAHRE LANG", "from": 0, "to": 1200, "fmt": "eur", "color": "green", "at": "span" },
-      "music": [1, 1, 1, 0.8],
+      "hl": {
+        "trotzdem": "green",
+        "grundeinkommen": "yellow"
+      },
+      "sfx": [
+        [
+          "w:grundeinkommen",
+          "coin"
+        ]
+      ]
+    },
+    {
+      "id": "study",
+      "scene": "study",
+      "chip": "STUDIE · 2021–2024",
+      "emotion": "surprised",
+      "ex": 0.6,
+      "list": [
+        "JOBS WEG",
+        "GEHALT WEG"
+      ],
+      "counter": {
+        "label": "JEDEN MONAT · DREI JAHRE LANG",
+        "from": 0,
+        "to": 1200,
+        "fmt": "eur",
+        "color": "green",
+        "at": "span"
+      },
+      "music": [
+        1,
+        1,
+        1,
+        0.8
+      ],
       "text": "Klingt verrückt? In Deutschland wurde das echt getestet. Drei Jahre lang, zwölfhundert Euro im Monat.",
-      "hl": { "verrückt": "pink", "deutschland": "yellow", "zwölfhundert": "green" }, "sfx": [["w:echt", "stamp"]] },
-
-    { "id": "result", "scene": "result", "chip": "STUDIE · ERGEBNIS", "emotion": "amused", "ex": 0.6,
-      "list": ["JOBS WEG", "GEHALT WEG"],
-      "music": [1, 0.8, 1, 0.6],
+      "hl": {
+        "verrückt": "pink",
+        "deutschland": "yellow",
+        "zwölfhundert": "green"
+      },
+      "sfx": [
+        [
+          "w:echt",
+          "stamp"
+        ]
+      ]
+    },
+    {
+      "id": "result",
+      "scene": "result",
+      "chip": "STUDIE · ERGEBNIS",
+      "emotion": "amused",
+      "ex": 0.6,
+      "list": [
+        "JOBS WEG",
+        "GEHALT WEG"
+      ],
+      "music": [
+        1,
+        0.8,
+        1,
+        0.6
+      ],
       "text": "Und das Überraschende: Die Leute haben nicht weniger gearbeitet. Sie waren einfach … zufriedener.",
-      "hl": { "überraschende": "yellow", "nicht": "red", "zufriedener": "green" }, "sfx": [["w:zufriedener", "chime"]] },
-
-    { "id": "whisper", "scene": "whisper", "chip": "MONAT 6 · 03:12", "emotion": "whisper", "ex": 0.5, "cfg": 0.35,
-      "list": ["JOBS WEG", "GEHALT WEG", "GELD VOM STAAT"],
-      "music": [0.7, 0, 0, 0],
+      "hl": {
+        "überraschende": "yellow",
+        "nicht": "red",
+        "zufriedener": "green"
+      },
+      "sfx": [
+        [
+          "w:zufriedener",
+          "chime"
+        ]
+      ]
+    },
+    {
+      "id": "whisper",
+      "scene": "whisper",
+      "chip": "MONAT 6 · 03:12",
+      "emotion": "whisper",
+      "ex": 0.5,
+      "cfg": 0.35,
+      "list": [
+        "JOBS WEG",
+        "GEHALT WEG",
+        "GELD VOM STAAT"
+      ],
+      "music": [
+        0.7,
+        0,
+        0,
+        0
+      ],
       "text": "Aber mal ganz ehrlich, nur zwischen uns … Was machst du mit deinem Leben, wenn dich keiner mehr braucht?",
-      "hl": { "ehrlich": "blue", "leben": "yellow", "keiner": "red", "braucht": "pink" }, "sfx": [["w:braucht", "heartbeat"]] },
-
-    { "id": "end", "scene": "end", "chip": "JAHR 1 · ???", "tint": "red", "emotion": "neutral", "ex": 0.7,
-      "list": ["JOBS WEG", "GEHALT WEG", "GELD VOM STAAT"],
-      "music": [1, 1, 0, 1],
+      "hl": {
+        "ehrlich": "blue",
+        "leben": "yellow",
+        "keiner": "red",
+        "braucht": "pink"
+      },
+      "sfx": [
+        [
+          "w:braucht",
+          "heartbeat"
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "scene": "end",
+      "chip": "JAHR 1 · ???",
+      "tint": "red",
+      "emotion": "neutral",
+      "ex": 0.7,
+      "list": [
+        "JOBS WEG",
+        "GEHALT WEG",
+        "GELD VOM STAAT"
+      ],
+      "music": [
+        1,
+        1,
+        0,
+        1
+      ],
       "text": "Denn genau hier fängt das eigentliche Problem erst an.",
-      "hl": { "problem": "red" }, "sfx": [["w:problem", "hit"]] }
+      "hl": {
+        "problem": "red"
+      },
+      "sfx": [
+        [
+          "w:problem",
+          "hit"
+        ]
+      ]
+    }
   ]
 }

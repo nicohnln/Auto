@@ -23,7 +23,7 @@ robot(t,d,S,h){
 },
 all(t,d,S,h){
   let s='';
-  const items=[['lkwfahrer',200,truck(0,90,0.48,{driver:robotIcon(150,-110,0.7,PAL.blue)}),'LKW'],['kassierer',540,register(0,70,'0,00',PAL.blue)+robotIcon(-140,-60,0.8,PAL.blue),'KASSE'],
+  const items=[['lastwagenfahrer',200,truck(0,90,0.48,{driver:robotIcon(150,-110,0.7,PAL.blue)}),'LKW'],['kassierer',540,register(0,70,'0,00',PAL.blue)+robotIcon(-140,-60,0.8,PAL.blue),'KASSE'],
     ['übersetzer',880,T(-60,-20,'Hello',{size:44,fill:'#c9cdf0'})+T(60,50,'Hallo',{size:44,fill:PAL.green})+arrowCurve(-40,0,40,30,40,PAL.green,1,5),'ÜBERSETZEN']];
   const al=h.wt('alle'), dim=h.p(t,al-0.1,al+0.3);
   items.forEach(([w,x,art,lab])=>{ const k=E.outBack(h.p(t,h.wt(w)-0.05,h.wt(w)+0.25)); if(k<=0) return;
