@@ -1,0 +1,111 @@
+{
+  "title": "Was wäre, wenn alle Menschen außer dir plötzlich verschwinden?",
+  "voice": "de-DE-FlorianMultilingualNeural",
+  "rate": "+6%",
+  "pitch": "+0Hz",
+  "humanize": true,
+  "voice_room": 0.10,
+  "lead_in": 0.35,
+  "max_pause": 0.45,
+  "end_card": { "text": "FORTSETZUNG FOLGT …", "sub": "Würdest du antworten?", "dur": 2.8 },
+  "music": { "bpm": 76 },
+  "segments": [
+    { "id": "wake", "scene": "wake", "chip": "TAG 1 · 07:30", "rate": "-1%",
+      "music": [1, 0, 0, 0],
+      "text": "Stell dir vor, du wachst morgen auf … und es ist still. Richtig still.",
+      "hl": { "morgen": "yellow", "still": "blue" }, "sfx": [["start", "riser_short"]] },
+
+    { "id": "phone", "scene": "phone", "chip": "TAG 1 · 07:34",
+      "music": [1, 0.4, 0, 0],
+      "text": "Keine Nachrichten. Niemand online. Und deine Mama? Zuletzt online gestern, 23:58.",
+      "hl": { "niemand": "red", "mama": "pink", "2358": "yellow" }, "sfx": [["w:niemand", "beep"], ["w:mama", "pop"]] },
+
+    { "id": "street", "scene": "street", "chip": "TAG 1 · 08:10",
+      "music": [1, 0.7, 0, 0],
+      "text": "Du gehst raus. Autos stehen mitten auf der Kreuzung. Türen offen. Der Motor läuft noch.",
+      "hl": { "autos": "blue", "türen": "yellow", "motor": "red" }, "sfx": [["w:türen", "pop"]] },
+
+    { "id": "alone", "scene": "alone", "chip": "TAG 1 · 08:12", "rate": "-2%",
+      "counter": { "label": "MENSCHEN AUF DER ERDE", "from": 8142369112, "to": 1, "fmt": "int", "color": "pink", "at": "w:niemand" },
+      "music": [1, 1, 0, 0.6],
+      "text": "Und dann checkst du es: Da ist niemand mehr. Außer dir.",
+      "hl": { "niemand": "red", "dir": "yellow" }, "sfx": [["w:niemand", "glitch"], ["w:dir", "impact"]] },
+
+    { "id": "freedom", "scene": "freedom", "chip": "TAG 1 · 10:00",
+      "counter": { "label": "MENSCHEN AUF DER ERDE", "from": 1, "to": 1, "fmt": "int", "color": "pink", "at": "span" },
+      "music": [1, 1, 1, 0.8],
+      "text": "Und ehrlich? Die ersten Stunden fühlen sich an wie der beste Tag deines Lebens.",
+      "hl": { "ehrlich": "yellow", "beste": "green" }, "sfx": [["w:beste", "chime"]] },
+
+    { "id": "free", "scene": "free", "chip": "TAG 1 · 15:00", "list": ["ALLES GRATIS"],
+      "music": [1, 1, 1, 1],
+      "text": "Supermarkt? Gratis. Elektroladen? Gratis. Heute Nacht schläfst du in der teuersten Suite der Stadt.",
+      "hl": { "gratis": "green", "suite": "yellow" }, "sfx": [["w:supermarkt", "pop"], ["w:elektroladen", "pop"], ["w:suite", "coin"]] },
+
+    { "id": "dark", "scene": "dark", "chip": "TAG 2 · 03:12", "list": ["ALLES GRATIS"], "rate": "-2%",
+      "music": [1, 0, 0, 0],
+      "text": "Aber in der zweiten Nacht … geht plötzlich das Licht aus.",
+      "hl": { "licht": "yellow", "aus": "red" }, "sfx": [["w:aus", "hit"]] },
+
+    { "id": "grid", "scene": "grid", "chip": "TAG 2 · 03:12", "list": ["ALLES GRATIS", "STROM WEG"],
+      "counter": { "label": "STROMNETZ EUROPA", "from": 100, "to": 0, "fmt": "pct", "color": "red", "at": "span" },
+      "music": [1, 1, 0.4, 1],
+      "text": "Kraftwerke brauchen Menschen. Ohne sie schalten sie sich einfach ab. Ganz Europa wird dunkel.",
+      "hl": { "kraftwerke": "blue", "menschen": "pink", "dunkel": "red" }, "sfx": [["w:ab", "buzz"], ["w:dunkel", "impact"]] },
+
+    { "id": "water", "scene": "water", "chip": "TAG 4 · 08:00", "list": ["ALLES GRATIS", "STROM WEG"],
+      "music": [1, 0.8, 0.4, 0.6],
+      "text": "Kurz danach kommt aus dem Wasserhahn nur noch ein Röcheln. Die Pumpen laufen ja auch mit Strom.",
+      "hl": { "wasserhahn": "blue", "röcheln": "red", "strom": "yellow" }, "sfx": [["w:röcheln", "glitch"]] },
+
+    { "id": "candle", "scene": "candle", "chip": "TAG 9 · 20:40", "list": ["ALLES GRATIS", "STROM WEG", "WASSER WEG"],
+      "music": [1, 0.3, 0.6, 0],
+      "text": "Du isst kalte Ravioli aus der Dose. Bei Kerzenlicht. Ganz allein.",
+      "hl": { "ravioli": "yellow", "kerzenlicht": "yellow", "allein": "pink" } },
+
+    { "id": "dogs", "scene": "dogs", "chip": "WOCHE 3 · NACHTS", "tint": "red", "list": ["ALLES GRATIS", "STROM WEG", "WASSER WEG"],
+      "music": [1, 1, 0, 1],
+      "text": "Und nachts hörst du sie: Hunde. Hunderte. Ohne Menschen sind die Haustiere jetzt auf sich allein gestellt.",
+      "hl": { "hunde": "red", "hunderte": "red", "haustiere": "yellow" }, "sfx": [["w:hunde", "impact"], ["w:hunderte", "heartbeat"]] },
+
+    { "id": "twist", "scene": "twist", "chip": "MONAT 2", "list": ["ALLES GRATIS", "STROM WEG", "WASSER WEG"],
+      "music": [1, 0.6, 0, 0.4],
+      "text": "Aber weißt du, was wirklich gefährlich wird? Nicht der Hunger. Nicht die Hunde.",
+      "hl": { "gefährlich": "red", "hunger": "yellow", "hunde": "yellow" }, "sfx": [["w:hunger", "buzz"], ["w:hunde", "buzz"]] },
+
+    { "id": "silence", "scene": "silence", "chip": "MONAT 2", "list": ["ALLES GRATIS", "STROM WEG", "WASSER WEG", "EINSAM"], "rate": "-8%",
+      "music": [0.7, 0, 0, 0],
+      "text": "Sondern die Stille. Die Einsamkeit.",
+      "hl": { "stille": "blue", "einsamkeit": "pink" }, "sfx": [["w:einsamkeit", "impact"]] },
+
+    { "id": "science", "scene": "science", "chip": "MONAT 2 · FAKT", "list": ["ALLES GRATIS", "STROM WEG", "WASSER WEG", "EINSAM"],
+      "counter": { "label": "SO SCHÄDLICH WIE ZIGARETTEN / TAG", "from": 0, "to": 15, "fmt": "int", "color": "red", "at": "span" },
+      "music": [1, 0.8, 0.5, 0.5],
+      "text": "Forscher sagen: Dauerhafte Einsamkeit schadet deinem Körper so sehr wie fünfzehn Zigaretten am Tag.",
+      "hl": { "forscher": "blue", "körper": "red", "fünfzehn": "yellow", "zigaretten": "red" }, "sfx": [["w:fünfzehn", "impact"]] },
+
+    { "id": "talk", "scene": "talk", "chip": "MONAT 5", "list": ["ALLES GRATIS", "STROM WEG", "WASSER WEG", "EINSAM"],
+      "music": [0.8, 0, 0.5, 0],
+      "text": "Irgendwann redest du mit dir selbst. Laut. Nur, um mal wieder eine Stimme zu hören.",
+      "hl": { "selbst": "pink", "laut": "yellow", "stimme": "pink" } },
+
+    { "id": "roof", "scene": "roof", "chip": "TAG 412 · 21:14", "list": ["ALLES GRATIS", "STROM WEG", "WASSER WEG", "EINSAM"], "rate": "-4%",
+      "counter": { "label": "MENSCHEN AUF DER ERDE", "from": 1, "to": 1, "fmt": "int", "color": "pink", "at": "span" },
+      "music": [1, 0, 0.3, 0],
+      "text": "Tag 412. Du sitzt auf dem Dach und schaust in die dunkle Stadt. Und plötzlich …",
+      "hl": { "412": "yellow", "plötzlich": "red" }, "sfx": [["w:plötzlich", "riser_short"]] },
+
+    { "id": "radio", "scene": "radio", "chip": "TAG 412 · 21:14", "list": ["ALLES GRATIS", "STROM WEG", "WASSER WEG", "EINSAM"],
+      "counter": { "label": "MENSCHEN AUF DER ERDE", "from": 1, "to": 1, "fmt": "int", "color": "pink", "at": "span" },
+      "music": [0.5, 0, 0, 0],
+      "text": "knackt dein altes Funkgerät.",
+      "hl": { "knackt": "red", "funkgerät": "yellow" }, "sfx": [["start", "static"], ["w:knackt", "glitch"]] },
+
+    { "id": "voice", "scene": "voice", "chip": "TAG 412 · 21:15", "list": ["ALLES GRATIS", "STROM WEG", "WASSER WEG", "EINSAM"],
+      "voice": "de-DE-SeraphinaMultilingualNeural", "fx": "radio", "rate": "-8%", "breath": false, "max_pause": 0.7,
+      "counter": { "label": "MENSCHEN AUF DER ERDE", "from": 1, "to": "2 ?", "fmt": "int", "color": "yellow", "at": "w:jemand" },
+      "music": [0.4, 0, 0, 0],
+      "text": "Hallo? … Ist da jemand?",
+      "hl": { "hallo": "pink", "jemand": "pink" }, "sfx": [["start", "static"], ["end", "heartbeat"]] }
+  ]
+}

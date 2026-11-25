@@ -48,15 +48,19 @@ Referenzen: „Was wäre, wenn alle Frauen sterben“ (flache 2D-Story, Hauptvor
    - 14–20 Segmente, je 1–2 kurze Sätze (insgesamt ~180–220 Wörter ≈ 75–90 s).
    - Pro Segment: `scene`, `chip`, `text`, `hl` (Schlüsselwort → Farbe, Wörter kleingeschrieben ohne Satzzeichen), optional `counter`, `list`, `tint` (`red`/`sepia`), `sfx`.
    - `counter.at`: `"w:<wort>"` (springt beim Wort) oder `"span"` (läuft über das ganze Segment).
-   - `sfx`: `[["start"|"end"|"w:<wort>", name]]`. Namen: whoosh, pop, ding, impact, hit, glitch, error, buzz, stamp, chime, beep, crowd, tick, net, vinyl, coin, heartbeat, riser_short. Impact/Stamp/Error lösen automatisch Kamerawackler und Farbblitz aus.
-   - Stimme: `de-DE-FlorianMultilingualNeural` (männlich, sehr natürlich). Alternative: `de-DE-SeraphinaMultilingualNeural` (weiblich). `rate` +4 % bis +8 %.
+   - `sfx`: `[["start"|"end"|"w:<wort>", name]]`. Namen: whoosh, pop, ding, static (Funkrauschen), impact, hit, glitch, error, buzz, stamp, chime, beep, crowd, tick, net, vinyl, coin, heartbeat, riser_short. Impact/Stamp/Error lösen automatisch Kamerawackler und Farbblitz aus.
+   - Stimme: `de-DE-FlorianMultilingualNeural` (männlich, sehr natürlich). Alternative: `de-DE-SeraphinaMultilingualNeural` (weiblich). `rate` +3 % bis +6 %.
+   - **Menschliche Stimme** (`"humanize": true`, Standard): Jeder Satz wird einzeln gesprochen, mit leicht variiertem Tempo und Tonhöhe. Fragen gehen hoch, kurze Einwürfe sind ruhiger. Die Pausen richten sich nach dem Satzzeichen, dazu kommen leise Atemzüge (`breath_level`, Standard 0.05) und ein warmer Mikrofon-Klang mit kleinem Raum (`voice_room`, Standard 0.10).
+   - Pro Segment möglich: `rate` (z. B. `-8%` für ruhige, emotionale Stellen), `pitch`, `voice` (zweite Stimme), `fx: "radio"` (Funkgerät/Telefon), `breath: false`, `max_pause`, `music: [pad, bass, arp, kick]` (Intensität 0–1 je Musikspur).
+   - Zähler-`to` darf Text sein (z. B. `"2 ?"`): Er springt beim Wort aus `at` um.
 3. **`scenes.js`** schreiben: eine Funktion pro `scene`-Name, `(t, d, S, h) => SVG-String`.
    - `t` = Sekunden seit Segmentstart, `d` = Dauer, `h.wt('wort')` = Zeitpunkt eines Wortes, `h.p(t,a,b)` = Fortschritt 0..1, `E.outBack` usw. = Easing.
-   - Bausteine aus `engine/lib.js`: `person()`, `figure()`, `phone()`, `hand()`, `notif()`, `globe()`, `shelf()`, `register()`, `bus()`, `bakery()`, `trash()`, `house()`, `coin()`, `banknote()`, `cigPack()`, `bread()`, `noodles()`, `toiletPaper()`, `stamp()`, `bigX()`, `arrowCurve()`, `confetti()`, `clockFace()`, `bubble()`, `heartLine()`, `spotlight()`, `ring()`, `T()` (Text), `G()` (Gruppe mit x/y/s/r/op).
+   - Bausteine aus `engine/lib.js`: `person()`, `figure()`, `phone()`, `hand()`, `notif()`, `globe()`, `shelf()`, `register()`, `bus()`, `bakery()`, `trash()`, `house()`, `coin()`, `banknote()`, `cigPack()`, `bread()`, `noodles()`, `toiletPaper()`, `stamp()`, `bigX()`, `arrowCurve()`, `confetti()`, `clockFace()`, `bubble()`, `heartLine()`, `spotlight()`, `ring()`, `car()`, `trafficLight()`, `skyline()`, `moon()`, `candle()`, `tinCan()`, `walkie()`, `faucet()`, `powerPlant()`, `pylon()`, `dog()`, `waveform()`, `T()` (Text), `G()` (Gruppe mit x/y/s/r/op).
    - Bildbereich für Grafik: y ≈ 360–1200. Darunter (ab 1235) liegen die Untertitel, unten ~450 px bleiben für die TikTok-Oberfläche frei.
    - Jede Szene braucht schon ab t = 0.1 s sichtbaren Inhalt (keine leeren Frames).
 4. **Bauen:** `bash .claude/skills/tiktok-was-waere-wenn/engine/build.sh videos/<slug>`
-   Einzelschritte: `engine/tts.py`, `engine/audio.py`, `engine/render.cjs` (mit `--stills 1.5,7,20` für Kontrollbilder).
+   Einzelschritte: `engine/tts.py`, `engine/audio.py`, `engine/render.cjs` (mit `--stills 1.5,7,20` für Kontrollbilder), `engine/transcript.py` (Transkript mit Zeitstempeln als `transkript.txt` + `.srt`).
+   Nur Ton geändert (gleiche Timeline)? Dann reicht `audio.py` + Muxen, kein neues Rendern.
 5. **Kontrolle:** Kontrollbilder pro Segment rendern und ansehen (Überlappungen Chip/Liste/Zähler, leere Frames, Text über Grafik). Lautheit prüfen: `ffmpeg -i build/mix.wav -af ebur128 -f null -` → ca. −14 bis −15 LUFS.
 
 ## 3. Technik und Voraussetzungen
@@ -70,6 +74,9 @@ Referenzen: „Was wäre, wenn alle Frauen sterben“ (flache 2D-Story, Hauptvor
 - `build/` ist temporär (gitignored). Nur `script.json` und `scenes.js` gehören ins Repo.
 
 ## 4. Text-Regeln für das Skript
+
+- **Persönlich erzählen:** wie ein Freund, der dir die Geschichte erzählt. Einschübe wie „Und ehrlich?“, „Weißt du, was …?“, kleine echte Details („deine Mama, zuletzt online gestern 23:58“), Ein-Wort-Sätze für Gewicht („Laut.“, „Gratis.“).
+- Emotionale Stellen langsamer (`rate` −4 bis −8 %), aufregende Stellen mit Grundtempo.
 
 - Du-Form, gesprochene Sprache, Sätze mit max. ~10 Wörtern, viele Pausen-Punkte.
 - Jede Szene muss in einem Bild erzählbar sein (konkretes Objekt oder konkrete Handlung).

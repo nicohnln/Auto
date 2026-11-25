@@ -194,8 +194,18 @@ def sfx_riser_short():
     return (tone + nz) * (t / d) ** 2
 
 
+def sfx_static(d=2.0):
+    """Funkgeräte-Rauschen mit Knacksern."""
+    n = int(d * SR); t = t_arr(d)
+    x = bp(rnd.standard_normal(n), 600, 4500) * 0.16
+    x *= 0.6 + 0.4 * np.abs(np.sin(2 * np.pi * 3.1 * t + np.sin(2 * np.pi * 0.7 * t) * 2))
+    for s in rnd.uniform(0, d, int(d * 9)):
+        i = int(s * SR); L = min(int(0.02 * SR), n - i); x[i:i + L] += rnd.uniform(-0.6, 0.6) * np.exp(-np.arange(L) / SR * 300)
+    return x * np.minimum(1, t / 0.05) * np.minimum(1, (d - t) / 0.3)
+
+
 SFX = {k[4:]: v for k, v in globals().items() if k.startswith("sfx_")}
-DUR_SFX = {"crowd", "tick", "net", "vinyl", "heartbeat"}  # Länge = Segmentdauer
+DUR_SFX = {"crowd", "tick", "net", "vinyl", "heartbeat", "static"}  # Länge = Segmentdauer
 
 
 # ---------------- Musik ----------------
@@ -284,8 +294,14 @@ def main(proj):
     wavfile.write(os.path.join(b, "music.wav"), SR, (norm(m) * 0.8 * 32767).astype(np.int16))
     wavfile.write(os.path.join(b, "sfx.wav"), SR, (norm(sfx) * 0.8 * 32767).astype(np.int16))
     # Mix: Stimme aufbereiten, Musik unter Stimme ducken, Lautheit auf -14 LUFS
-    fc = ("[0:a]highpass=f=75,equalizer=f=180:t=q:w=1:g=1.5,equalizer=f=3400:t=q:w=1.2:g=2.5,"
-          "acompressor=threshold=-20dB:ratio=3:attack=5:release=120:makeup=3,asplit=2[v][key];"
+    # Stimme "menschlich" machen: Nahbesprechungs-Wärme, weniger digitale Schärfe, kleiner Raum statt steriler Studio-Luft
+    room = sc.get("voice_room", 0.10)
+    vchain = ("highpass=f=75,equalizer=f=200:t=q:w=1:g=2.5,equalizer=f=3000:t=q:w=1.2:g=1.5,"
+              "equalizer=f=7500:t=q:w=1.5:g=-3,deesser=i=0.4,"
+              "acompressor=threshold=-22dB:ratio=3:attack=8:release=150:makeup=3")
+    if room > 0:
+        vchain += f",aecho=0.9:0.9:23|37|53:{room:.2f}|{room*0.7:.2f}|{room*0.45:.2f}"
+    fc = (f"[0:a]{vchain},asplit=2[v][key];"
           "[1:a]volume=0.72[mus];[mus][key]sidechaincompress=threshold=0.04:ratio=4:attack=20:release=350[duck];"
           "[2:a]volume=0.7[fx];"
           "[v][duck][fx]amix=inputs=3:normalize=0:duration=longest,loudnorm=I=-14:TP=-1:LRA=9,aformat=sample_rates=48000:channel_layouts=stereo[out]")

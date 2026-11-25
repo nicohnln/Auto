@@ -170,3 +170,43 @@ function clockFace(x,y,r,h,m,col=PAL.yellow){ const ha=(h%12+m/60)*30, ma=m*6; r
 function bubble(x,y,w,h,inner,op=1){ return `<g transform="translate(${x},${y})" opacity="${op}"><rect x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" rx="${h/2}" fill="#f3f4fb"/><circle cx="${-w/4}" cy="${h/2+26}" r="18" fill="#f3f4fb"/><circle cx="${-w/4-24}" cy="${h/2+62}" r="10" fill="#f3f4fb"/>${inner}</g>`; }
 function heartLine(x,y,w,t,col=PAL.red,bpm=135){ let d=`M${-w/2},0`; const n=60; for(let i=0;i<=n;i++){ const xx=-w/2+i*w/n, ph=((i/n)*3+t*bpm/60)%1; const yy=ph>0.45&&ph<0.5?-50:ph>0.5&&ph<0.55?40:0; d+=` L${xx},${yy}`; }
   return `<g transform="translate(${x},${y})"><rect x="${-w/2-20}" y="-80" width="${w+40}" height="160" rx="14" fill="#1a0d1c" stroke="${col}" stroke-width="4"/>${T(-w/2,-50,'PULS',{size:18,font:'Mono',w:500,fill:col,anchor:'start'})}${T(w/2,-50,bpm,{size:18,font:'Mono',w:500,fill:col,anchor:'end'})}<path d="${d}" stroke="${col}" stroke-width="5" fill="none" filter="url(#glowS)"/></g>`; }
+
+/* ---------- Erweiterung: Stadt, Nacht, Überleben ---------- */
+function car(x,y,s=1,col='#4ea8ff',o={}){ // Seitenansicht, Ursprung = Bodenmitte
+  const door=o.door?`<path d="M-30,-118 L-30,-40 L-110,-20 L-118,-104Z" fill="${col}" stroke="#0e1024" stroke-width="3" opacity=".95"/>`:'';
+  return `<g transform="translate(${x},${y}) scale(${o.flip?-s:s},${s}) rotate(${o.r||0})">${shadow(0,0,190,.3)}
+   <path d="M-190,-40 Q-190,-90 -150,-96 L-110,-100 L-70,-160 Q-60,-170 -40,-170 L70,-170 Q90,-170 100,-160 L140,-100 L170,-96 Q195,-90 195,-40 L195,-20 L-190,-20Z" fill="${col}"/>
+   <path d="M-58,-150 L-30,-150 L-30,-104 L-92,-104Z M-18,-150 L80,-150 L118,-104 L-18,-104Z" fill="#1a1e3e"/>
+   <rect x="160" y="-80" width="30" height="16" rx="6" fill="${o.lights?'#fff6b0':'#fff'}" ${o.lights?'filter="url(#glowS)"':''}/><rect x="-190" y="-80" width="18" height="16" rx="5" fill="#ff5d73"/>
+   <circle cx="-110" cy="-20" r="36" fill="#14162c"/><circle cx="-110" cy="-20" r="14" fill="#5c6390"/><circle cx="120" cy="-20" r="36" fill="#14162c"/><circle cx="120" cy="-20" r="14" fill="#5c6390"/>${door}</g>`; }
+function trafficLight(x,y,s=1,state='g',blink=1){ const c={r:'#ff3355',y:'#ffd23f',g:'#38f27e'};
+  return `<g transform="translate(${x},${y}) scale(${s})"><rect x="-8" y="0" width="16" height="320" fill="#2a2f57"/><rect x="-38" y="-150" width="76" height="190" rx="16" fill="#1a1d38"/>
+  ${['r','y','g'].map((k,i)=>`<circle cx="0" cy="${-110+i*58}" r="22" fill="${state===k&&blink?c[k]:'#2e3361'}" ${state===k&&blink?'filter="url(#glowS)"':''}/>`).join('')}</g>`; }
+function moon(x,y,r=60){ return `<g transform="translate(${x},${y})"><circle r="${r*2}" fill="#dfe6ff" opacity=".06" filter="url(#blur8)"/><circle r="${r}" fill="#eef1ff"/><circle cx="${-r*.3}" cy="${-r*.2}" r="${r*.18}" fill="#d5daf2"/><circle cx="${r*.25}" cy="${r*.3}" r="${r*.12}" fill="#d5daf2"/></g>`; }
+function skyline(y,lit=0.5,seed=3,o={}){ const r=rng(seed); let g='', x=-20;
+  while(x<1100){ const w=110+r()*90, h=(o.min||220)+r()*(o.var||380); g+=house(x+w/2,y,w,h,lit,Math.floor(r()*999)).replace('fill="#23284e"',`fill="${o.col||'#23284e'}"`); x+=w+6; }
+  return g; }
+function candle(x,y,s=1,t=0,on=1){ const fl=1+0.12*Math.sin(t*23)+0.08*Math.sin(t*37);
+  return `<g transform="translate(${x},${y}) scale(${s})"><circle cx="0" cy="-130" r="${160*on}" fill="#ffb347" opacity="${0.16*on}" filter="url(#blur8)"/>
+  <rect x="-26" y="-100" width="52" height="100" rx="8" fill="#f3eee0"/><path d="M-26,-96 q10,16 18,0 q8,18 18,2 q6,10 16,-4" fill="#e4dcc6"/><rect x="-2" y="-112" width="4" height="14" fill="#333"/>
+  ${on?`<path d="M0,${-112-46*fl} Q18,-128 0,-108 Q-18,-128 0,${-112-46*fl}Z" fill="#ffd23f" filter="url(#glowS)"/><path d="M0,${-112-26*fl} Q8,-120 0,-110 Q-8,-120 0,${-112-26*fl}Z" fill="#fff6d6"/>`:''}</g>`; }
+function tinCan(x,y,s=1,label='RAVIOLI',col='#ff5d73'){ return `<g transform="translate(${x},${y}) scale(${s})"><rect x="-60" y="-140" width="120" height="140" fill="#b9bdd6"/><rect x="-60" y="-115" width="120" height="90" fill="${col}"/>${T(0,-62,label,{size:22,fill:'#fff'})}
+  <ellipse cx="0" cy="-140" rx="60" ry="14" fill="#d5d8ea"/><ellipse cx="0" cy="0" rx="60" ry="12" fill="#9599b8"/><ellipse cx="0" cy="-140" rx="48" ry="9" fill="#c0392b" opacity=".7"/></g>`; }
+function walkie(x,y,s=1,o={}){ const led=o.led||'#ff3355', on=o.on??1;
+  return `<g transform="translate(${x},${y}) scale(${s}) rotate(${o.r||0})"><rect x="40" y="-330" width="26" height="170" rx="12" fill="#1b1d33"/>
+  <rect x="-110" y="-180" width="220" height="380" rx="36" fill="#2a2f57"/><rect x="-110" y="-180" width="220" height="380" rx="36" fill="none" stroke="#3b4180" stroke-width="6"/>
+  <rect x="-80" y="-140" width="160" height="90" rx="12" fill="#0f2a1e" stroke="#1f5a3e" stroke-width="4"/>${o.screen||''}
+  ${[0,1,2,3,4,5].map(i=>`<rect x="-76" y="${-20+i*28}" width="152" height="12" rx="6" fill="#151832"/>`).join('')}
+  <circle cx="-60" cy="-205" r="${16}" fill="${on?led:'#3a3f6a'}" ${on?'filter="url(#glow)"':''}/><rect x="-24" y="-214" width="40" height="34" rx="6" fill="#3b4180"/></g>`; }
+function faucet(x,y,s=1){ return `<g transform="translate(${x},${y}) scale(${s})"><rect x="-200" y="-30" width="120" height="60" rx="10" fill="#9aa0c0"/><path d="M-90,-20 h120 q60,0 60,60 v40 h-50 v-30 q0,-20 -20,-20 h-110z" fill="#b9bdd6"/>
+  <rect x="-40" y="-70" width="40" height="50" rx="8" fill="#9aa0c0"/><rect x="-70" y="-84" width="100" height="22" rx="10" fill="#c9cdf0"/><rect x="40" y="80" width="50" height="14" rx="4" fill="#7f86ab"/></g>`; }
+function powerPlant(x,y,s=1,t=0,on=1){ let g=`<g transform="translate(${x},${y}) scale(${s})">`;
+  [[-130,1],[90,0.85]].forEach(([dx,k])=>{ g+=`<path d="M${dx-110*k},0 Q${dx-60*k},${-200*k} ${dx-80*k},${-330*k} L${dx+80*k},${-330*k} Q${dx+60*k},${-200*k} ${dx+110*k},0Z" fill="#9aa0c0"/>`;
+    if(on>0) for(let i=0;i<4;i++){ const p=(t*0.35+i/4)%1; g+=`<circle cx="${dx+Math.sin(p*6+i)*30*k}" cy="${-330*k-p*260}" r="${(50+p*70)*k}" fill="#e8ebf7" opacity="${(1-p)*0.55*on}"/>`; } });
+  g+=`<rect x="200" y="-160" width="150" height="160" fill="#6c7090"/><rect x="240" y="-260" width="30" height="100" fill="#6c7090"/>`;
+  return g+'</g>'; }
+function pylon(x,y,s=1){ return `<g transform="translate(${x},${y}) scale(${s})" stroke="#6c7090" stroke-width="7" fill="none"><path d="M-60,0 L-14,-360 L14,-360 L60,0 M-46,-100 L46,-100 M-34,-200 L34,-200 M-60,0 L34,-200 M60,0 L-34,-200 M-90,-300 L90,-300 M-70,-250 L70,-250"/></g>`; }
+function dog(x,y,s=1,col='#1a1424',eye=null,o={}){ return `<g transform="translate(${x},${y}) scale(${o.flip?-s:s},${s})"><path d="M-80,0 L-74,-60 Q-70,-90 -30,-92 L50,-92 Q66,-92 70,-110 L66,-150 L84,-128 L100,-150 L104,-112 Q130,-104 132,-86 L110,-74 Q96,-70 86,-60 L82,0 L66,0 L62,-50 L-40,-50 L-50,0Z M-74,-60 Q-104,-70 -112,-104" fill="${col}" stroke="${col}" stroke-width="6" stroke-linejoin="round"/>
+  ${eye?`<circle cx="100" cy="-110" r="5" fill="${eye}" filter="url(#glowS)"/>`:''}</g>`; }
+function waveform(x,y,w,t,amp=1,col=PAL.green,seed=1){ let d=`M${-w/2},0`; const n=70; for(let i=0;i<=n;i++){ const xx=-w/2+i*w/n; const yy=amp*Math.sin(i*0.9+t*18+seed)*Math.sin(i*0.21+t*5)*36*Math.sin(Math.PI*i/n); d+=` L${xx},${yy}`; }
+  return `<path transform="translate(${x},${y})" d="${d}" stroke="${col}" stroke-width="5" fill="none" stroke-linejoin="round" filter="url(#glowS)"/>`; }

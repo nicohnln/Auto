@@ -17,4 +17,5 @@ node "$ENGINE/render.cjs" "$PROJ" --workers "${WORKERS:-4}"
 echo "== 4/4 Muxen =="
 ffmpeg -v error -y -i "$PROJ/build/video_noaudio.mp4" -i "$PROJ/build/mix.wav" \
   -c:v copy -c:a aac -b:a 192k -shortest -movflags +faststart "$PROJ/$NAME.mp4"
-echo "Fertig: $PROJ/$NAME.mp4"
+python3 "$ENGINE/transcript.py" "$PROJ" > /dev/null
+echo "Fertig: $PROJ/$NAME.mp4 (+ transkript.txt / transkript.srt)"

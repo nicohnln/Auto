@@ -85,6 +85,7 @@ function renderCaption(t,seg){
 
 /* ---------- HUD: Chip, Zähler, Checkliste ---------- */
 function fmtVal(v,f){
+  if(typeof v==='string') return v;
   if(f==='eur'){ const s=v<0?'-':''; v=Math.abs(v); const [a,b]=v.toFixed(2).split('.'); return s+a.replace(/\B(?=(\d{3})+(?!\d))/g,'.')+','+b+' €'; }
   if(f==='pct') return Math.round(v)+' %';
   return Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');
@@ -102,7 +103,8 @@ function renderHud(t,seg,lt){
   if(seg.counter){
     const c=seg.counter, col=COLORS[c.color]||'#ff4fae';
     let v=c.from;
-    if(c.at==='span'){ v=c.from+(c.to-c.from)*E.inOut(clamp((lt-0.3)/(seg.end-seg.start-0.7),0,1)); }
+    if(typeof c.to==='string'){ v=lt>=H(seg).wt(c.at.slice(2))?c.to:c.from; }
+    else if(c.at==='span'){ v=c.from+(c.to-c.from)*E.inOut(clamp((lt-0.3)/(seg.end-seg.start-0.7),0,1)); }
     else { const tt=H(seg).wt(c.at.slice(2)); v=c.from+(c.to-c.from)*E.out(clamp((lt-tt+0.15)/0.55,0,1)); }
     const same=prev.counter&&prev.counter.label===c.label, pop=same?1:E.outBack(clamp(lt/0.25,0,1));
     const shake=(c.at!=='span' && Math.abs(lt-H(seg).wt(c.at.slice(2))-0.5)<0.25)?Math.sin(lt*90)*5:0;
