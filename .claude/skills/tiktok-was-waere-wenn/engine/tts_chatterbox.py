@@ -69,6 +69,15 @@ def score(target, words):
     return max(sm.ratio(), cr if cr > 0.9 else 0)
 
 
+def stretched(words):
+    """Erkennt versteckte Wiederholungen/Gestammel: Whisper packt sie oft in ein einziges, viel zu langes Wort."""
+    for w in words:
+        n = len(norm(w["w"]))
+        if n and (w["e"] - w["t"]) > max(0.95, 0.12 * n + 0.4):
+            return True
+    return False
+
+
 def map_words(text, wwords, offset):
     """Untertitel-Tokens (Skript) bekommen Zeiten aus Whisper-Wörtern (fuzzy, Reihenfolge erhalten)."""
     toks = text.split()
@@ -169,6 +178,9 @@ def main(proj):
         for k, sent in enumerate(sentences):
             key = hashlib.md5(f"cb|{emo}|{ex}|{cfg}|{sent}".encode()).hexdigest()[:10]
             wav_p, js_p = (os.path.join(cache, f"{seg['id']}_{k}_{key}.{x}") for x in ("wav", "json"))
+            if os.path.exists(js_p) and stretched(json.load(open(js_p))["words"]):
+                print(f"  {seg['id']}[{k}] Cache verdächtig (gedehntes Wort) -> neu erzeugen")
+                os.remove(js_p)
             if not os.path.exists(js_p):
                 if model is None:
                     print("Lade Chatterbox …"); model = ChatterboxMultilingualTTS.from_local(MODEL_DIR, "cpu")
@@ -186,11 +198,12 @@ def main(proj):
                     # Halluzinations-/Abbruchcheck: plausible Sprechdauer (ca. 1.6–4.5 Wörter/s)
                     rate = n_words / max(dur, 0.1)
                     ok_rate = 1.3 < rate < 4.8 or n_words <= 2
-                    q = sc_ - (0 if ok_rate else 0.3)
-                    print(f"  {seg['id']}[{k}] Versuch {attempt + 1}: Genauigkeit {sc_:.2f}, {rate:.1f} W/s, {dur:.1f}s")
+                    sus = stretched(ww)
+                    q = sc_ - (0 if ok_rate else 0.3) - (0.4 if sus else 0)
+                    print(f"  {seg['id']}[{k}] Versuch {attempt + 1}: Genauigkeit {sc_:.2f}, {rate:.1f} W/s, {dur:.1f}s" + (" (gedehntes Wort!)" if sus else ""))
                     if best is None or q > best[0]:
                         best = (q, y, ww)
-                    if sc_ >= 0.92 and ok_rate:
+                    if sc_ >= 0.92 and ok_rate and not sus:
                         break
                 q, y, ww = best
                 torchaudio.save(wav_p, torch.tensor(y).unsqueeze(0), SR)

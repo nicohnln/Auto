@@ -37,9 +37,9 @@ hook(t,d,S,h){
 },
 everyone(t,d,S,h){
   let s=skyline(1080,0.25,6,{min:240,var:300})+`<rect x="0" y="1080" width="1080" height="200" fill="#1a1d38"/>`;
-  const ppl=[[150,'#ff7aa8',61,22],[360,'#4ea8ff',47,301],[560,PAL.purple,52,118],[760,'#ffd23f',38,9],[950,'#38f27e',70,190]];
+  const ppl=[[120,'#ff7aa8',61,22],[330,'#4ea8ff',47,301],[540,PAL.purple,52,118],[750,'#ffd23f',38,9],[960,'#38f27e',70,190]];
   ppl.forEach(([x,c,y,dd],i)=>{ const k=E.outBack(h.p(t,0.1+i*0.12,0.4+i*0.12));
-    s+=figure(x,1230,0.95,c,null); if(k>0) s+=G(cd(0,0,y,dd,t*5+i*1000,x===560?PAL.red:'#ff8fa3',0.62),{x,y:1030,s:k}); });
+    s+=figure(x,1230,1.05,c,null); if(k>0) s+=G(cd(0,0,y,dd,t*5+i*1000,x===540?PAL.red:'#ff8fa3',0.62),{x,y:(i%2?960:1040),s:k}); });
   return s;
 },
 big(t,d,S,h){
@@ -64,7 +64,8 @@ friend(t,d,S,h){
 change(t,d,S,h){
   const items=[['kündigen',230,`<rect x="-80" y="-100" width="160" height="200" rx="10" fill="#f3f4fb"/>`+T(0,-60,'KÜNDIGUNG',{size:22,fill:'#22264a'})+[0,1,2].map(i=>`<rect x="-56" y="${-30+i*26}" width="${i%2?80:112}" height="10" rx="5" fill="#b9bdd6"/>`).join(''),'JOB'],
     ['reisen',540,globe(0,0,95,t),'WELTREISE'],['eltern',850,`<rect x="-60" y="-110" width="120" height="210" rx="20" fill="#1b1e3a" stroke="#c9cdf0" stroke-width="6"/>`+T(0,-30,'MAMA',{size:30,fill:PAL.pink})+`<circle cy="40" r="30" fill="${PAL.green}"/>`+T(0,52,'☎',{size:34,fill:'#fff'}),'ANRUF']];
-  let s='';
+  const kc=1-h.p(t,h.wt('kündigen')-0.4,h.wt('kündigen')-0.1);
+  let s=kc>0?G(clockFace(0,0,170,(t*40)%12,(t*480)%60,PAL.yellow),{x:540,y:640,op:kc,s:0.8+0.2*E.outBack(h.p(t,0,0.3))}):'';
   items.forEach(([w,x,art,lab])=>{ const tw=h.wt(w), k=E.outBack(h.p(t,tw-0.2,tw+0.1)); if(k<=0) return;
     let inner=art+T(0,150,lab,{size:24,font:'Mono',w:700,fill:'#8d93bd'});
     if(w==='kündigen'){ const ks=h.p(t,tw,tw+0.2); if(ks>0) inner+=G(stamp('RAUS!',PAL.red,0.5,-14),{y:20,s:lerp(2,1,E.outBack(ks))}); }
@@ -90,7 +91,7 @@ twist(t,d,S,h){
 },
 weeks(t,d,S,h){
   const f=Math.round(4230*E.inOut(h.p(t,0.3,d-0.5)));
-  let s=weeksGrid(540,430,4230,f,0,t);
+  let s=weeksGrid(540,430,4230,f,0,t,{showEmpty:true});
   s+=T(540,1190,'1 KÄSTCHEN = 1 WOCHE',{size:24,font:'Mono',w:700,fill:'#8d93bd'});
   return s;
 },
