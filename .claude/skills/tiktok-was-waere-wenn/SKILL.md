@@ -61,6 +61,8 @@ Referenzen: „Was wäre, wenn alle Frauen sterben“ (flache 2D-Story, Hauptvor
 
 ## 3. Technik und Voraussetzungen
 
+**Grundregel: Alles muss komplett kostenlos und ohne Anmeldung laufen.** Keine kostenpflichtigen Dienste, keine Konten oder API-Keys (also z. B. kein ElevenLabs, keine Stock-Musik-Abos). Grafik, Musik und SFX werden lokal erzeugt. Schriften sind Open Source (OFL).
+
 - Python: `edge-tts`, `numpy`, `scipy`. Node: `playwright` mit Chromium. Dazu `ffmpeg`.
 - Netzwerk: `speech.platform.bing.com` muss erreichbar sein (in der Cloud-Umgebung „auto“ freigeschaltet). edge-tts läuft über den Proxy aus `HTTPS_PROXY`.
 - `tts.py` kürzt Sprechpausen automatisch auf 0,42 s (`max_pause`) für TikTok-Tempo und richtet jedes Untertitelwort an den TTS-Wortgrenzen aus.
