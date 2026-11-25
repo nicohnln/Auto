@@ -295,10 +295,17 @@ def main(proj):
     wavfile.write(os.path.join(b, "sfx.wav"), SR, (norm(sfx) * 0.8 * 32767).astype(np.int16))
     # Mix: Stimme aufbereiten, Musik unter Stimme ducken, Lautheit auf -14 LUFS
     # Stimme "menschlich" machen: Nahbesprechungs-Wärme, weniger digitale Schärfe, kleiner Raum statt steriler Studio-Luft
-    room = sc.get("voice_room", 0.10)
-    vchain = ("highpass=f=75,equalizer=f=200:t=q:w=1:g=2.5,equalizer=f=3000:t=q:w=1.2:g=1.5,"
-              "equalizer=f=7500:t=q:w=1.5:g=-3,deesser=i=0.4,"
-              "acompressor=threshold=-22dB:ratio=3:attack=8:release=150:makeup=3")
+    if sc.get("voice_style", "doku" if sc.get("tts") == "chatterbox" else "edge") == "doku":
+        # Doku-Erzähler wie in den Referenzen: trocken, präsent, hell, kräftig komprimiert
+        room = sc.get("voice_room", 0.0)
+        vchain = ("highpass=f=80,equalizer=f=250:t=q:w=1.2:g=-2.5,equalizer=f=3500:t=q:w=1.0:g=4,"
+                  "highshelf=f=8000:g=3,deesser=i=0.5,"
+                  "acompressor=threshold=-24dB:ratio=4:attack=5:release=100:makeup=4")
+    else:
+        room = sc.get("voice_room", 0.10)
+        vchain = ("highpass=f=75,equalizer=f=200:t=q:w=1:g=2.5,equalizer=f=3000:t=q:w=1.2:g=1.5,"
+                  "equalizer=f=7500:t=q:w=1.5:g=-3,deesser=i=0.4,"
+                  "acompressor=threshold=-22dB:ratio=3:attack=8:release=150:makeup=3")
     if room > 0:
         vchain += f",aecho=0.9:0.9:23|37|53:{room:.2f}|{room*0.7:.2f}|{room*0.45:.2f}"
     fc = (f"[0:a]{vchain},asplit=2[v][key];"

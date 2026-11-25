@@ -21,3 +21,7 @@ for k, ps in sets.items():
     fc += "".join(f"[a{i}]" for i in range(len(ps))) + f"concat=n={len(ps)}:v=0:a=1,loudnorm=I=-20[o]"
     subprocess.run(["ffmpeg", "-v", "error", "-y", *inp, "-filter_complex", fc, "-map", "[o]", "-ar", "24000", "-ac", "1", f"{D}/refs/{k}.wav"], check=True)
     print("Referenz:", k)
+# Doku-Stil: dieselben Referenzen 4 Halbtöne tiefer (Formanten erhalten) -> tiefe Erzählerstimme wie in den Referenzvideos
+for k in sets:
+    subprocess.run(["rubberband", "-q", "--fine", "-F", "-p", "-4", f"{D}/refs/{k}.wav", f"{D}/refs/{k}_d4.wav"], check=True)
+    print("Referenz (tief):", k)

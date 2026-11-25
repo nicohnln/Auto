@@ -2,70 +2,329 @@
   "title": "Was wäre, wenn jeder Mensch seinen eigenen Todeszeitpunkt sehen könnte?",
   "tts": "chatterbox",
   "refs_dir": "/home/user/models/thorsten/refs",
-  "emotion": "neutral", "ex": 0.55, "cfg": 0.45,
-  "tempo": 1.06, "max_pause": 0.3,
-  "voice_room": 0.06,
+  "emotion": "neutral",
+  "ex": 0.55,
+  "cfg": 0.45,
+  "tempo": 1.1,
+  "max_pause": 0.3,
   "lead_in": 0.3,
-  "end_card": { "text": "FORTSETZUNG FOLGT …", "sub": "Würdest du deine Zahl sehen wollen?", "dur": 2.4 },
-  "music": { "bpm": 72 },
+  "end_card": {
+    "text": "FORTSETZUNG FOLGT …",
+    "sub": "Würdest du deine Zahl sehen wollen?",
+    "dur": 2.4
+  },
+  "music": {
+    "bpm": 72
+  },
   "segments": [
-    { "id": "hook", "scene": "hook", "chip": "TAG 1 · 07:00", "emotion": "neutral", "ex": 0.6,
-      "music": [1, 0, 0, 0],
+    {
+      "id": "hook",
+      "scene": "hook",
+      "chip": "TAG 1 · 07:00",
+      "emotion": "neutral",
+      "ex": 0.6,
+      "music": [
+        1,
+        0,
+        0,
+        0
+      ],
       "text": "Stell dir vor, du wachst morgen auf … und über deinem Kopf läuft ein Countdown.",
-      "hl": { "morgen": "yellow", "kopf": "blue", "countdown": "red" }, "sfx": [["start", "riser_short"], ["w:countdown", "impact"]] },
-
-    { "id": "everyone", "scene": "everyone", "chip": "TAG 1 · 08:30", "emotion": "surprised", "ex": 0.65,
-      "music": [1, 0.6, 0, 0.5],
+      "hl": {
+        "morgen": "yellow",
+        "kopf": "blue",
+        "countdown": "red"
+      },
+      "sfx": [
+        [
+          "start",
+          "riser_short"
+        ],
+        [
+          "w:countdown",
+          "impact"
+        ]
+      ]
+    },
+    {
+      "id": "everyone",
+      "scene": "everyone",
+      "chip": "TAG 1 · 08:30",
+      "emotion": "surprised",
+      "ex": 0.65,
+      "music": [
+        1,
+        0.6,
+        0,
+        0.5
+      ],
       "text": "Bei jedem Menschen. Er zeigt genau, wie lange du noch zu leben hast.",
-      "hl": { "jedem": "pink", "genau": "yellow", "leben": "red" }, "sfx": [["w:jedem", "pop"], ["w:genau", "tick"]] },
-
-    { "id": "big", "scene": "big", "chip": "TAG 1 · 09:00", "emotion": "amused", "ex": 0.65,
-      "music": [1, 1, 1, 0.6],
+      "hl": {
+        "jedem": "pink",
+        "genau": "yellow",
+        "leben": "red"
+      },
+      "sfx": [
+        [
+          "w:jedem",
+          "pop"
+        ],
+        [
+          "w:genau",
+          "tick"
+        ]
+      ]
+    },
+    {
+      "id": "big",
+      "scene": "big",
+      "chip": "TAG 1 · 09:00",
+      "emotion": "amused",
+      "ex": 0.65,
+      "music": [
+        1,
+        1,
+        1,
+        0.6
+      ],
       "text": "Und ehrlich? Bei den meisten steht da eine riesige Zahl. Fünfzig, sechzig Jahre.",
-      "hl": { "ehrlich": "yellow", "riesige": "green", "fünfzig": "green", "sechzig": "green" }, "sfx": [["w:riesige", "chime"]] },
-
-    { "id": "friend", "scene": "friend", "chip": "TAG 1 · 18:40", "emotion": "whisper", "ex": 0.5, "cfg": 0.38,
-      "music": [0.7, 0, 0, 0],
+      "hl": {
+        "ehrlich": "yellow",
+        "riesige": "green",
+        "fünfzig": "green",
+        "sechzig": "green"
+      },
+      "sfx": [
+        [
+          "w:riesige",
+          "chime"
+        ]
+      ]
+    },
+    {
+      "id": "friend",
+      "scene": "friend",
+      "chip": "TAG 1 · 18:40",
+      "emotion": "whisper",
+      "ex": 0.5,
+      "cfg": 0.38,
+      "music": [
+        0.7,
+        0,
+        0,
+        0
+      ],
       "text": "Aber dann siehst du deinen besten Freund. Und bei ihm steht: drei Wochen.",
-      "hl": { "besten": "pink", "freund": "pink", "drei": "red", "wochen": "red" }, "sfx": [["w:drei", "heartbeat"]] },
-
-    { "id": "change", "scene": "change", "chip": "WOCHE 1", "emotion": "surprised", "ex": 0.65,
-      "list": ["JEDER KENNT SEINE ZEIT"],
-      "music": [1, 1, 0.8, 0.9],
+      "hl": {
+        "besten": "pink",
+        "freund": "pink",
+        "drei": "red",
+        "wochen": "red"
+      },
+      "sfx": [
+        [
+          "w:drei",
+          "heartbeat"
+        ]
+      ]
+    },
+    {
+      "id": "change",
+      "scene": "change",
+      "chip": "WOCHE 1",
+      "emotion": "surprised",
+      "ex": 0.65,
+      "list": [
+        "JEDER KENNT SEINE ZEIT"
+      ],
+      "music": [
+        1,
+        1,
+        0.8,
+        0.9
+      ],
       "text": "Plötzlich ist alles anders. Leute kündigen ihren Job, reisen um die Welt, rufen ihre Eltern an.",
-      "hl": { "anders": "yellow", "kündigen": "red", "welt": "blue", "eltern": "pink" },
-      "sfx": [["w:kündigen", "stamp"], ["w:reisen", "whoosh"], ["w:eltern", "ding"]] },
-
-    { "id": "brave", "scene": "brave", "chip": "MONAT 2", "emotion": "amused", "ex": 0.6,
-      "list": ["JEDER KENNT SEINE ZEIT"],
-      "music": [1, 1, 1, 1],
+      "hl": {
+        "anders": "yellow",
+        "kündigen": "red",
+        "welt": "blue",
+        "eltern": "pink"
+      },
+      "sfx": [
+        [
+          "w:kündigen",
+          "stamp"
+        ],
+        [
+          "w:reisen",
+          "whoosh"
+        ],
+        [
+          "w:eltern",
+          "ding"
+        ]
+      ]
+    },
+    {
+      "id": "brave",
+      "scene": "brave",
+      "chip": "MONAT 2",
+      "emotion": "amused",
+      "ex": 0.6,
+      "list": [
+        "JEDER KENNT SEINE ZEIT"
+      ],
+      "music": [
+        1,
+        1,
+        1,
+        1
+      ],
       "text": "Andere werden übermütig. Wer weiß, dass er erst mit neunzig stirbt, fühlt sich unbesiegbar.",
-      "hl": { "übermütig": "yellow", "neunzig": "green", "unbesiegbar": "green" }, "sfx": [["w:unbesiegbar", "impact"]] },
-
-    { "id": "twist", "scene": "twist", "chip": "HEUTE", "emotion": "neutral", "ex": 0.6,
-      "music": [1, 0, 0, 0],
+      "hl": {
+        "übermütig": "yellow",
+        "neunzig": "green",
+        "unbesiegbar": "green"
+      },
+      "sfx": [
+        [
+          "w:unbesiegbar",
+          "impact"
+        ]
+      ]
+    },
+    {
+      "id": "twist",
+      "scene": "twist",
+      "chip": "HEUTE",
+      "emotion": "neutral",
+      "ex": 0.6,
+      "music": [
+        1,
+        0,
+        0,
+        0
+      ],
       "text": "Aber weißt du was? Eine Zahl kennst du eigentlich schon.",
-      "hl": { "zahl": "yellow", "schon": "red" }, "sfx": [["w:schon", "glitch"]] },
-
-    { "id": "weeks", "scene": "weeks", "chip": "FAKT · DEUTSCHLAND", "emotion": "surprised", "ex": 0.6,
-      "counter": { "label": "WOCHEN IN EINEM LEBEN", "from": 0, "to": 4230, "fmt": "int", "color": "yellow", "at": "span" },
-      "music": [1, 1, 0.8, 0.9],
+      "hl": {
+        "zahl": "yellow",
+        "schon": "red"
+      },
+      "sfx": [
+        [
+          "w:schon",
+          "glitch"
+        ]
+      ]
+    },
+    {
+      "id": "weeks",
+      "scene": "weeks",
+      "chip": "FAKT · DEUTSCHLAND",
+      "emotion": "surprised",
+      "ex": 0.6,
+      "counter": {
+        "label": "WOCHEN IN EINEM LEBEN",
+        "from": 0,
+        "to": 4230,
+        "fmt": "int",
+        "color": "yellow",
+        "at": "span"
+      },
+      "music": [
+        1,
+        1,
+        0.8,
+        0.9
+      ],
       "text": "Ein Mensch in Deutschland lebt im Schnitt etwas mehr als viertausend Wochen. Nur viertausend.",
-      "hl": { "deutschland": "yellow", "viertausend": "yellow", "nur": "red" }, "sfx": [["w:nur", "impact"]] },
-
-    { "id": "nurse", "scene": "nurse", "chip": "FAKT · PALLIATIVSTATION", "emotion": "whisper", "ex": 0.5, "cfg": 0.38,
-      "music": [0.8, 0, 0.4, 0],
+      "hl": {
+        "deutschland": "yellow",
+        "viertausend": "yellow",
+        "nur": "red"
+      },
+      "sfx": [
+        [
+          "w:nur",
+          "impact"
+        ]
+      ]
+    },
+    {
+      "id": "nurse",
+      "scene": "nurse",
+      "chip": "FAKT · PALLIATIVSTATION",
+      "emotion": "whisper",
+      "ex": 0.5,
+      "cfg": 0.38,
+      "music": [
+        0.8,
+        0,
+        0.4,
+        0
+      ],
       "text": "Und eine Pflegerin hat aufgeschrieben, was Sterbende am meisten bereuen.",
-      "hl": { "pflegerin": "blue", "sterbende": "pink", "bereuen": "yellow" } },
-
-    { "id": "regret", "scene": "regret", "chip": "FAKT · PALLIATIVSTATION", "emotion": "neutral", "ex": 0.65, "cfg": 0.4,
-      "music": [1, 0.6, 0.8, 0.4],
+      "hl": {
+        "pflegerin": "blue",
+        "sterbende": "pink",
+        "bereuen": "yellow"
+      }
+    },
+    {
+      "id": "regret",
+      "scene": "regret",
+      "chip": "FAKT · PALLIATIVSTATION",
+      "emotion": "neutral",
+      "ex": 0.65,
+      "cfg": 0.4,
+      "music": [
+        1,
+        0.6,
+        0.8,
+        0.4
+      ],
       "text": "Nicht, zu wenig gearbeitet zu haben. Sondern, nicht ihr eigenes Leben gelebt zu haben.",
-      "hl": { "gearbeitet": "blue", "eigenes": "pink", "leben": "pink" }, "sfx": [["w:gearbeitet", "buzz"], ["w:eigenes", "chime"]] },
-
-    { "id": "end", "scene": "end", "chip": "DEINE WOCHE · JETZT", "emotion": "whisper", "ex": 0.55, "cfg": 0.38,
-      "music": [1, 0.8, 0, 0.6],
+      "hl": {
+        "gearbeitet": "blue",
+        "eigenes": "pink",
+        "leben": "pink"
+      },
+      "sfx": [
+        [
+          "w:gearbeitet",
+          "buzz"
+        ],
+        [
+          "w:eigenes",
+          "chime"
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "scene": "end",
+      "chip": "DEINE WOCHE · JETZT",
+      "emotion": "whisper",
+      "ex": 0.55,
+      "cfg": 0.38,
+      "music": [
+        1,
+        0.8,
+        0,
+        0.6
+      ],
       "text": "Also … wie viele von deinen Wochen hast du schon verschenkt?",
-      "hl": { "wochen": "yellow", "verschenkt": "red" }, "sfx": [["w:verschenkt", "hit"]] }
-  ]
+      "hl": {
+        "wochen": "yellow",
+        "verschenkt": "red"
+      },
+      "sfx": [
+        [
+          "w:verschenkt",
+          "hit"
+        ]
+      ]
+    }
+  ],
+  "voice_style": "doku"
 }

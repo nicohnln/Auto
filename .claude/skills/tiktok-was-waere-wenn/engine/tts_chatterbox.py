@@ -166,17 +166,27 @@ def main(proj):
         segs, _ = wm.transcribe(y16, language="de", word_timestamps=True, beam_size=5, vad_filter=False)
         return [{"w": w.word.strip(), "t": w.start, "e": w.end} for s in segs for w in (s.words or [])]
 
+    # Stimmstil "doku" = wie die Referenzvideos: tiefe (~100 Hz), ruhige, schnelle Erzählerstimme
+    style = sc.get("voice_style", "doku")
+    STY = {"doku": {"suffix": "_d4", "ex_scale": 0.72, "cfg": 0.5, "tempo": 1.10},
+           "emotional": {"suffix": "", "ex_scale": 1.0, "cfg": 0.45, "tempo": 1.06}}[style]
+    suffix = sc.get("ref_suffix", STY["suffix"])
+    sc.setdefault("tempo", STY["tempo"])
     lead = sc.get("lead_in", 0.3)
     pcm = [np.zeros(int(lead * SR), np.float32)]; cur = lead
     timeline = {"segments": [], "fps": 30}
     for si, seg in enumerate(sc["segments"]):
         emo = seg.get("emotion", sc.get("emotion", "neutral"))
-        ex, cfg = seg.get("ex", sc.get("ex", 0.55)), seg.get("cfg", sc.get("cfg", 0.45))
-        ref = os.path.join(refs, f"{emo}.wav")
+        ex = round(seg.get("ex", sc.get("ex", 0.55)) * STY["ex_scale"], 3)
+        cfg = seg.get("cfg", sc.get("cfg", STY["cfg"])) if style != "doku" else max(seg.get("cfg", 0.5), STY["cfg"])
+        ref = os.path.join(refs, f"{emo}{suffix}.wav")
+        if not os.path.exists(ref):
+            base = os.path.join(refs, f"{emo}.wav")
+            subprocess.run(["rubberband", "-q", "--fine", "-F", "-p", "-4", base, ref], check=True)
         seg_start, words = cur, []
         sentences = split_sentences(seg["text"])
         for k, sent in enumerate(sentences):
-            key = hashlib.md5(f"cb|{emo}|{ex}|{cfg}|{sent}".encode()).hexdigest()[:10]
+            key = hashlib.md5(f"cb|{emo}{suffix}|{ex}|{cfg}|{sent}".encode()).hexdigest()[:10]
             wav_p, js_p = (os.path.join(cache, f"{seg['id']}_{k}_{key}.{x}") for x in ("wav", "json"))
             if os.path.exists(js_p) and stretched(json.load(open(js_p))["words"]):
                 print(f"  {seg['id']}[{k}] Cache verdächtig (gedehntes Wort) -> neu erzeugen")

@@ -5,6 +5,7 @@
 #  - Referenzstimme: Thorsten-Voice (echter deutscher Sprecher, CC0), 4 Emotionen
 # Netzwerk: huggingface.co, us.aws.cdn.hf.co (+ PyPI) müssen erreichbar sein.
 set -euo pipefail
+command -v rubberband >/dev/null || (apt-get update -q && apt-get install -y -q rubberband-cli)
 VENV="${TTS_VENV:-/home/user/tts-venv}"; M="${MODELS:-/home/user/models}"
 HF=https://huggingface.co
 [ -x "$VENV/bin/python" ] || { uv venv -q -p 3.12 "$VENV"; VIRTUAL_ENV="$VENV" uv pip install -q chatterbox-tts==0.1.7 faster-whisper "setuptools<81"; }
