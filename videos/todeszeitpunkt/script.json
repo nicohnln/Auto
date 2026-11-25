@@ -1,11 +1,6 @@
 {
   "title": "Was wäre, wenn jeder Mensch seinen eigenen Todeszeitpunkt sehen könnte?",
-  "tts": "chatterbox",
-  "refs_dir": "/home/user/models/thorsten/refs",
-  "emotion": "neutral",
-  "ex": 0.55,
-  "cfg": 0.45,
-  "max_pause": 0.3,
+  "tts": "orpheus",
   "lead_in": 0.3,
   "end_card": {
     "text": "FORTSETZUNG FOLGT …",
@@ -20,8 +15,6 @@
       "id": "hook",
       "scene": "hook",
       "chip": "TAG 1 · 07:00",
-      "emotion": "neutral",
-      "ex": 0.6,
       "music": [
         1,
         0,
@@ -43,14 +36,13 @@
           "w:countdown",
           "impact"
         ]
-      ]
+      ],
+      "say": "Stell dir vor, du wachst morgen auf … und über deinem Kopf läuft ein Countdown. <gasp>"
     },
     {
       "id": "everyone",
       "scene": "everyone",
       "chip": "TAG 1 · 08:30",
-      "emotion": "surprised",
-      "ex": 0.65,
       "music": [
         1,
         0.6,
@@ -78,8 +70,6 @@
       "id": "big",
       "scene": "big",
       "chip": "TAG 1 · 09:00",
-      "emotion": "amused",
-      "ex": 0.65,
       "music": [
         1,
         1,
@@ -98,15 +88,13 @@
           "w:riesige",
           "chime"
         ]
-      ]
+      ],
+      "say": "Und ehrlich? <chuckle> Bei den meisten steht da eine riesige Zahl. Fünfzig, sechzig Jahre."
     },
     {
       "id": "friend",
       "scene": "friend",
       "chip": "TAG 1 · 18:40",
-      "emotion": "whisper",
-      "ex": 0.5,
-      "cfg": 0.38,
       "music": [
         0.7,
         0,
@@ -125,14 +113,13 @@
           "w:drei",
           "heartbeat"
         ]
-      ]
+      ],
+      "say": "Aber dann siehst du deinen besten Freund. Und bei ihm steht: drei Wochen. <sigh>"
     },
     {
       "id": "change",
       "scene": "change",
       "chip": "WOCHE 1",
-      "emotion": "surprised",
-      "ex": 0.65,
       "list": [
         "JEDER KENNT SEINE ZEIT"
       ],
@@ -168,8 +155,6 @@
       "id": "brave",
       "scene": "brave",
       "chip": "MONAT 2",
-      "emotion": "amused",
-      "ex": 0.6,
       "list": [
         "JEDER KENNT SEINE ZEIT"
       ],
@@ -190,14 +175,13 @@
           "w:unbesiegbar",
           "impact"
         ]
-      ]
+      ],
+      "say": "Andere werden übermütig. <chuckle> Wer weiß, dass er erst mit neunzig stirbt, fühlt sich unbesiegbar."
     },
     {
       "id": "twist",
       "scene": "twist",
       "chip": "HEUTE",
-      "emotion": "neutral",
-      "ex": 0.6,
       "music": [
         1,
         0,
@@ -220,8 +204,6 @@
       "id": "weeks",
       "scene": "weeks",
       "chip": "FAKT · DEUTSCHLAND",
-      "emotion": "surprised",
-      "ex": 0.6,
       "counter": {
         "label": "WOCHEN IN EINEM LEBEN",
         "from": 0,
@@ -253,9 +235,6 @@
       "id": "nurse",
       "scene": "nurse",
       "chip": "FAKT · PALLIATIVSTATION",
-      "emotion": "whisper",
-      "ex": 0.5,
-      "cfg": 0.38,
       "music": [
         0.8,
         0,
@@ -273,9 +252,6 @@
       "id": "regret",
       "scene": "regret",
       "chip": "FAKT · PALLIATIVSTATION",
-      "emotion": "neutral",
-      "ex": 0.65,
-      "cfg": 0.4,
       "music": [
         1,
         0.6,
@@ -297,15 +273,13 @@
           "w:eigenes",
           "chime"
         ]
-      ]
+      ],
+      "say": "Nicht, zu wenig gearbeitet zu haben. <sigh> Sondern, nicht ihr eigenes Leben gelebt zu haben."
     },
     {
       "id": "end",
       "scene": "end",
       "chip": "DEINE WOCHE · JETZT",
-      "emotion": "whisper",
-      "ex": 0.55,
-      "cfg": 0.38,
       "music": [
         1,
         0.8,
@@ -325,5 +299,6 @@
       ]
     }
   ],
-  "voice_style": "doku"
+  "voice": "thomas",
+  "max_pause": 0.55
 }

@@ -8,7 +8,10 @@ NAME="$(basename "$PROJ")"
 
 python3 -c "import edge_tts, numpy, scipy" 2>/dev/null || pip install -q edge-tts numpy scipy
 
-if grep -q '"tts": *"chatterbox"' "$PROJ/script.json"; then
+if grep -q '"tts": *"orpheus"' "$PROJ/script.json"; then
+  echo "== 1/4 Voice-over (Orpheus, Stimme Thomas) =="
+  "${TTS_VENV:-/home/user/tts-venv}/bin/python" "$ENGINE/tts_orpheus.py" "$PROJ"
+elif grep -q '"tts": *"chatterbox"' "$PROJ/script.json"; then
   echo "== 1/4 Voice-over (Chatterbox, menschliche Referenzstimme) =="
   [ -x "${TTS_VENV:-/home/user/tts-venv}/bin/python" ] || bash "$ENGINE/setup_chatterbox.sh"
   "${TTS_VENV:-/home/user/tts-venv}/bin/python" "$ENGINE/tts_chatterbox.py" "$PROJ"

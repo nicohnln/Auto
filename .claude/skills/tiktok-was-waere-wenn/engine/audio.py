@@ -295,7 +295,12 @@ def main(proj):
     wavfile.write(os.path.join(b, "sfx.wav"), SR, (norm(sfx) * 0.8 * 32767).astype(np.int16))
     # Mix: Stimme aufbereiten, Musik unter Stimme ducken, Lautheit auf -14 LUFS
     # Stimme "menschlich" machen: Nahbesprechungs-Wärme, weniger digitale Schärfe, kleiner Raum statt steriler Studio-Luft
-    if sc.get("voice_style", "doku" if sc.get("tts") == "chatterbox" else "edge") == "doku":
+    if sc.get("tts") == "orpheus":
+        # Orpheus klingt schon natürlich: nur sanft säubern und präsent machen, keine Effekte
+        room = sc.get("voice_room", 0.0)
+        vchain = ("highpass=f=70,equalizer=f=3000:t=q:w=1.2:g=1.5,deesser=i=0.3,"
+                  "acompressor=threshold=-20dB:ratio=2.5:attack=10:release=150:makeup=2")
+    elif sc.get("voice_style", "doku" if sc.get("tts") == "chatterbox" else "edge") == "doku":
         # Doku-Erzähler wie in den Referenzen: trocken, präsent, hell, kräftig komprimiert
         room = sc.get("voice_room", 0.0)
         vchain = ("highpass=f=80,equalizer=f=250:t=q:w=1.2:g=-2.5,equalizer=f=3500:t=q:w=1.0:g=4,"

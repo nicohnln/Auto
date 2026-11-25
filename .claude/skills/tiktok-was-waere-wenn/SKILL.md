@@ -10,7 +10,17 @@ Alles wird lokal erzeugt: Grafik, Musik, SFX und die Stimme.
 
 ## 0. Stimme (wichtigster Qualitätsfaktor)
 
-**Standard: `"tts": "chatterbox"`.** Das ist ein Open-Source-Sprachmodell (Chatterbox Multilingual, MIT-Lizenz, läuft lokal auf der CPU) mit einer **echten menschlichen Referenzstimme** (Thorsten-Voice, deutscher Sprecher, CC0) in vier Emotionen: `neutral`, `amused`, `surprised`, `whisper`. Die Microsoft-Stimme (edge-tts) klingt dem Creator zu sehr nach KI und ist nur noch eine Notlösung.
+**Standard: `"tts": "orpheus"`, `"voice": "thomas"`** – vom Creator am 25.11.2026 per Hör-Casting gewählt (Orpheus Thomas vor Max, Jana und Chatterbox).
+- Modell: deutsches Orpheus 3B von Canopy Labs (Apache-2.0), lokal auf CPU über llama.cpp (`Orpheus-3b-German-FT-Q8_0.gguf`, ungated Kopie von `lex-au`) und SNAC-Decoder (`hubertsiuzdak/snac_24khz`, MIT). Code: `engine/orpheus_de.py` und `engine/tts_orpheus.py`.
+- Jedes Segment wird **am Stück** gesprochen, damit Melodie und Atmung natürlich durchlaufen. Es gibt **keine** Tonhöhen-Verschiebung und **keine** Tempo-Tricks.
+- Emotionen: im Feld `"say"` (gesprochener Text) Tags wie `<chuckle>`, `<sigh>`, `<gasp>` oder `<laugh>` sparsam einsetzen, 3–5 pro Video. `"text"` bleibt der Untertitel ohne Tags.
+- Dauer: ca. 10× Echtzeit (60 s Audio ≈ 10–20 min inkl. Prüfung).
+- Mix: sanfte Kompression und leichte Präsenz, kein Hall.
+- **Wichtigste Lehre:** Claude kann Audio nicht hören. Stimmen nie nach Messwerten „optimieren“, das hat die Stimme schlechter gemacht. Bei Stimmfragen immer ein **Hör-Casting** (gleicher Text, mehrere Varianten, nummeriert) schicken und den Creator wählen lassen.
+- Die menschlichste Option bleibt die **eigene Aufnahme des Creators** (Sprachmemo). Sie lässt sich bereinigen und mit Whisper wortgenau untertiteln.
+
+Ältere Engines, nur noch Notlösungen:
+- `"tts": "chatterbox"`: Das ist ein Open-Source-Sprachmodell (Chatterbox Multilingual, MIT-Lizenz, läuft lokal auf der CPU) mit einer **echten menschlichen Referenzstimme** (Thorsten-Voice, deutscher Sprecher, CC0) in vier Emotionen: `neutral`, `amused`, `surprised`, `whisper`. Die Microsoft-Stimme (edge-tts) klingt dem Creator zu sehr nach KI und ist nur noch eine Notlösung.
 - Einmalige Einrichtung: `engine/setup_chatterbox.sh` (lädt venv, Modelle und Referenzen; ~7 GB). Netzwerk: `huggingface.co`, `us.aws.cdn.hf.co`.
 - **Stimmstil `"voice_style": "doku"` (Standard, Wunsch des Creators: „wie in den Referenzen“).** Die Referenzstimmen wurden gemessen: tiefe Männerstimme (~97–110 Hz), ruhig und kontrolliert (~3,7 Halbtöne Melodie-Schwankung), schnell (~170 Wörter/min), präsent und trocken. Umsetzung:
   - Referenzen 4 Halbtöne tiefer, Formanten erhalten (Rubber Band, Dateien `*_d4.wav`)
