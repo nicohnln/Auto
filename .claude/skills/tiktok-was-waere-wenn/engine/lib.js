@@ -210,3 +210,33 @@ function dog(x,y,s=1,col='#1a1424',eye=null,o={}){ return `<g transform="transla
   ${eye?`<circle cx="100" cy="-110" r="5" fill="${eye}" filter="url(#glowS)"/>`:''}</g>`; }
 function waveform(x,y,w,t,amp=1,col=PAL.green,seed=1){ let d=`M${-w/2},0`; const n=70; for(let i=0;i<=n;i++){ const xx=-w/2+i*w/n; const yy=amp*Math.sin(i*0.9+t*18+seed)*Math.sin(i*0.21+t*5)*36*Math.sin(Math.PI*i/n); d+=` L${xx},${yy}`; }
   return `<path transform="translate(${x},${y})" d="${d}" stroke="${col}" stroke-width="5" fill="none" stroke-linejoin="round" filter="url(#glowS)"/>`; }
+
+/* ---------- Erweiterung: Roboter & Arbeit ---------- */
+function robot(o){ // Ursprung = Füße
+  const {x=540,y=1150,s=1,eye=PAL.blue,look=0,armL=12,armR=-12,bob=0,legs=true,tilt=0,body='#c9cdf0',dark='#8a8fb0',smile=false,item=null}=o;
+  const arm=(sx,ang)=>`<g transform="translate(${sx},-282) rotate(${ang})"><rect x="-14" y="-6" width="28" height="140" rx="14" fill="${dark}"/><circle cx="0" cy="146" r="22" fill="${body}"/><rect x="-6" y="150" width="12" height="18" fill="${dark}"/></g>`;
+  let g=`<g transform="translate(${x},${y+bob}) scale(${s}) rotate(${tilt},0,-200)">`+shadow(0,0,80,.28);
+  if(legs) g+=`<rect x="-44" y="-150" width="32" height="146" rx="10" fill="${dark}"/><rect x="12" y="-150" width="32" height="146" rx="10" fill="${dark}"/><rect x="-54" y="-18" width="50" height="18" rx="6" fill="#5c6390"/><rect x="4" y="-18" width="50" height="18" rx="6" fill="#5c6390"/>`;
+  g+=arm(-74,armL)+arm(74,armR);
+  g+=`<rect x="-76" y="-310" width="152" height="170" rx="26" fill="${body}"/><rect x="-46" y="-276" width="92" height="64" rx="12" fill="#1a1e3e"/>
+     <circle cx="-22" cy="-244" r="9" fill="${PAL.green}" filter="url(#glowS)"/><circle cx="4" cy="-244" r="9" fill="${PAL.yellow}"/><circle cx="30" cy="-244" r="9" fill="${PAL.red}"/>`;
+  g+=`<rect x="-14" y="-330" width="28" height="24" fill="${dark}"/>`;
+  g+=`<rect x="-80" y="-460" width="160" height="134" rx="34" fill="${body}"/><rect x="-62" y="-436" width="124" height="84" rx="22" fill="#141836"/>
+     <rect x="-4" y="-500" width="8" height="40" fill="${dark}"/><circle cx="0" cy="-506" r="12" fill="${eye}" filter="url(#glowS)"/>
+     <circle cx="${-28+look*10}" cy="-400" r="14" fill="${eye}" filter="url(#glowS)"/><circle cx="${28+look*10}" cy="-400" r="14" fill="${eye}" filter="url(#glowS)"/>`;
+  if(smile) g+=`<path d="M-24,-372 q24,16 48,0" stroke="${eye}" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+  else g+=`<rect x="-22" y="-372" width="44" height="6" rx="3" fill="${eye}" opacity=".8"/>`;
+  g+=`<rect x="-96" y="-418" width="16" height="44" rx="6" fill="${dark}"/><rect x="80" y="-418" width="16" height="44" rx="6" fill="${dark}"/>`;
+  if(item) g+=`<g transform="translate(${74-Math.sin(armR*Math.PI/180)*150},${-282+Math.cos(armR*Math.PI/180)*150})">${item}</g>`;
+  return g+'</g>'; }
+function robotIcon(x,y,s=1,eye=PAL.red){ return `<g transform="translate(${x},${y}) scale(${s})"><rect x="-40" y="-74" width="80" height="62" rx="16" fill="#c9cdf0"/><circle cx="-16" cy="-44" r="8" fill="${eye}" filter="url(#glowS)"/><circle cx="16" cy="-44" r="8" fill="${eye}" filter="url(#glowS)"/><rect x="-2" y="-92" width="4" height="18" fill="#8a8fb0"/><path d="M-56,0 Q-56,-8 -46,-8 L46,-8 Q56,-8 56,0Z" fill="#8a8fb0"/></g>`; }
+function truck(x,y,s=1,o={}){ return `<g transform="translate(${x},${y}) scale(${s})">${shadow(0,0,240,.3)}<rect x="-250" y="-230" width="330" height="200" rx="10" fill="#f3f4fb"/>${T(-85,-118,o.label||'LOGISTIK',{size:34,fill:'#4e63d6'})}
+  <path d="M90,-170 h90 q40,0 60,50 l20,40 v50 h-170z" fill="${o.col||'#ff5d73'}"/><path d="M110,-150 h66 q24,0 36,30 l10,20 h-112z" fill="#1a1e3e"/>${o.driver||''}
+  <rect x="-250" y="-30" width="520" height="22" fill="#2a2f57"/><circle cx="-170" cy="-8" r="34" fill="#14162c"/><circle cx="-90" cy="-8" r="34" fill="#14162c"/><circle cx="190" cy="-8" r="34" fill="#14162c"/>
+  ${[-170,-90,190].map(c=>`<circle cx="${c}" cy="-8" r="13" fill="#5c6390"/>`).join('')}</g>`; }
+function alarmClock(x,y,s=1,t=0,ring=0){ const sh=ring?Math.sin(t*60)*6:0; return `<g transform="translate(${x+sh},${y}) scale(${s}) rotate(${sh})"><circle cx="-60" cy="-90" r="30" fill="${PAL.red}"/><circle cx="60" cy="-90" r="30" fill="${PAL.red}"/>
+  <circle r="100" fill="${PAL.red}"/><circle r="78" fill="#f3f4fb"/><rect x="-4" y="-60" width="8" height="60" rx="4" fill="#22264a"/><rect x="-3" y="-3" width="46" height="7" rx="3" fill="#22264a"/><circle r="8" fill="#22264a"/>
+  <rect x="-70" y="88" width="20" height="30" rx="6" fill="#b1263a" transform="rotate(25,-60,100)"/><rect x="50" y="88" width="20" height="30" rx="6" fill="#b1263a" transform="rotate(-25,60,100)"/></g>`; }
+function box(x,y,s=1,col='#c98f4e'){ return `<g transform="translate(${x},${y}) scale(${s})"><rect x="-50" y="-50" width="100" height="100" rx="6" fill="${col}"/><rect x="-50" y="-50" width="100" height="18" fill="#000" opacity=".12"/><rect x="-8" y="-50" width="16" height="100" fill="#f3e2b8" opacity=".6"/></g>`; }
+function desk(x,y,w=520){ return `<g transform="translate(${x},${y})"><rect x="${-w/2}" y="0" width="${w}" height="30" rx="8" fill="${PAL.wood}"/><rect x="${-w/2+20}" y="30" width="24" height="200" fill="${PAL.woodD}"/><rect x="${w/2-44}" y="30" width="24" height="200" fill="${PAL.woodD}"/>
+  <rect x="-110" y="-200" width="220" height="150" rx="12" fill="#1b1e3a" stroke="#353b6e" stroke-width="6"/><rect x="-96" y="-186" width="192" height="122" rx="6" fill="#26306a"/><rect x="-20" y="-50" width="40" height="50" fill="#353b6e"/></g>`; }

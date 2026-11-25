@@ -6,14 +6,22 @@ description: Erstellt fertige TikTok-Erklärvideos (9:16, Deutsch) im Stil "Was 
 # TikTok „Was wäre, wenn …?“ – Videoproduktion
 
 Ergebnis: eine fertige MP4 (1080×1920, 30 fps, AAC, −14 LUFS), direkt hochladbar.
-Alles wird lokal erzeugt (Grafik, Musik, SFX). Nur das Voice-over kommt von Microsofts Neural-TTS (edge-tts, kostenlos).
+Alles wird lokal erzeugt: Grafik, Musik, SFX und die Stimme.
+
+## 0. Stimme (wichtigster Qualitätsfaktor)
+
+**Standard: `"tts": "chatterbox"`.** Das ist ein Open-Source-Sprachmodell (Chatterbox Multilingual, MIT-Lizenz, läuft lokal auf der CPU) mit einer **echten menschlichen Referenzstimme** (Thorsten-Voice, deutscher Sprecher, CC0) in vier Emotionen: `neutral`, `amused`, `surprised`, `whisper`. Die Microsoft-Stimme (edge-tts) klingt dem Creator zu sehr nach KI und ist nur noch eine Notlösung.
+- Einmalige Einrichtung: `engine/setup_chatterbox.sh` (lädt venv, Modelle und Referenzen; ~7 GB). Netzwerk: `huggingface.co`, `us.aws.cdn.hf.co`.
+- Pro Segment `emotion` passend zum Inhalt wählen, außerdem `ex` (Emotionsstärke 0.5–0.75) und `cfg` (0.35–0.45; niedriger = ruhiger). Neutral erzählen, `surprised` bei Wendungen, `amused` bei positiven Stellen, `whisper` bei persönlichen oder unheimlichen Momenten.
+- Qualitätskontrolle läuft automatisch: Whisper hört jeden Satz nach, bei Fehlern wird neu generiert. Die Wort-Zeitstempel kommen ebenfalls aus Whisper.
+- Dauer: ca. 5× Echtzeit auf 4 CPU-Kernen (60 s Audio ≈ 6–10 min).
 
 ## 1. Stil-DNA (aus den 3 Referenzvideos analysiert)
 
 Referenzen: „Was wäre, wenn alle Frauen sterben“ (flache 2D-Story, Hauptvorbild), „What if it rained for a thousand years?“ (Zeitraffer-Eskalation), „Wie nah berühren sich deine Finger wirklich?“ (Zoom-Reise mit Messschieber).
 
 **Format & Länge**
-- 9:16, 70–110 s, harter Schnitt alle 2–4 s (eine Szene pro Satz/Halbsatz).
+- 9:16, **höchstens 70 s** inkl. Abspann (Wunsch des Creators), harter Schnitt alle 2–4 s (eine Szene pro Satz/Halbsatz).
 - Dunkler Navy-Hintergrund (radialer Verlauf #1d2150 → #0b0d20) mit schwachen Sternpunkten und Vignette.
 - Flache Vektor-Illustration: runde Köpfe, einfache Körper, kräftige Flächenfarben, Glow für wichtige Objekte. Stimmungs-Tints: Rot = Gefahr, Sepia = Vergangenheit.
 
@@ -45,7 +53,7 @@ Referenzen: „Was wäre, wenn alle Frauen sterben“ (flache 2D-Story, Hauptvor
 
 1. **Projektordner** anlegen: `videos/<slug>/` (Slug = Thema, z. B. `strom-weg`).
 2. **`script.json`** schreiben (Vorlage: `videos/geld-abgeschafft/script.json`):
-   - 14–20 Segmente, je 1–2 kurze Sätze (insgesamt ~180–220 Wörter ≈ 75–90 s).
+   - 10–13 Segmente, je 1–2 kurze Sätze (insgesamt ~140–155 Wörter ≈ 60–66 s + Abspann ≤ 70 s). Zahlen als Wörter schreiben („zwölfhundert Euro“), weil Chatterbox Ziffern nicht zuverlässig ausspricht.
    - Pro Segment: `scene`, `chip`, `text`, `hl` (Schlüsselwort → Farbe, Wörter kleingeschrieben ohne Satzzeichen), optional `counter`, `list`, `tint` (`red`/`sepia`), `sfx`.
    - `counter.at`: `"w:<wort>"` (springt beim Wort) oder `"span"` (läuft über das ganze Segment).
    - `sfx`: `[["start"|"end"|"w:<wort>", name]]`. Namen: whoosh, pop, ding, static (Funkrauschen), impact, hit, glitch, error, buzz, stamp, chime, beep, crowd, tick, net, vinyl, coin, heartbeat, riser_short. Impact/Stamp/Error lösen automatisch Kamerawackler und Farbblitz aus.
