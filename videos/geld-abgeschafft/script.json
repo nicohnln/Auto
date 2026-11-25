@@ -1,0 +1,89 @@
+{
+  "title": "Was wäre, wenn morgen das Geld abgeschafft wird?",
+  "voice": "de-DE-FlorianMultilingualNeural",
+  "rate": "+6%",
+  "pitch": "+0Hz",
+  "gap": 0.28,
+  "lead_in": 0.35,
+  "end_card": { "text": "FORTSETZUNG FOLGT …", "sub": "Was würdest du als Erstes tauschen?", "dur": 2.6 },
+  "music": { "mood": "suspense", "bpm": 84 },
+  "segments": [
+    { "id": "bed",     "scene": "bed",     "chip": "TAG 1 · 06:58",
+      "text": "Stell dir vor, du wachst morgen auf …",
+      "hl": { "morgen": "yellow" }, "sfx": [["start", "riser_short"]] },
+
+    { "id": "news",    "scene": "news",    "chip": "TAG 1 · 07:02",
+      "text": "und überall steht nur ein Satz: Das Geld ist abgeschafft.",
+      "hl": { "geld": "red", "abgeschafft": "red" }, "sfx": [["start", "ding"], ["w:satz", "ding"], ["w:abgeschafft", "impact"]] },
+
+    { "id": "globe",   "scene": "globe",   "chip": "TAG 1 · 07:02",
+      "text": "Kein Euro. Kein Dollar. Nichts. Weltweit, über Nacht.",
+      "hl": { "euro": "blue", "dollar": "green", "nichts": "red", "weltweit": "yellow" },
+      "sfx": [["w:euro", "pop"], ["w:dollar", "pop"], ["w:nichts", "glitch"]] },
+
+    { "id": "bank",    "scene": "bank",    "chip": "TAG 1 · 07:05",
+      "counter": { "label": "DEIN KONTOSTAND", "from": 2347.18, "to": 0, "fmt": "eur", "color": "red", "at": "w:null" },
+      "text": "Du checkst dein Konto: Null.",
+      "hl": { "konto": "blue", "null": "red" }, "sfx": [["w:null", "error"]] },
+
+    { "id": "debt",    "scene": "debt",    "chip": "TAG 1 · 07:05",
+      "counter": { "label": "DEINE SCHULDEN", "from": -12480, "to": 0, "fmt": "eur", "color": "green", "at": "w:weg" },
+      "text": "Aber warte mal … deine Schulden? Auch weg.",
+      "hl": { "schulden": "red", "weg": "green" }, "sfx": [["w:weg", "stamp"]] },
+
+    { "id": "happy",   "scene": "happy",   "chip": "TAG 1 · 07:06", "list": ["SCHULDEN WEG"],
+      "text": "Kredit, Handyvertrag – alles. Klingt erstmal genial, oder?",
+      "hl": { "genial": "green" }, "sfx": [["w:genial", "chime"]] },
+
+    { "id": "market",  "scene": "market",  "chip": "TAG 1 · 12:14", "list": ["SCHULDEN WEG"],
+      "text": "Mittags im Supermarkt. Die Kasse zeigt nur noch: Fehler.",
+      "hl": { "kasse": "blue", "fehler": "red" }, "sfx": [["w:kasse", "beep"], ["w:fehler", "error"]] },
+
+    { "id": "rush",    "scene": "rush",    "chip": "TAG 1 · 12:20", "list": ["SCHULDEN WEG", "REGALE LEER"],
+      "counter": { "label": "REGALE GEFÜLLT", "from": 100, "to": 4, "fmt": "pct", "color": "red", "at": "span" },
+      "text": "Also nehmen die Leute einfach alles mit. Nach drei Stunden: leere Regale.",
+      "hl": { "alles": "yellow", "leere": "red", "regale": "red" }, "sfx": [["start", "crowd"], ["w:leere", "impact"]] },
+
+    { "id": "cashier", "scene": "cashier", "chip": "TAG 3 · 08:00", "list": ["SCHULDEN WEG", "REGALE LEER"],
+      "text": "Am dritten Tag fragt sich die Kassiererin: Warum soll ich eigentlich noch arbeiten?",
+      "hl": { "kassiererin": "pink", "arbeiten": "yellow" }, "sfx": [["start", "tick"]] },
+
+    { "id": "city",    "scene": "city",    "chip": "TAG 4 · 09:30", "list": ["SCHULDEN WEG", "REGALE LEER", "STADT STEHT STILL"],
+      "counter": { "label": "MENSCHEN BEI DER ARBEIT", "from": 46000000, "to": 17300000, "fmt": "int", "color": "pink", "at": "span" },
+      "text": "Busfahrer, Bäcker, Müllabfuhr – viele bleiben einfach zu Hause.",
+      "hl": { "busfahrer": "blue", "bäcker": "yellow", "müllabfuhr": "green", "hause": "red" },
+      "sfx": [["w:busfahrer", "pop"], ["w:bäcker", "pop"], ["w:müllabfuhr", "pop"]] },
+
+    { "id": "swap",    "scene": "swap",    "chip": "TAG 6 · TAUSCHEN", "list": ["SCHULDEN WEG", "REGALE LEER", "STADT STEHT STILL"],
+      "text": "Also fängst du an zu tauschen: Nudeln gegen Klopapier.",
+      "hl": { "tauschen": "yellow", "nudeln": "yellow", "klopapier": "blue" }, "sfx": [["w:nudeln", "whoosh"], ["w:klopapier", "chime"]] },
+
+    { "id": "baker",   "scene": "baker",   "chip": "TAG 6 · BÄCKEREI", "list": ["SCHULDEN WEG", "REGALE LEER", "STADT STEHT STILL"],
+      "text": "Aber was, wenn der Bäcker keine Nudeln will? Dann gibt's eben kein Brot.",
+      "hl": { "bäcker": "yellow", "kein": "red", "brot": "red" }, "sfx": [["w:kein", "buzz"]] },
+
+    { "id": "cigs",    "scene": "cigs",    "chip": "WOCHE 3", "list": ["SCHULDEN WEG", "REGALE LEER", "STADT STEHT STILL"],
+      "text": "Und dann passiert etwas Seltsames. Plötzlich wollen alle dasselbe: Zigaretten. Sogar Nichtraucher.",
+      "hl": { "seltsames": "pink", "zigaretten": "yellow", "nichtraucher": "pink" }, "sfx": [["w:zigaretten", "impact"], ["w:nichtraucher", "pop"]] },
+
+    { "id": "network", "scene": "network", "chip": "WOCHE 3", "list": ["SCHULDEN WEG", "REGALE LEER", "STADT STEHT STILL"],
+      "text": "Weil jeder weiß: Die nimmt mir morgen auch noch jemand ab.",
+      "hl": { "morgen": "yellow", "jemand": "green" }, "sfx": [["start", "net"]] },
+
+    { "id": "history", "scene": "history", "chip": "DEUTSCHLAND · 1945", "tint": "sepia", "list": ["SCHULDEN WEG", "REGALE LEER", "STADT STEHT STILL"],
+      "text": "Klingt ausgedacht? Genau das ist in Deutschland nach dem Krieg wirklich passiert.",
+      "hl": { "ausgedacht": "blue", "deutschland": "yellow", "wirklich": "green" }, "sfx": [["start", "vinyl"], ["w:wirklich", "impact"]] },
+
+    { "id": "coin",    "scene": "coin",    "chip": "WOCHE 3", "list": ["SCHULDEN WEG", "REGALE LEER", "STADT STEHT STILL", "NEUES GELD"],
+      "text": "Merkst du was? Ihr habt das Geld gerade neu erfunden.",
+      "hl": { "geld": "yellow", "erfunden": "green" }, "sfx": [["w:erfunden", "coin"]] },
+
+    { "id": "promise", "scene": "promise", "chip": "WOCHE 3", "list": ["SCHULDEN WEG", "REGALE LEER", "STADT STEHT STILL", "NEUES GELD"],
+      "text": "Denn Geld ist kein Papier. Geld ist ein Versprechen.",
+      "hl": { "papier": "blue", "versprechen": "yellow" }, "sfx": [["w:versprechen", "chime"]] },
+
+    { "id": "end",     "scene": "question", "chip": "WOCHE 4 · ???", "tint": "red", "list": ["SCHULDEN WEG", "REGALE LEER", "STADT STEHT STILL", "NEUES GELD"],
+      "text": "Und jetzt die eigentliche Frage: Wer bestimmt, was das neue Geld wird?",
+      "hl": { "wer": "red", "bestimmt": "red", "neue": "yellow" }, "sfx": [["w:wer", "heartbeat"], ["end", "hit"]] }
+  ]
+}

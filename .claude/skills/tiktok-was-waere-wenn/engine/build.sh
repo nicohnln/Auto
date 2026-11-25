@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Komplettes Video bauen:  bash build.sh <projektordner>
+# Ergebnis: <projektordner>/<ordnername>.mp4 (1080x1920, 30 fps, -14 LUFS)
+set -euo pipefail
+ENGINE="$(cd "$(dirname "$0")" && pwd)"
+PROJ="$(cd "$1" && pwd)"
+NAME="$(basename "$PROJ")"
+
+python3 -c "import edge_tts, numpy, scipy" 2>/dev/null || pip install -q edge-tts numpy scipy
+
+echo "== 1/4 Voice-over (edge-tts) =="
+python3 "$ENGINE/tts.py" "$PROJ"
+echo "== 2/4 Musik + SFX + Mix =="
+python3 "$ENGINE/audio.py" "$PROJ"
+echo "== 3/4 Frames rendern =="
+node "$ENGINE/render.cjs" "$PROJ" --workers "${WORKERS:-4}"
+echo "== 4/4 Muxen =="
+ffmpeg -v error -y -i "$PROJ/build/video_noaudio.mp4" -i "$PROJ/build/mix.wav" \
+  -c:v copy -c:a aac -b:a 192k -shortest -movflags +faststart "$PROJ/$NAME.mp4"
+echo "Fertig: $PROJ/$NAME.mp4"

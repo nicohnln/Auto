@@ -1,0 +1,160 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Inter;font-weight:800;src:url(__FONTS__/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(__FONTS__/inter-latin-900-normal.woff2)}
+@font-face{font-family:Mono;font-weight:500;src:url(__FONTS__/jetbrains-mono-latin-500-normal.woff2)}
+@font-face{font-family:Mono;font-weight:700;src:url(__FONTS__/jetbrains-mono-latin-700-normal.woff2)}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#0b0d20}
+#stage{position:absolute;inset:0;overflow:hidden}
+#svg{position:absolute;inset:0}
+#hud{position:absolute;inset:0;pointer-events:none}
+.chip{position:absolute;left:50%;top:96px;transform:translateX(-50%);padding:14px 34px;border:3px solid #b8953e;border-radius:10px;
+  background:rgba(15,16,34,.82);color:#f3cf6c;font:700 30px Mono;letter-spacing:5px;white-space:nowrap}
+.counter{position:absolute;left:50%;top:200px;transform:translateX(-50%);min-width:460px;padding:16px 40px 18px;border:4px solid;border-radius:18px;
+  background:rgba(14,15,34,.86);text-align:center;white-space:nowrap}
+.counter .l{font:700 24px Mono;letter-spacing:5px;color:#d9dbe8;opacity:.9}
+.counter .v{font:900 64px Inter;color:#fff;letter-spacing:1px;margin-top:4px;font-variant-numeric:tabular-nums}
+.list{position:absolute;left:20px;top:40px}
+.list .it{font:700 15px Mono;letter-spacing:1px;color:#ff6b8a;border:2px solid #ff6b8a;border-radius:5px;padding:3px 8px;margin-bottom:6px;background:rgba(20,10,30,.7);width:max-content}
+#cap{position:absolute;left:40px;right:40px;top:1235px;text-align:center;font:900 86px/1.06 Inter;text-transform:uppercase;letter-spacing:-1px}
+#cap .w{display:inline-block;margin:0 .13em;color:#5f6385;
+  text-shadow:0 5px 0 rgba(4,5,15,.65),0 0 3px rgba(4,5,15,.9),3px 3px 0 rgba(4,5,15,.6),-3px -3px 0 rgba(4,5,15,.6),3px -3px 0 rgba(4,5,15,.6),-3px 3px 0 rgba(4,5,15,.6)}
+#end{position:absolute;inset:0;background:#000;display:none;align-items:center;justify-content:center;flex-direction:column}
+#end .a{font:700 54px Mono;letter-spacing:8px;color:#fff}
+#end .b{font:800 40px Inter;color:#9aa0c0;margin-top:40px}
+#flash{position:absolute;inset:0;pointer-events:none}
+</style></head>
+<body>
+<div id="stage">
+  <svg id="svg" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+  <div id="hud"></div>
+  <div id="cap"></div>
+  <div id="flash"></div>
+</div>
+<div id="end"><div class="a"></div><div class="b"></div></div>
+<script>__LIB__</script>
+<script>__SCENES__</script>
+<script>
+const TL = __TIMELINE__;
+const COLORS = {yellow:'#ffd23f', red:'#ff3355', pink:'#ff4fae', green:'#38f27e', blue:'#4ea8ff', white:'#ffffff'};
+
+/* ---------- Untertitel: Wörter zu Phrasen bündeln ---------- */
+function chunkWords(seg){
+  const out=[]; let cur=[], chars=0;
+  seg.words.forEach((w,i)=>{
+    const len=w.text.length+1;
+    if(cur.length && (cur.length>=5 || chars+len>24)){ out.push(cur); cur=[]; chars=0; }
+    cur.push(w); chars+=len;
+    const endP=/[.?!:]["“”]?$|…$/.test(w.text), comma=/[,–]$/.test(w.text);
+    if(endP || (comma && cur.length>=2)){ out.push(cur); cur=[]; chars=0; }
+  });
+  if(cur.length) out.push(cur);
+  return out;
+}
+TL.segments.forEach((s,i)=>{ s.chunks=chunkWords(s); s.idx=i; s._shake=[]; s._flash=[];
+  // Kamera-Wackler + Farbblitz automatisch aus den Soundeffekten ableiten
+  (s.sfx||[]).forEach(([at,name])=>{
+    const tt=at==='start'?0:at==='end'?s.end-s.start-0.3:H(s).wt(at.slice(2));
+    if(['impact','hit','stamp','error','glitch','buzz'].includes(name)) s._shake.push([tt,(name==='impact'||name==='hit'||name==='stamp')?16:9]);
+    if(name==='error'||name==='buzz') s._flash.push([tt,'#ff2a4a']);
+    if(name==='impact'||name==='stamp') s._flash.push([tt,'#9fb0ff']);
+  });
+});
+
+function hlColor(seg,w){ const m=seg.hl||{}; return COLORS[m[w.n]]||null; }
+
+function renderCaption(t,seg){
+  const cap=document.getElementById('cap');
+  if(!seg){ cap.innerHTML=''; return; }
+  let ch=null;
+  for(const c of seg.chunks){ if(t>=c[0].t-0.06) ch=c; }
+  if(!ch){ // vor dem ersten Wort: letzte Phrase des vorigen Segments halten
+    const prev=TL.segments[seg.idx-1]; if(prev && t-seg.start<0.12){ ch=prev.chunks[prev.chunks.length-1]; seg=prev; } else { cap.innerHTML=''; return; }
+  }
+  const age=t-ch[0].t+0.06, pop=E.outBack(clamp(age/0.16,0,1));
+  cap.style.transform=`scale(${0.86+0.14*pop})`; cap.style.opacity=clamp(age/0.08,0,1);
+  cap.innerHTML=ch.map(w=>{
+    const said=t>=w.t-0.02, col=hlColor(seg,w);
+    let st='';
+    if(said){ const c=col||'#ffffff'; st=`color:${c};`+(col?`text-shadow:0 0 22px ${c}aa,0 0 6px ${c}88,0 5px 0 rgba(4,5,15,.65),3px 3px 0 rgba(4,5,15,.6),-3px -3px 0 rgba(4,5,15,.6),3px -3px 0 rgba(4,5,15,.6),-3px 3px 0 rgba(4,5,15,.6);`:'');
+      const k=clamp((t-w.t)/0.12,0,1); st+=`transform:scale(${1+0.09*(1-k)})`; }
+    return `<span class="w" style="${st}">${w.text}</span>`;
+  }).join(' ');
+}
+
+/* ---------- HUD: Chip, Zähler, Checkliste ---------- */
+function fmtVal(v,f){
+  if(f==='eur'){ const s=v<0?'-':''; v=Math.abs(v); const [a,b]=v.toFixed(2).split('.'); return s+a.replace(/\B(?=(\d{3})+(?!\d))/g,'.')+','+b+' €'; }
+  if(f==='pct') return Math.round(v)+' %';
+  return Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+}
+function renderHud(t,seg,lt){
+  if(!seg){ document.getElementById('hud').innerHTML=''; return; }
+  const prev=TL.segments[seg.idx-1]||{};
+  let h='';
+  // Chip (tippt sich neu ein, wenn er wechselt)
+  if(seg.chip){
+    let txt=seg.chip;
+    if(seg.chip!==prev.chip && seg.idx>0){ const n=Math.floor(clamp(lt/0.35,0,1)*txt.length); txt=txt.slice(0,n)+(n<txt.length?'▌':''); }
+    h+=`<div class="chip">${txt||'&nbsp;'}</div>`;
+  }
+  if(seg.counter){
+    const c=seg.counter, col=COLORS[c.color]||'#ff4fae';
+    let v=c.from;
+    if(c.at==='span'){ v=c.from+(c.to-c.from)*E.inOut(clamp((lt-0.3)/(seg.end-seg.start-0.7),0,1)); }
+    else { const tt=H(seg).wt(c.at.slice(2)); v=c.from+(c.to-c.from)*E.out(clamp((lt-tt+0.15)/0.55,0,1)); }
+    const same=prev.counter&&prev.counter.label===c.label, pop=same?1:E.outBack(clamp(lt/0.25,0,1));
+    const shake=(c.at!=='span' && Math.abs(lt-H(seg).wt(c.at.slice(2))-0.5)<0.25)?Math.sin(lt*90)*5:0;
+    h+=`<div class="counter" style="border-color:${col};box-shadow:0 0 26px ${col}66, inset 0 0 18px ${col}22;transform:translateX(calc(-50% + ${shake}px)) scale(${pop})">
+      <div class="l">${c.label}</div><div class="v" style="color:${v===c.to&&c.at!=='span'?col:'#fff'}">${fmtVal(v,c.fmt)}</div></div>`;
+  }
+  if(seg.list){
+    const pl=prev.list||[];
+    h+='<div class="list">'+seg.list.map((x,i)=>{
+      const isNew=!pl.includes(x), a=isNew?clamp((lt-0.2)/0.3,0,1):1;
+      return `<div class="it" style="opacity:${a};transform:translateX(${(1-a)*-40}px)">${i+1}. ${x} ✓</div>`;}).join('')+'</div>';
+  }
+  document.getElementById('hud').innerHTML=h;
+}
+
+/* ---------- Hintergrund ---------- */
+const STARS=(()=>{const r=rng(7),a=[];for(let i=0;i<90;i++)a.push([r()*1080,r()*1920,0.8+r()*2.2,r()*6.28]);return a;})();
+function background(t,seg){
+  const tint=(seg&&seg.tint)||'none';
+  const c={none:['#1d2150','#0b0d20'],red:['#3a1028','#0e0712'],sepia:['#3a2c1c','#120d08'],green:['#103326','#07120d']}[tint];
+  let s=`<defs>${DEFS}<radialGradient id="bg" cx="50%" cy="42%" r="75%"><stop offset="0" stop-color="${c[0]}"/><stop offset="1" stop-color="${c[1]}"/></radialGradient>
+   <radialGradient id="vig" cx="50%" cy="45%" r="75%"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></radialGradient></defs>
+   <rect width="1080" height="1920" fill="url(#bg)"/>`;
+  s+=STARS.map(([x,y,r,p])=>`<circle cx="${x}" cy="${(y+t*6)%1920}" r="${r}" fill="#cdd3ff" opacity="${0.15+0.25*Math.abs(Math.sin(t*0.8+p))}"/>`).join('');
+  return s;
+}
+
+/* ---------- Haupt-Frame ---------- */
+window.seek=function(t){
+  const end=TL.end_card;
+  const E1=document.getElementById('end');
+  if(end && t>=end.start){
+    E1.style.display='flex'; E1.querySelector('.a').textContent=end.text; E1.querySelector('.b').textContent=end.sub||'';
+    const k=clamp((t-end.start)/0.5,0,1); E1.querySelector('.a').style.opacity=k; E1.querySelector('.b').style.opacity=clamp((t-end.start-0.7)/0.5,0,1);
+    return;
+  }
+  E1.style.display='none';
+  let seg=t<TL.segments[0].start?TL.segments[0]:(TL.segments.find(s=>t>=s.start&&t<s.end)||TL.segments[TL.segments.length-1]);
+  const lt=t-seg.start, d=seg.end-seg.start;
+  const fn=SCENES[seg.scene]||(()=>'' );
+  const enter=E.outBack(clamp(lt/0.22,0,1)), z=(0.955+0.045*enter)*(1+0.035*lt/d);
+  const shake=(seg._shake||[]).reduce((a,[t0,amp])=>a+(lt>t0&&lt<t0+0.35?Math.sin(lt*95)*amp*(1-(lt-t0)/0.35):0),0);
+  let body='';
+  try{ body=fn(lt,d,seg,H(seg)); }catch(e){ body=`<text x="40" y="900" fill="red" font-size="30">${e}</text>`; }
+  document.getElementById('svg').innerHTML=background(t,seg)+
+    `<g transform="translate(${540+shake},860) scale(${z}) translate(-540,-860)">${body}</g><rect width="1080" height="1920" fill="url(#vig)"/>`;
+  document.getElementById('svg').style.filter=seg.tint==='sepia'?'sepia(.55) contrast(1.05)':'none';
+  const fl=document.getElementById('flash'); const f=(seg._flash||[]).reduce((a,[t0,c])=>lt>t0&&lt<t0+0.3?{c,a:0.28*(1-(lt-t0)/0.3)}:a,null);
+  fl.style.background=f?f.c:'transparent'; fl.style.opacity=f?f.a:0;
+  renderHud(t,seg,lt);
+  renderCaption(t,seg);
+};
+window.READY=document.fonts.ready.then(()=>true);
+</script>
+</body></html>
