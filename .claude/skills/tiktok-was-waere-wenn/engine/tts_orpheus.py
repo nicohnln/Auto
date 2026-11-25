@@ -44,6 +44,16 @@ def score(target, words):
     return max(sm.ratio(), cr if cr > 0.9 else 0)
 
 
+def exact(target, words):
+    """Sauber = jedes Wort stimmt (Zusammen-/Getrenntschreibung und Ziffern ausgenommen)."""
+    a = [norm(w) for w in target.split() if norm(w) and not norm(w).isdigit()]
+    FILL = {"ah", "äh", "oh", "hm", "hmm", "mhm", "ha", "haha", "hehe", "uff", "puh", "ach"}
+    b = [norm(w["w"]) for w in words if norm(w["w"]) and not norm(w["w"]).isdigit() and norm(w["w"]) not in FILL]
+    if any(any(ch.isdigit() for ch in w["w"]) for w in words):
+        a = [x for x in a if not re.search(r"(hundert|tausend|zehn|zig|zwölf|elf|drei|vier|fünf|sechs|sieben|acht|neun|zwei|eins)$", x)]
+    return a == b or "".join(a) == "".join(b)
+
+
 def stretched(words):
     for w in words:
         n = len(norm(w["w"]))
@@ -134,10 +144,12 @@ def main(proj):
                 sus = stretched(ww)
                 q = s_ - (0.6 if rep else 0) - (0.4 if sus else 0)
                 flag = " (Wiederholung!)" if rep else (" (gedehntes Wort!)" if sus else "")
-                print(f"  {seg['id']} Versuch {attempt + 1}: Genauigkeit {s_:.2f}, {len(y)/SR:.1f}s{flag}", flush=True)
+                print(f"  {seg['id']} Versuch {attempt + 1}: Genauigkeit {s_:.2f}{'' if exact(cap, ww) else ' (nicht wortgenau)'}, {len(y)/SR:.1f}s{flag}", flush=True)
                 if best is None or q > best[0]:
                     best = (q, y, ww)
-                if s_ >= 0.93 and not rep and not sus:
+                ex_ = exact(cap, ww)
+                if not ex_: q -= 0.05
+                if ex_ and not rep and not sus:
                     break
             q, y, ww = best
             sf.write(wav_p, y, SR); json.dump({"words": ww, "score": q}, open(js_p, "w"), ensure_ascii=False)

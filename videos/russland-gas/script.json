@@ -78,7 +78,7 @@
         1,
         0.8
       ],
-      "text": "Fabriken, die wegen der hohen Energiekosten ins Ausland wollten, bleiben vielleicht doch hier.",
+      "text": "Viele Fabriken, die wegen der hohen Energiekosten ins Ausland wollten, bleiben vielleicht doch hier.",
       "hl": {
         "fabriken": "blue",
         "ausland": "red",
@@ -160,14 +160,14 @@
         0,
         0.6
       ],
-      "text": "Dann kam Russlands Angriff auf die Ukraine. Und Deutschland entschied: Wir wollen weg vom russischen Gas. Nord Stream 2 ging nie in Betrieb.",
-      "say": "Dann kam Russlands Angriff auf die Ukraine. <sigh> Und Deutschland entschied: Wir wollen weg vom russischen Gas. Nord Stream zwei ging nie in Betrieb.",
+      "text": "Dann kam Russlands Angriff auf die Ukraine. Und Deutschland entschied: Wir wollen weg vom russischen Gas. Nord Stream 2 wurde gestoppt.",
+      "say": "Dann kam Russlands Angriff auf die Ukraine. <sigh> Und Deutschland entschied: Wir wollen weg vom russischen Gas. Nord Stream zwei wurde gestoppt.",
       "hl": {
         "angriff": "red",
         "ukraine": "yellow",
         "deutschland": "yellow",
         "weg": "red",
-        "nie": "red"
+        "gestoppt": "red"
       },
       "sfx": [
         [

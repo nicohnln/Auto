@@ -65,7 +65,7 @@ history(t,d,S,h){
   return s;
 },
 decision(t,d,S,h){
-  const an=h.wt('angriff'), en=h.wt('entschied'), ni=h.wt('nie');
+  const an=h.wt('angriff'), en=h.wt('entschied'), ni=h.wt('gestoppt');
   let s=balticMap(t,1-h.p(t,en,en+0.8),{col:GAS});
   s+=`<rect x="60" y="430" width="960" height="640" rx="30" fill="#000" opacity="${0.25*h.p(t,an,an+0.5)}"/>`;
   // zweite Leitung (Nord Stream 2) parallel
