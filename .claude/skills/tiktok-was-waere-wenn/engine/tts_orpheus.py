@@ -35,6 +35,7 @@ def caption_text(t):
 def score(target, words):
     a = [norm(w) for w in target.split() if norm(w)]
     b = [norm(w["w"]) for w in words if norm(w["w"])]
+    a = [x for x in a if not x.isdigit()]  # Ziffern im Untertitel (gesprochen als Wort) nicht werten
     if any(x.isdigit() for x in b):
         b = [x for x in b if not x.isdigit()]
         a = [x for x in a if not re.search(r"(hundert|tausend|zehn|zig|zwölf|elf|drei|vier|fünf|sechs|sieben|acht|neun|zwei|eins)$", x)]

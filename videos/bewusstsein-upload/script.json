@@ -1,0 +1,79 @@
+{
+  "title": "Was wäre, wenn man das Bewusstsein eines Menschen in einen Computer übertragen könnte?",
+  "tts": "orpheus",
+  "voice": "thomas",
+  "max_pause": 0.55,
+  "lead_in": 0.3,
+  "end_card": { "text": "FORTSETZUNG FOLGT …", "sub": "Würdest du dich hochladen?", "dur": 2.4 },
+  "music": { "bpm": 76 },
+  "segments": [
+    { "id": "hook", "scene": "hook", "chip": "UPLOAD · 00:00:00",
+      "music": [1, 0, 0, 0],
+      "text": "Stell dir vor, du schließt die Augen … und wachst in einem Computer wieder auf.",
+      "say": "Stell dir vor, du schließt die Augen … und wachst in einem Computer wieder auf. <gasp>",
+      "hl": { "augen": "blue", "computer": "red" }, "sfx": [["start", "riser_short"], ["w:computer", "glitch"]] },
+
+    { "id": "digital", "scene": "digital", "chip": "UPLOAD · 00:00:04",
+      "music": [1, 0.6, 0, 0.4],
+      "text": "Kein Herzschlag. Kein Atem. Aber du denkst. Du erinnerst dich an alles.",
+      "hl": { "herzschlag": "red", "atem": "red", "denkst": "green", "alles": "yellow" }, "sfx": [["w:herzschlag", "beep"], ["w:denkst", "chime"]] },
+
+    { "id": "power", "scene": "power", "chip": "TAG 1",
+      "counter": { "label": "VERBLEIBENDE JAHRE", "from": 61, "to": "∞", "fmt": "int", "color": "green", "at": "w:alt" },
+      "music": [1, 1, 1, 0.7],
+      "text": "Und ehrlich? Das ist erstmal unglaublich. Du wirst nie müde, nie krank, nie alt.",
+      "say": "Und ehrlich? <chuckle> Das ist erstmal unglaublich. Du wirst nie müde, nie krank, nie alt.",
+      "hl": { "unglaublich": "green", "müde": "blue", "krank": "pink", "alt": "yellow" }, "sfx": [["w:alt", "impact"]] },
+
+    { "id": "speed", "scene": "speed", "chip": "TAG 1 · 00:00:09",
+      "list": ["UNSTERBLICH"],
+      "music": [1, 1, 1, 1],
+      "text": "Du liest ein ganzes Buch in einer Sekunde. Und lernst jede Sprache an einem Nachmittag.",
+      "hl": { "buch": "yellow", "sekunde": "red", "sprache": "blue" }, "sfx": [["w:sekunde", "whoosh"], ["w:sprache", "pop"]] },
+
+    { "id": "question", "scene": "question", "chip": "TAG 3",
+      "list": ["UNSTERBLICH"],
+      "music": [1, 0.4, 0, 0],
+      "text": "Aber dann kommt die eine Frage, die dich nicht mehr loslässt.",
+      "hl": { "frage": "yellow", "loslässt": "red" }, "sfx": [["w:frage", "tick"]] },
+
+    { "id": "body", "scene": "body", "chip": "LABOR · RAUM 4",
+      "list": ["UNSTERBLICH"],
+      "music": [1, 1, 0, 0.8],
+      "text": "Dein alter Körper liegt immer noch im Labor. Und er wacht gerade auf.",
+      "say": "Dein alter Körper liegt immer noch im Labor. Und er wacht gerade auf. <gasp>",
+      "hl": { "körper": "pink", "labor": "blue", "wacht": "red" }, "sfx": [["w:wacht", "impact"]] },
+
+    { "id": "two", "scene": "two", "chip": "LABOR · RAUM 4",
+      "list": ["UNSTERBLICH", "ZWEI VON DIR"],
+      "counter": { "label": "AUSGABEN VON DIR", "from": 1, "to": 2, "fmt": "int", "color": "red", "at": "w:zwei" },
+      "music": [1, 1, 0.6, 1],
+      "text": "Jetzt gibt es zwei von dir. Und beide sagen: Ich bin das Original.",
+      "hl": { "zwei": "red", "beide": "yellow", "original": "red" }, "sfx": [["w:original", "hit"]] },
+
+    { "id": "twist", "scene": "twist", "chip": "HEUTE",
+      "music": [1, 0, 0, 0],
+      "text": "Klingt nach Science-Fiction? Dann schau mal, wie weit wir schon sind.",
+      "hl": { "sciencefiction": "blue", "weit": "yellow" }, "sfx": [["w:schon", "glitch"]] },
+
+    { "id": "fly", "scene": "fly", "chip": "FAKT · 2024",
+      "counter": { "label": "KARTIERTE NERVENZELLEN", "from": 0, "to": 140000, "fmt": "int", "color": "yellow", "at": "span" },
+      "music": [1, 1, 0.8, 0.9],
+      "text": "2024 haben Forscher zum ersten Mal das komplette Gehirn einer Fruchtfliege kartiert. 140.000 Nervenzellen.",
+      "say": "Zweitausendvierundzwanzig haben Forscher zum ersten Mal das komplette Gehirn einer Fruchtfliege kartiert. Hundertvierzigtausend Nervenzellen.",
+      "hl": { "2024": "yellow", "fruchtfliege": "green", "140000": "yellow" }, "sfx": [["w:kartiert", "stamp"]] },
+
+    { "id": "human", "scene": "human", "chip": "FAKT · DEIN GEHIRN",
+      "counter": { "label": "NERVENZELLEN IM MENSCHEN", "from": 140000, "to": "86.000.000.000", "fmt": "int", "color": "red", "at": "w:milliarden" },
+      "music": [1, 1, 0.8, 1],
+      "text": "Dein Gehirn hat 86 Milliarden.",
+      "say": "Dein Gehirn hat sechsundachtzig Milliarden.",
+      "hl": { "86": "red", "milliarden": "red" }, "sfx": [["w:milliarden", "impact"]] },
+
+    { "id": "end", "scene": "end", "chip": "DU · ODER DU?", "tint": "red",
+      "music": [1, 0.8, 0, 0.6],
+      "text": "Aber die eigentliche Frage ist: Wärst das dann überhaupt noch du?",
+      "say": "Aber die eigentliche Frage ist … <sigh> wärst das dann überhaupt noch du?",
+      "hl": { "eigentliche": "yellow", "noch": "pink", "du": "red" }, "sfx": [["w:du", "heartbeat"]] }
+  ]
+}
