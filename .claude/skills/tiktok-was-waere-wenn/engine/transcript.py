@@ -29,6 +29,13 @@ def main(proj):
             card = f"{sc.get('series', 'Was wäre wenn').upper()} · Nr. {sc.get('nr', '')} – {sc.get('tagline', '')}"
         txt.append(f"[{ts(e['start'])} – {ts(t['duration'])}] (Einblendung ohne Sprache) {card}")
     open(os.path.join(proj, "transkript.txt"), "w", encoding="utf-8").write("\n".join(txt) + "\n")
+    # Voice-over-Skript als reiner Text (ohne Zeitstempel) – wird bei jedem Video mitgeschickt
+    try:
+        sc = json.load(open(os.path.join(proj, "script.json"), encoding="utf-8"))
+        vo = [s["text"] for s in sc["segments"]]
+    except Exception:
+        vo = [s["text"] for s in t["segments"]]
+    open(os.path.join(proj, "voiceover.txt"), "w", encoding="utf-8").write("\n\n".join(vo) + "\n")
     open(os.path.join(proj, "transkript.srt"), "w", encoding="utf-8").write("\n".join(srt))
     print("\n".join(txt))
 

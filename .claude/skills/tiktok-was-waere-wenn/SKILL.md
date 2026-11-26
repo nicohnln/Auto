@@ -46,6 +46,7 @@ Alter Stil (bunte 2D-Navy-Welt mit farbigen Untertiteln, „FORTSETZUNG FOLGT“
 - Vorgabe des Creators: Er will **kein Voice-over** und **keine Hintergrundmusik**, nur Soundeffekte (`"voiceover": false`, `"background_music": false` sind Standard).
 - `build.sh` erzeugt dann keine Stimme. `engine/timeline_text.py` schätzt die Zeitleiste aus dem Skripttext (`wpm`, Standard 165). `"hold": 1.0` lässt eine Szene länger stehen. Der Mix enthält nur Soundeffekte mit Spitze −3 dBFS, ohne Lautheits-Normalisierung, damit Stille still bleibt.
 - Der Text in `script.json` bestimmt weiter das Tempo und landet in `transkript.txt`. Der Creator kann ihn selbst einsprechen.
+- **Bei jeder Lieferung mitschicken:** das Video **und das Voice-over-Skript als Text** (`voiceover.txt`, ohne Zeitstempel, ein Absatz pro Segment). Das Skript gehört als Datei dazu und zusätzlich als Codeblock in die Antwort. Wunsch des Creators vom 26.11.2026.
 - Weil keine Stimme die Geschichte trägt, müssen **Bild und Schlüsselsätze** (`kicker`, Zahlen, Pillen) die Aussage allein verständlich machen.
 
 ## 2b. Stimme (nur wenn `"voiceover": true`)
