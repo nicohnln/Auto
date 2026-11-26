@@ -252,3 +252,62 @@ function robotEye(x,y,r,t,o={}){ // großes Kamera-/Roboterauge; o.pupil 0..1 (G
 function drone(x,y,s=1,t=0,col=PAL.red){ const sp=Math.sin(t*60)*30; return `<g transform="translate(${x},${y}) scale(${s})"><rect x="-70" y="-14" width="140" height="28" rx="14" fill="#3b4180"/><rect x="-24" y="-30" width="48" height="40" rx="12" fill="#2a2f57"/>
   <circle cx="0" cy="14" r="12" fill="${col}" filter="url(#glowS)"/><rect x="-100" y="-34" width="60" height="6" rx="3" fill="#8a8fb0" transform="rotate(${sp},-70,-31)"/><rect x="40" y="-34" width="60" height="6" rx="3" fill="#8a8fb0" transform="rotate(${-sp},70,-31)"/>
   <path d="M0,22 L-120,260 L120,260Z" fill="${col}" opacity=".07"/></g>`; }
+
+/* ======================================================================
+   MONO-STIL (Referenzen geld.gesetze / egotalking): Schwarz, Weiß, Grau, weicher Glow.
+   Konventionen: Hauptfigur weiß + Glow (+ Lichtkegel/Bühne), Nebenfiguren grau (#8c8c8c),
+   Linien 3–5 px weiß mit filter glowS, Text Poppins. Keine Farben.
+   ====================================================================== */
+const MW='#f4f4f4', MG='#8c8c8c', MD='#3a3a3a';
+const MT=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-family="Poppins" font-weight="${o.w||700}" font-size="${o.size||40}" fill="${o.fill||MW}" text-anchor="${o.anchor||'middle'}" letter-spacing="${o.ls||0}" opacity="${o.op??1}" ${o.glow?'filter="url(#glowS)"':''}>${s}</text>`;
+const MCAPS=(x,y,s,o={})=>MT(x,y,String(s).toUpperCase(),{size:o.size||22,w:600,ls:o.ls??6,fill:o.fill||'#bdbdbd',anchor:o.anchor,op:o.op});
+// Piktogramm-Mensch, Ursprung = Füße. lit: weiß+Glow, sonst grau.
+function mPerson(x,y,s=1,o={}){ const col=o.col||(o.lit===false?MG:MW), op=o.op??1;
+  let g=`<g transform="translate(${x},${y+(o.bob||0)}) scale(${s})" opacity="${op}" ${o.lit===false?'':'filter="url(#glowS)"'}>`;
+  g+=`<path d="M-50,0 V-62 Q-50,-112 0,-112 Q50,-112 50,-62 V0Z" fill="${col}"/><circle cx="0" cy="-150" r="30" fill="${col}"/>`;
+  if(o.cap) g+=`<path d="M-40,-178 L0,-196 L40,-178 L0,-162Z" fill="${col}"/><rect x="-18" y="-176" width="36" height="12" fill="${col}"/><path d="M34,-178 v22" stroke="${col}" stroke-width="4"/>`;
+  return g+'</g>'; }
+function mSpot(x,y,w=240,h=520,op=1){ const id='sp'+Math.round(x)+'_'+Math.round(y);
+  return `<defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".32"/><stop offset="1" stop-color="#fff" stop-opacity="0.04"/></linearGradient></defs>
+  <path d="M${x-w*0.28},${y-h} L${x+w*0.28},${y-h} L${x+w/2},${y} L${x-w/2},${y}Z" fill="url(#${id})" opacity="${op}"/><ellipse cx="${x}" cy="${y}" rx="${w*0.62}" ry="${w*0.1}" fill="#fff" opacity="${0.08*op}"/>`; }
+function mStage(x,y,rx=120){ return `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${rx*0.17}" fill="#000" stroke="${MW}" stroke-width="3" filter="url(#glowS)"/>`; }
+function mGround(y,o={}){ return `<line x1="${o.x0??0}" y1="${y}" x2="${o.x1??1080}" y2="${y}" stroke="#9a9a9a" stroke-width="2" stroke-dasharray="10 9" opacity="${o.op??0.7}"/>`; }
+function mDivider(x,y0=420,y1=1250){ return `<line x1="${x}" y1="${y0}" x2="${x}" y2="${y1}" stroke="#8a8a8a" stroke-width="2" stroke-dasharray="8 10" opacity=".7"/>`; }
+function mPill(x,y,txt,o={}){ const size=o.size||24, w=o.w||Math.max(120,txt.length*size*0.66+48), h=size*1.9;
+  return o.outline?`<g transform="translate(${x},${y}) scale(${o.s??1})" opacity="${o.op??1}"><rect x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" rx="${h/2}" fill="#000" stroke="${MW}" stroke-width="3"/>${MT(0,size*0.36,String(txt).toUpperCase(),{size,w:600,ls:2})}</g>`
+   :`<g transform="translate(${x},${y}) scale(${o.s??1})" opacity="${o.op??1}"><rect x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" rx="${h/2}" fill="${MW}" filter="url(#glowS)"/>${MT(0,size*0.36,String(txt).toUpperCase(),{size,w:700,ls:1.5,fill:'#000'})}</g>`; }
+function mNumber(x,y,label,val,o={}){ return `<g transform="translate(${x},${y}) scale(${o.s??1})" opacity="${o.op??1}">${label?MCAPS(0,-(o.size||96)*0.95,label,{size:o.lsize||22}):''}${MT(0,0,val,{size:o.size||96,w:700,glow:true,fill:o.fill})}${o.sub?MCAPS(0,(o.size||96)*0.42,o.sub,{size:18,fill:'#8a8a8a'}):''}</g>`; }
+function mCard(x,y,w,h,inner='',o={}){ return `<g transform="translate(${x},${y}) scale(${o.s??1})" opacity="${o.op??1}"><rect x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" rx="${o.r??22}" fill="#050505" stroke="${o.dim?'#5a5a5a':MW}" stroke-width="3" ${o.dim?'':'filter="url(#glowS)"'}/>${inner}</g>`; }
+function mCheck(x,y,s=1,o={}){ return `<g transform="translate(${x},${y}) scale(${s})" opacity="${o.op??1}"><circle r="26" fill="none" stroke="${MW}" stroke-width="3.5"/><path d="M-12,1 L-3,10 L13,-8" stroke="${MW}" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>`; }
+function mX(x,y,s=1,o={}){ return `<g transform="translate(${x},${y}) scale(${s})" opacity="${o.op??1}" filter="url(#glowS)"><circle r="${o.r||26}" fill="none" stroke="${MW}" stroke-width="${o.sw||3.5}"/><path d="M-11,-11 L11,11 M11,-11 L-11,11" stroke="${MW}" stroke-width="${o.sw||4}" stroke-linecap="round" transform="scale(${(o.r||26)/26})"/></g>`; }
+function mCloud(x,y,s=1,inner='',o={}){ return `<g transform="translate(${x},${y}) scale(${s})" opacity="${o.op??1}"><path d="M-150,40 Q-200,40 -196,0 Q-200,-50 -140,-52 Q-130,-110 -60,-100 Q-20,-140 40,-110 Q110,-130 130,-70 Q200,-66 196,-10 Q200,40 140,40Z" fill="#050505" stroke="${MW}" stroke-width="3.5" filter="url(#glowS)"/>${inner}
+  ${o.tail===false?'':`<circle cx="0" cy="70" r="9" fill="${MW}"/><circle cx="0" cy="100" r="6" fill="${MW}"/><circle cx="0" cy="122" r="4" fill="${MW}"/>`}</g>`; }
+function mCoin(x,y,s=1,o={}){ return `<g transform="translate(${x},${y}) scale(${s})" opacity="${o.op??1}"><circle r="30" fill="${o.fill?MW:'#050505'}" stroke="${MW}" stroke-width="3.5" filter="url(#glowS)"/>${MT(0,12,o.sym||'€',{size:32,w:700,fill:o.fill?'#000':MW})}</g>`; }
+function mToggle(x,y,on,o={}){ const k=clamp(on,0,1); return `<g transform="translate(${x},${y}) scale(${o.s??1})">${MCAPS(-150,10,'AUS',{size:20,anchor:'end'})}${MCAPS(150,10,'AN',{size:20,anchor:'start'})}
+  <rect x="-110" y="-44" width="220" height="88" rx="44" fill="${k>0.5?'#5a5a5a':'#1a1a1a'}" stroke="${MW}" stroke-width="3"/><circle cx="${-66+132*k}" cy="0" r="34" fill="${MW}" filter="url(#glowS)"/>${o.label?MCAPS(0,-80,o.label,{size:20}):''}</g>`; }
+function mRing(x,y,r,pct,o={}){ const a=2*Math.PI*clamp(pct,0,1), ex=x+r*Math.sin(a), ey=y-r*Math.cos(a);
+  return `<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="#2a2a2a" stroke-width="8"/>`+(pct>0.001?`<path d="M${x},${y-r} A${r},${r} 0 ${pct>0.5?1:0} 1 ${ex},${ey}" stroke="${MW}" stroke-width="8" fill="none" stroke-linecap="round" filter="url(#glowS)"/>`:'')+MT(x,y+r*0.16,o.text??Math.round(pct*100)+' %',{size:r*0.42,w:700})+(o.label?MCAPS(x,y+r+40,o.label,{size:18}):''); }
+function mTimeline(x,y,w,years,mark,o={}){ let g=`<line x1="${x-w/2}" y1="${y}" x2="${x+w/2}" y2="${y}" stroke="${MW}" stroke-width="3"/>`;
+  years.forEach((yr,i)=>{ const xx=x-w/2+i*w/(years.length-1); g+=`<line x1="${xx}" y1="${y-10}" x2="${xx}" y2="${y+10}" stroke="${MW}" stroke-width="3"/>`+MCAPS(xx,y+44,yr,{size:16,ls:1,fill:'#9a9a9a'}); });
+  if(mark!=null) g+=`<circle cx="${x-w/2+mark*w}" cy="${y}" r="12" fill="${MW}" filter="url(#glowS)"/>`; return g; }
+function mMagnifier(x,y,s=1){ return `<g transform="translate(${x},${y}) scale(${s})" filter="url(#glowS)"><circle r="52" fill="none" stroke="${MW}" stroke-width="10"/><path d="M38,38 L92,92" stroke="${MW}" stroke-width="16" stroke-linecap="round"/></g>`; }
+function mDots(x,y,cols,rows,gap,lit=()=>0){ let g=''; for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){ const l=lit(c,r); g+=`<circle cx="${x+(c-(cols-1)/2)*gap}" cy="${y+(r-(rows-1)/2)*gap}" r="${l?9:5}" fill="${l?'#050505':MG}" stroke="${l?MW:'none'}" stroke-width="3" opacity="${l?1:0.55}"/>`; } return g; }
+// Linien-Icons (Kontur weiß)
+const MI={
+  house:(s=1)=>`<g transform="scale(${s})" fill="none" stroke="${MW}" stroke-width="4" stroke-linejoin="round"><path d="M-40,30 V-10 L0,-42 L40,-10 V30Z"/><rect x="-10" y="6" width="20" height="24"/></g>`,
+  car:(s=1)=>`<g transform="scale(${s})" fill="none" stroke="${MW}" stroke-width="4" stroke-linejoin="round"><path d="M-56,14 V0 Q-56,-8 -46,-10 L-28,-14 L-14,-30 H20 L36,-14 L50,-10 Q58,-8 58,0 V14Z"/><circle cx="-30" cy="16" r="10" fill="#000"/><circle cx="32" cy="16" r="10" fill="#000"/></g>`,
+  watch:(s=1)=>`<g transform="scale(${s})" fill="none" stroke="${MW}" stroke-width="4"><rect x="-12" y="-44" width="24" height="88" rx="8"/><circle r="22" fill="#000"/><path d="M0,-10 V0 L8,6"/></g>`,
+  safe:(s=1,fill=0)=>`<g transform="scale(${s})"><rect x="-52" y="-52" width="104" height="104" rx="10" fill="#050505" stroke="${MW}" stroke-width="5" filter="url(#glowS)"/><rect x="-40" y="${40-80*fill}" width="80" height="${80*fill}" fill="${MW}" opacity=".85"/><circle cy="-8" r="20" fill="none" stroke="${MW}" stroke-width="4"/><path d="M0,-8 L10,-18" stroke="${MW}" stroke-width="4"/></g>`,
+  desk:(s=1,col=MG)=>`<g transform="scale(${s})"><rect x="-70" y="-6" width="140" height="10" fill="${col}"/><rect x="-60" y="4" width="6" height="60" fill="${col}"/><rect x="54" y="4" width="6" height="60" fill="${col}"/><rect x="0" y="-74" width="58" height="46" rx="4" fill="none" stroke="${col}" stroke-width="4"/><rect x="26" y="-28" width="6" height="22" fill="${col}"/>${mPerson(-28,0,0.42,{lit:false,col})}</g>`,
+  cap:(s=1)=>`<g transform="scale(${s})" fill="none" stroke="${MW}" stroke-width="4" stroke-linejoin="round"><path d="M-60,-10 L0,-36 L60,-10 L0,16Z"/><path d="M-34,2 V30 Q0,48 34,30 V2"/><path d="M56,-8 V26"/></g>`,
+  shop:(s=1,lab='')=>`<g transform="scale(${s})"><rect x="-56" y="-56" width="112" height="112" rx="10" fill="#050505" stroke="${MW}" stroke-width="3"/><path d="M-40,-30 H40 L46,-14 H-46Z M-36,-14 V30 H36 V-14 M-16,30 V6 H16 V30" fill="none" stroke="${MW}" stroke-width="3"/>${lab?MCAPS(0,48,lab,{size:12,ls:1}):''}</g>`,
+  doc:(s=1)=>`<g transform="scale(${s})" fill="none" stroke="${MW}" stroke-width="4"><path d="M-36,-46 H20 L36,-30 V46 H-36Z"/><path d="M-22,-20 H22 M-22,0 H22 M-22,20 H10"/></g>`,
+  drop:(s=1,fill=false)=>`<g transform="scale(${s})"><path d="M0,-50 C20,-20 34,0 34,18 A34,34 0 0 1 -34,18 C-34,0 -20,-20 0,-50Z" fill="${fill?MW:'#050505'}" stroke="${MW}" stroke-width="4" filter="url(#glowS)"/></g>`,
+  sun:(s=1)=>`<g transform="scale(${s})" stroke="${MW}" stroke-width="4" fill="none" filter="url(#glowS)"><circle r="30"/>${[...Array(8)].map((_,i)=>`<path d="M0,-46 V-62" transform="rotate(${i*45})"/>`).join('')}</g>`,
+  umbrella:(s=1)=>`<g transform="scale(${s})" fill="none" stroke="${MW}" stroke-width="4" stroke-linejoin="round"><path d="M-70,0 Q-70,-62 0,-64 Q70,-62 70,0 Q52,-14 35,0 Q18,-14 0,0 Q-18,-14 -35,0 Q-52,-14 -70,0Z" fill="#050505"/><path d="M0,0 V70 Q0,84 -14,84"/></g>`,
+  plant:(s=1,wilt=0)=>`<g transform="scale(${s})" fill="none" stroke="${MW}" stroke-width="4" stroke-linecap="round"><path d="M0,40 V${-20+wilt*20}"/><path d="M0,${-2+wilt*10} Q-30,${-20+wilt*40} -40,${-40+wilt*70}"/><path d="M0,${-12+wilt*14} Q30,${-34+wilt*44} 40,${-54+wilt*80}"/><path d="M-30,40 H30"/></g>`,
+  cloudIcon:(s=1)=>`<g transform="scale(${s})"><path d="M-60,20 Q-86,20 -84,-4 Q-84,-30 -54,-30 Q-46,-62 -10,-56 Q14,-80 44,-56 Q80,-58 82,-24 Q100,-20 98,0 Q96,20 70,20Z" fill="#050505" stroke="${MW}" stroke-width="4" filter="url(#glowS)"/></g>`,
+};
+function mRain(t,k=1,o={}){ const r=rng(o.seed||3); let g=''; const n=Math.round((o.n||90)*k);
+  for(let i=0;i<n;i++){ const x=r()*1100-10, sp=900+r()*500, y=((r()*2000+t*sp)%2000)-80, L=26+r()*30; g+=`<line x1="${x}" y1="${y}" x2="${x-6}" y2="${y+L}" stroke="#fff" stroke-width="2.2" opacity="${0.18+0.25*r()}"/>`; }
+  return g; }

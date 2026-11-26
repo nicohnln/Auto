@@ -12,6 +12,11 @@ const arg = (k, d) => { const i = process.argv.indexOf('--' + k); return i > 0 ?
 const FPS = +arg('fps', 30), WORKERS = +arg('workers', 3);
 const build = path.join(proj, 'build');
 const tl = JSON.parse(fs.readFileSync(path.join(build, 'timeline.json'), 'utf8'));
+// Stil-Einstellungen aus script.json (theme, captions, series, nr, tagline) an den Player geben
+try {
+  const sc = JSON.parse(fs.readFileSync(path.join(proj, 'script.json'), 'utf8'));
+  tl.cfg = { theme: sc.theme || 'navy', captions: sc.captions ?? (sc.theme !== 'mono'), series: sc.series, nr: sc.nr, tagline: sc.tagline };
+} catch (e) { tl.cfg = { theme: 'navy', captions: true }; }
 
 function composeHtml() {
   let html = fs.readFileSync(path.join(ENGINE, 'player.html'), 'utf8');

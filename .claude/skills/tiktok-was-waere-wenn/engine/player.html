@@ -5,6 +5,12 @@
 @font-face{font-family:Inter;font-weight:900;src:url(__FONTS__/inter-latin-900-normal.woff2)}
 @font-face{font-family:Mono;font-weight:500;src:url(__FONTS__/jetbrains-mono-latin-500-normal.woff2)}
 @font-face{font-family:Mono;font-weight:700;src:url(__FONTS__/jetbrains-mono-latin-700-normal.woff2)}
+@font-face{font-family:Poppins;font-weight:400;src:url(__FONTS__/poppins-latin-400-normal.woff2)}
+@font-face{font-family:Poppins;font-weight:500;src:url(__FONTS__/poppins-latin-500-normal.woff2)}
+@font-face{font-family:Poppins;font-weight:600;src:url(__FONTS__/poppins-latin-600-normal.woff2)}
+@font-face{font-family:Poppins;font-weight:700;src:url(__FONTS__/poppins-latin-700-normal.woff2)}
+@font-face{font-family:Poppins;font-weight:800;src:url(__FONTS__/poppins-latin-800-normal.woff2)}
+
 html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#0b0d20}
 #stage{position:absolute;inset:0;overflow:hidden}
 #svg{position:absolute;inset:0}
@@ -24,6 +30,28 @@ html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#0b0d20
 #end .a{font:700 54px Mono;letter-spacing:8px;color:#fff}
 #end .b{font:800 40px Inter;color:#9aa0c0;margin-top:40px}
 #flash{position:absolute;inset:0;pointer-events:none}
+#kick{position:absolute;left:50px;right:50px;top:300px;text-align:center;pointer-events:none}
+#kick .s{font:600 30px Poppins;letter-spacing:7px;color:#e6e6e6;text-transform:uppercase}
+#kick .b{font:700 74px/1.12 Poppins;color:#fff;margin-top:10px;text-shadow:0 0 26px rgba(255,255,255,.45)}
+/* ===== Mono-Stil (Referenzen geld.gesetze / egotalking): Schwarz, Weiß, Glow, keine Farben ===== */
+body.mono{background:#000}
+body.mono .chip{top:150px;padding:10px 28px;border:none;border-radius:40px;background:#f2f2f2;color:#000;font:600 26px Poppins;letter-spacing:2px;box-shadow:0 0 22px rgba(255,255,255,.35)}
+body.mono .counter{top:230px;border:none!important;background:none;box-shadow:none!important;padding:0;min-width:0}
+body.mono .counter .l{font:600 22px Poppins;letter-spacing:7px;color:#bdbdbd}
+body.mono .counter .v{font:700 104px Poppins;color:#fff!important;letter-spacing:0;margin-top:0;text-shadow:0 0 28px rgba(255,255,255,.55)}
+body.mono .counter .u{font:600 20px Poppins;letter-spacing:6px;color:#8a8a8a;margin-top:4px}
+body.mono .list{display:none}
+body.mono #cap{font:700 62px/1.15 Poppins;text-transform:none;letter-spacing:0;top:1300px}
+body.mono #cap .w{color:#5a5a5a;text-shadow:none}
+body.mono #end{background:#000}
+#end .icon{width:120px;height:120px;border-radius:30px;background:#f2f2f2;display:none;align-items:center;justify-content:center;font:800 70px Poppins;color:#000;box-shadow:0 0 60px rgba(255,255,255,.5)}
+#end .ser{font:600 34px Poppins;letter-spacing:12px;color:#d6d6d6;margin-top:34px;display:none}
+#end .nr{font:800 170px/1 Poppins;color:#fff;margin-top:24px;text-shadow:0 0 40px rgba(255,255,255,.45);display:none}
+#end .line{width:260px;height:2px;background:#555;margin:34px 0 26px;display:none}
+body.mono #end .icon,body.mono #end .nr{display:flex}
+body.mono #end .ser,body.mono #end .line{display:block}
+body.mono #end .a{display:none}
+body.mono #end .b{font:500 40px Poppins;color:#f0f0f0;margin-top:0}
 </style></head>
 <body>
 <div id="stage">
@@ -32,12 +60,17 @@ html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#0b0d20
   <div id="cap"></div>
   <div id="flash"></div>
 </div>
-<div id="end"><div class="a"></div><div class="b"></div></div>
+<div id="kick"></div>
+<div id="end"><div class="icon">?</div><div class="ser"></div><div class="nr"></div><div class="line"></div><div class="a"></div><div class="b"></div></div>
 <script>__LIB__</script>
 <script>__SCENES__</script>
 <script>
 const TL = __TIMELINE__;
-const COLORS = {yellow:'#ffd23f', red:'#ff3355', pink:'#ff4fae', green:'#38f27e', blue:'#4ea8ff', white:'#ffffff'};
+const CFG = TL.cfg||{theme:'navy',captions:true};
+const MONO = CFG.theme==='mono';
+if(MONO) document.body.classList.add('mono');
+const COLORS = MONO ? {yellow:'#ffffff', red:'#ffffff', pink:'#ffffff', green:'#ffffff', blue:'#ffffff', white:'#ffffff'}
+                    : {yellow:'#ffd23f', red:'#ff3355', pink:'#ff4fae', green:'#38f27e', blue:'#4ea8ff', white:'#ffffff'};
 
 /* ---------- Untertitel: Wörter zu Phrasen bündeln ---------- */
 function chunkWords(seg){
@@ -57,8 +90,8 @@ TL.segments.forEach((s,i)=>{ s.chunks=chunkWords(s); s.idx=i; s._shake=[]; s._fl
   (s.sfx||[]).forEach(([at,name])=>{
     const tt=at==='start'?0:at==='end'?s.end-s.start-0.3:H(s).wt(at.slice(2));
     if(['impact','hit','stamp','error','glitch','buzz'].includes(name)) s._shake.push([tt,(name==='impact'||name==='hit'||name==='stamp')?16:9]);
-    if(name==='error'||name==='buzz') s._flash.push([tt,'#ff2a4a']);
-    if(name==='impact'||name==='stamp') s._flash.push([tt,'#9fb0ff']);
+    if(name==='error'||name==='buzz') s._flash.push([tt,MONO?'#ffffff':'#ff2a4a']);
+    if(name==='impact'||name==='stamp') s._flash.push([tt,MONO?'#ffffff':'#9fb0ff']);
   });
 });
 
@@ -66,7 +99,7 @@ function hlColor(seg,w){ const m=seg.hl||{}; return COLORS[m[w.n]]||null; }
 
 function renderCaption(t,seg){
   const cap=document.getElementById('cap');
-  if(!seg){ cap.innerHTML=''; return; }
+  if(!seg || !CFG.captions){ cap.innerHTML=''; return; }
   let ch=null;
   for(const c of seg.chunks){ if(t>=c[0].t-0.06) ch=c; }
   if(!ch){ // vor dem ersten Wort: letzte Phrase des vorigen Segments halten
@@ -86,6 +119,7 @@ function renderCaption(t,seg){
 /* ---------- HUD: Chip, Zähler, Checkliste ---------- */
 function fmtVal(v,f){
   if(typeof v==='string') return v;
+  if(f==='m1') return v.toFixed(1).replace('.',',')+' m';
   if(f==='eur'){ const s=v<0?'-':''; v=Math.abs(v); const [a,b]=v.toFixed(2).split('.'); return s+a.replace(/\B(?=(\d{3})+(?!\d))/g,'.')+','+b+' €'; }
   if(f==='pct') return Math.round(v)+' %';
   return Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');
@@ -109,7 +143,7 @@ function renderHud(t,seg,lt){
     const same=prev.counter&&prev.counter.label===c.label, pop=same?1:E.outBack(clamp(lt/0.25,0,1));
     const shake=(c.at!=='span' && Math.abs(lt-H(seg).wt(c.at.slice(2))-0.5)<0.25)?Math.sin(lt*90)*5:0;
     h+=`<div class="counter" style="border-color:${col};box-shadow:0 0 26px ${col}66, inset 0 0 18px ${col}22;transform:translateX(calc(-50% + ${shake}px)) scale(${pop})">
-      <div class="l">${c.label}</div><div class="v" style="color:${v===c.to&&c.at!=='span'?col:'#fff'}">${fmtVal(v,c.fmt)}</div></div>`;
+      <div class="l">${c.label}</div><div class="v" style="color:${v===c.to&&c.at!=='span'?col:'#fff'}">${fmtVal(v,c.fmt)}</div>${c.sub?`<div class="u">${c.sub}</div>`:''}</div>`;
   }
   if(seg.list){
     const pl=prev.list||[];
@@ -118,11 +152,25 @@ function renderHud(t,seg,lt){
       return `<div class="it" style="opacity:${a};transform:translateX(${(1-a)*-40}px)">${i+1}. ${x} ✓</div>`;}).join('')+'</div>';
   }
   document.getElementById('hud').innerHTML=h;
+  // Schlüsselsatz (Mono-Stil): kleine Zeile + große Zeile, blendet weich ein
+  const K=document.getElementById('kick'); const kk=seg.kicker;
+  if(kk){ const t0=kk.at?H(seg).wt(kk.at.slice(2)):0, a=clamp((lt-t0)/0.35,0,1), same=prev.kicker&&prev.kicker.big===kk.big;
+    K.style.top=(kk.y||300)+'px'; K.style.opacity=same?1:a; K.style.transform=`translateY(${same?0:(1-E.out(a))*24}px)`;
+    K.innerHTML=(kk.small?`<div class="s">${kk.small}</div>`:'')+(kk.big?`<div class="b">${kk.big}</div>`:''); }
+  else K.innerHTML='';
 }
 
 /* ---------- Hintergrund ---------- */
 const STARS=(()=>{const r=rng(7),a=[];for(let i=0;i<90;i++)a.push([r()*1080,r()*1920,0.8+r()*2.2,r()*6.28]);return a;})();
+function backgroundMono(t,seg){
+  let s=`<defs>${DEFS}<radialGradient id="bgm" cx="50%" cy="45%" r="70%"><stop offset="0" stop-color="#141414"/><stop offset="1" stop-color="#000"/></radialGradient>
+   <radialGradient id="vig" cx="50%" cy="45%" r="75%"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".7"/></radialGradient>
+   <pattern id="dots" width="54" height="54" patternUnits="userSpaceOnUse"><circle cx="27" cy="27" r="1.7" fill="#fff" opacity=".09"/></pattern></defs>
+   <rect width="1080" height="1920" fill="url(#bgm)"/><rect width="1080" height="1920" fill="url(#dots)"/>`;
+  return s;
+}
 function background(t,seg){
+  if(MONO) return backgroundMono(t,seg);
   const tint=(seg&&seg.tint)||'none';
   const c={none:['#1d2150','#0b0d20'],red:['#3a1028','#0e0712'],sepia:['#3a2c1c','#120d08'],green:['#103326','#07120d']}[tint];
   let s=`<defs>${DEFS}<radialGradient id="bg" cx="50%" cy="42%" r="75%"><stop offset="0" stop-color="${c[0]}"/><stop offset="1" stop-color="${c[1]}"/></radialGradient>
@@ -137,8 +185,12 @@ window.seek=function(t){
   const end=TL.end_card;
   const E1=document.getElementById('end');
   if(end && t>=end.start){
-    E1.style.display='flex'; E1.querySelector('.a').textContent=end.text; E1.querySelector('.b').textContent=end.sub||'';
+    E1.style.display='flex'; E1.querySelector('.a').textContent=end.text; E1.querySelector('.b').textContent=MONO?(CFG.tagline||end.sub||''):(end.sub||'');
+    E1.querySelector('.ser').textContent=(CFG.series||'WAS WÄRE WENN').toUpperCase(); E1.querySelector('.nr').textContent=CFG.nr?('Nr. '+CFG.nr):'';
+    E1.querySelector('.icon').textContent=end.icon||'?';
     const k=clamp((t-end.start)/0.5,0,1); E1.querySelector('.a').style.opacity=k; E1.querySelector('.b').style.opacity=clamp((t-end.start-0.7)/0.5,0,1);
+    ['.icon','.ser','.nr','.line'].forEach((q,i)=>{ const el=E1.querySelector(q); const a=clamp((t-end.start-i*0.12)/0.45,0,1); el.style.opacity=a; el.style.transform=`translateY(${(1-E.out(a))*20}px)`; });
+    document.getElementById('kick').innerHTML='';
     return;
   }
   E1.style.display='none';
@@ -151,8 +203,8 @@ window.seek=function(t){
   try{ body=fn(lt,d,seg,H(seg)); }catch(e){ body=`<text x="40" y="900" fill="red" font-size="30">${e}</text>`; }
   document.getElementById('svg').innerHTML=background(t,seg)+
     `<g transform="translate(${540+shake},860) scale(${z}) translate(-540,-860)">${body}</g><rect width="1080" height="1920" fill="url(#vig)"/>`;
-  document.getElementById('svg').style.filter=seg.tint==='sepia'?'sepia(.55) contrast(1.05)':'none';
-  const fl=document.getElementById('flash'); const f=(seg._flash||[]).reduce((a,[t0,c])=>lt>t0&&lt<t0+0.3?{c,a:0.28*(1-(lt-t0)/0.3)}:a,null);
+  document.getElementById('svg').style.filter=MONO?'grayscale(1)':(seg.tint==='sepia'?'sepia(.55) contrast(1.05)':'none');
+  const fl=document.getElementById('flash'); const f=(seg._flash||[]).reduce((a,[t0,c])=>lt>t0&&lt<t0+0.3?{c,a:(MONO?0.12:0.28)*(1-(lt-t0)/0.3)}:a,null);
   fl.style.background=f?f.c:'transparent'; fl.style.opacity=f?f.a:0;
   renderHud(t,seg,lt);
   renderCaption(t,seg);
