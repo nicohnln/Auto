@@ -37,7 +37,7 @@ Referenzen (vom Creator am 26.11.2026 vorgegeben, ersetzen die alten): „geld.g
 5. **Serien-Abschluss gesprochen:** „Das war ‚Was wäre wenn‘ Nummer X.“ Danach die Endkarte. **Kein** „Fortsetzung folgt“, **keine** Cliffhanger-Effekthascherei.
 - **Ton:** ruhig, sachlich, Du-Form, kurze Aussagesätze, keine Übertreibung. Emotionen höchstens 1–2 dezente Tags.
 
-**Ton/Mix:** leiser Musikteppich (ruhiger, eher Pad, wenig Kick), wenige, weiche Soundeffekte (pop, chime, whoosh, impact nur bei der Pointe). Endmix −14 LUFS.
+**Ton/Mix:** **Keine Hintergrundmusik** (Vorgabe des Creators vom 26.11.2026, `background_music` ist standardmäßig `false`). Es gibt **nur Soundeffekte**: wenige, weiche (pop, chime, whoosh, coin, impact nur bei der Pointe). Endmix −14 LUFS.
 
 Alter Stil (bunte 2D-Navy-Welt mit farbigen Untertiteln, „FORTSETZUNG FOLGT“) bleibt als `"theme": "navy"` verfügbar. Alle Videos bis Nr. 8 sind in diesem Stil.
 
@@ -48,6 +48,7 @@ Alter Stil (bunte 2D-Navy-Welt mit farbigen Untertiteln, „FORTSETZUNG FOLGT“
 - Jedes Segment wird am Stück gesprochen. **Keine** Tonhöhen- oder Tempo-Tricks.
 - `"say"` = gesprochener Text: Zahlen als Wörter, optionale Tags `<sigh>` `<chuckle>` `<gasp>`. `"text"` = sauberer Text für Prüfung und Zeitstempel.
 - **Prüfung:** Whisper hört jedes Segment nach. Sauber ist es nur, wenn jedes Wort stimmt. Füllaute, Ziffern und Getrenntschreibung zählen nicht als Fehler. Wiederholungen und gedehnte Wörter werden erkannt. Bis zu 4 Versuche, der beste gewinnt. Schwierige Wörter umformulieren statt hoffen.
+- **Casting 2 (26.11.2026), gemessen gegen die Mono-Referenzen:** Die Hauptreferenz geld.gesetze liegt bei ~99 Hz, 3,7 Halbtönen Melodie und 183 W/min. Keine freie Stimme trifft das genau. Am nächsten ist Chatterbox mit unveränderter Thorsten-Referenz (125 Hz / 3,9 HT / 178 W/min, Einstellungen: `voice_style: emotional`, `ex: 0.45`, `cfg: 0.5`, `tempo: 1.0`, `voice_pitch: 0`). Danach folgt Orpheus Thomas ruhig (`temp` 0.45). Proben liegen in `videos/_casting2/`. Die Wahl des Creators steht noch aus.
 - **Lehre:** Claude kann Audio nicht hören. Stimmen nie nach Messwerten „optimieren“. Bei Stimmfragen ein nummeriertes Hör-Casting schicken. Die menschlichste Option ist die eigene Aufnahme des Creators.
 - Ältere Engines (nur Notlösung): `"tts": "chatterbox"` (`engine/tts_chatterbox.py`), edge-tts (`engine/tts.py`).
 

@@ -6,52 +6,146 @@
   "series": "Millionärs Edition",
   "nr": 1,
   "tagline": "Kein Glück. Ein Anfang.",
-  "tts": "orpheus",
+  "tts": "chatterbox",
   "voice": "thomas",
   "max_pause": 0.5,
   "lead_in": 0.3,
-  "end_card": { "icon": "€", "dur": 2.4 },
+  "end_card": {
+    "icon": "€",
+    "dur": 2.4
+  },
   "segments": [
-    { "id": "hook", "scene": "hook",
-      "kicker": { "small": "Millionärs Edition", "big": "Eine einzige<br>Entscheidung." },
+    {
+      "id": "hook",
+      "scene": "hook",
+      "kicker": {
+        "small": "Millionärs Edition",
+        "big": "Eine einzige<br>Entscheidung."
+      },
       "text": "Du bist vielleicht nur eine einzige Entscheidung davon entfernt, dein Leben zu verändern.",
-      "sfx": [["start", "riser_short"]] },
-
-    { "id": "lotto", "scene": "lotto",
+      "sfx": [
+        [
+          "start",
+          "riser_short"
+        ]
+      ]
+    },
+    {
+      "id": "lotto",
+      "scene": "lotto",
       "text": "Und nein, es ist nicht der Lottoschein.",
-      "sfx": [["w:lottoschein", "pop"]] },
-
-    { "id": "two", "scene": "two",
+      "sfx": [
+        [
+          "w:lottoschein",
+          "pop"
+        ]
+      ]
+    },
+    {
+      "id": "two",
+      "scene": "two",
       "text": "Stell dir zwei Menschen vor. Beide sind fünfundzwanzig. Beide verdienen gleich viel.",
-      "sfx": [["w:zwei", "pop"]] },
-
-    { "id": "later", "scene": "later",
+      "sfx": [
+        [
+          "w:zwei",
+          "pop"
+        ]
+      ]
+    },
+    {
+      "id": "later",
+      "scene": "later",
       "text": "Der eine sagt: Ich fange an, wenn ich mehr verdiene.",
-      "sfx": [["w:verdiene", "pop"]] },
-
-    { "id": "now", "scene": "now",
+      "sfx": [
+        [
+          "w:verdiene",
+          "pop"
+        ]
+      ]
+    },
+    {
+      "id": "now",
+      "scene": "now",
       "text": "Der andere legt ab sofort hundert Euro im Monat an. Nicht mehr.",
-      "sfx": [["w:hundert", "coin"]] },
-
-    { "id": "tenyears", "scene": "tenyears", "chip": "10 Jahre später",
+      "sfx": [
+        [
+          "w:hundert",
+          "coin"
+        ]
+      ]
+    },
+    {
+      "id": "tenyears",
+      "scene": "tenyears",
+      "chip": "10 Jahre später",
       "text": "Zehn Jahre später fängt auch der Erste an. Mit genau denselben hundert Euro.",
-      "sfx": [["w:erste", "pop"]] },
-
-    { "id": "result", "scene": "result", "chip": "Mit 65",
+      "sfx": [
+        [
+          "w:erste",
+          "pop"
+        ]
+      ]
+    },
+    {
+      "id": "result",
+      "scene": "result",
+      "chip": "Mit 65",
       "text": "Bei sieben Prozent im Jahr hat der Erste mit fünfundsechzig rund hundertzweiundzwanzigtausend Euro. Der Zweite rund zweihundertzweiundsechzigtausend.",
-      "sfx": [["w:zweite", "impact"]] },
-
-    { "id": "double", "scene": "double",
+      "sfx": [
+        [
+          "w:zweite",
+          "impact"
+        ]
+      ]
+    },
+    {
+      "id": "double",
+      "scene": "double",
       "text": "Derselbe Betrag. Nur zehn Jahre früher. Mehr als das Doppelte.",
-      "sfx": [["w:doppelte", "chime"]] },
-
-    { "id": "reason", "scene": "reason", "chip": "Der Unterschied",
+      "sfx": [
+        [
+          "w:doppelte",
+          "chime"
+        ]
+      ]
+    },
+    {
+      "id": "reason",
+      "scene": "reason",
+      "chip": "Der Unterschied",
       "text": "Der Unterschied war kein Talent. Kein Glück. Sondern ein einziger Tag, an dem er angefangen hat.",
-      "sfx": [["w:talent", "pop"], ["w:glück", "pop"], ["w:tag", "impact"]] },
-
-    { "id": "end", "scene": "end",
-      "kicker": { "small": "Reich wird man nicht, wenn das Geld kommt", "big": "Sondern wenn man<br>sich entscheidet.", "at": "w:sondern" },
+      "sfx": [
+        [
+          "w:talent",
+          "pop"
+        ],
+        [
+          "w:glück",
+          "pop"
+        ],
+        [
+          "w:tag",
+          "impact"
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "scene": "end",
+      "kicker": {
+        "small": "Reich wird man nicht, wenn das Geld kommt",
+        "big": "Sondern wenn man<br>sich entscheidet.",
+        "at": "w:sondern"
+      },
       "text": "Reich wird man nicht an dem Tag, an dem das Geld kommt. Sondern an dem Tag, an dem man sich entscheidet. Das war die Millionärs Edition, Nummer eins.",
-      "say": "Reich wird man nicht an dem Tag, an dem das Geld kommt. Sondern an dem Tag, an dem man sich entscheidet. … Das war die Millionärs Edition, Nummer eins." }
-  ]
+      "say": "Reich wird man nicht an dem Tag, an dem das Geld kommt. Sondern an dem Tag, an dem man sich entscheidet. … Das war die Millionärs Edition, Nummer eins."
+    }
+  ],
+  "voice_style": "emotional",
+  "refs_dir": "/home/user/models/thorsten/refs",
+  "emotion": "neutral",
+  "ex": 0.45,
+  "cfg": 0.5,
+  "tempo": 1.0,
+  "voice_pitch": 0.0
 }
