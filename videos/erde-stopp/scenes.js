@@ -4,9 +4,12 @@ const panel=(x,y,w,hh,inner,o={})=>`<g transform="translate(${x},${y}) scale(${o
 const ME={hair:'short',hairC:'#6b4a2f',shirt:PAL.purple};
 const tag=(txt,col,w=300)=>`<rect x="${-w/2}" y="-36" width="${w}" height="72" rx="16" fill="#141836" stroke="${col}" stroke-width="5"/>`+T(0,14,txt,{size:30,font:'Mono',w:700,fill:col});
 const speedLines=(x,y,w,n,t,col='#c9cdf0',seed=1)=>{ const r=rng(seed); let g=''; for(let i=0;i<n;i++){ const yy=y+(r()-0.5)*w, L=80+r()*160, p=((t*3+r())%1); g+=`<rect x="${x-p*600}" y="${yy}" width="${L}" height="6" rx="3" fill="${col}" opacity="${0.5*(1-p)}"/>`; } return g; };
-function gauge(x,y,r,val,max,col=PAL.yellow){ const a=-120+240*clamp(val/max,0,1); let g=`<g transform="translate(${x},${y})"><path d="M${-r*Math.sin(2.094)},${r*Math.cos(2.094)} A${r},${r} 0 1 1 ${r*Math.sin(2.094)},${r*Math.cos(2.094)}" stroke="#2f3566" stroke-width="26" fill="none" stroke-linecap="round"/>`;
-  const ea=a*Math.PI/180; g+=`<path d="M${-r*Math.sin(2.094)},${r*Math.cos(2.094)} A${r},${r} 0 ${a>60?1:0} 1 ${r*Math.sin(ea)},${-r*Math.cos(ea)}" stroke="${col}" stroke-width="26" fill="none" stroke-linecap="round" filter="url(#glowS)"/>`;
-  g+=`<rect x="-6" y="${-r+30}" width="12" height="${r-30}" rx="6" fill="#fff" transform="rotate(${a})"/><circle r="22" fill="#fff"/>`+T(0,r*0.55,'KM/H',{size:30,font:'Mono',w:700,fill:'#8d93bd'});
+function gauge(x,y,r,val,max,col=PAL.yellow){ // Tacho: Bogen von -120° (unten links) über oben bis +120° (unten rechts)
+  const pt=a=>[r*Math.sin(a*Math.PI/180),-r*Math.cos(a*Math.PI/180)];
+  const a=-120+240*clamp(val/max,0,1), [sx,sy]=pt(-120), [ex,ey]=pt(120), [vx,vy]=pt(a);
+  let g=`<g transform="translate(${x},${y})"><path d="M${sx},${sy} A${r},${r} 0 1 1 ${ex},${ey}" stroke="#2f3566" stroke-width="26" fill="none" stroke-linecap="round"/>`;
+  if(a>-119) g+=`<path d="M${sx},${sy} A${r},${r} 0 ${a+120>180?1:0} 1 ${vx},${vy}" stroke="${col}" stroke-width="26" fill="none" stroke-linecap="round" filter="url(#glowS)"/>`;
+  g+=`<rect x="-6" y="${-r+30}" width="12" height="${r-30}" rx="6" fill="#fff" transform="rotate(${a})"/><circle r="22" fill="#fff"/>`+T(0,r*0.62,'KM/H',{size:30,font:'Mono',w:700,fill:'#8d93bd'});
   return g+'</g>'; }
 function house1(x,y,s=1,r=0){ return `<g transform="translate(${x},${y}) scale(${s}) rotate(${r})"><path d="M-70,0 V-90 L0,-150 L70,-90 V0Z" fill="#d9a35a"/><path d="M-84,-84 L0,-160 L84,-84" stroke="#b1263a" stroke-width="18" fill="none"/><rect x="-20" y="-60" width="40" height="60" fill="#4b2f1a"/><rect x="-56" y="-76" width="28" height="26" fill="#bfe3ff"/></g>`; }
 function tree(x,y,s=1,bend=0){ return `<g transform="translate(${x},${y}) scale(${s})"><path d="M-8,0 Q${bend*0.4},-80 ${bend},-150" stroke="#6b4a2a" stroke-width="18" fill="none" stroke-linecap="round"/><ellipse cx="${bend*1.1}" cy="-180" rx="70" ry="55" fill="#2f9a5b" transform="rotate(${bend*0.4},${bend},-180)"/></g>`; }
@@ -26,7 +29,7 @@ speed(t,d,S,h){
   const v=1000*E.inOut(h.p(t,0.3,d-0.4));
   let s=G(globe(0,0,170,t*2.5),{x:300,y:560})+`<circle cx="300" cy="490" r="10" fill="${PAL.yellow}" filter="url(#glowS)"/>`+T(300,780,'DU',{size:26,font:'Mono',w:700,fill:PAL.yellow});
   s+=gauge(700,880,230,v,1700);
-  s+=T(700,960,Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.'),{size:70,fill:'#fff'});
+  s+=T(700,1050,Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.'),{size:70,fill:'#fff'});
   return s;
 },
 stop(t,d,S,h){
@@ -39,6 +42,8 @@ stop(t,d,S,h){
 fling(t,d,S,h){
   const items=[['menschen',figure(0,0,0.9,'#ff7aa8',null)],['autos',car(0,0,0.55,'#4ea8ff')],['häuser',house1(0,0,0.9)]];
   let s=`<rect x="0" y="1100" width="1080" height="160" fill="#1a1d38"/>`+speedLines(1000,760,700,20,t,'#c9cdf0',5);
+  const rr=rng(17); for(let i=0;i<9;i++){ const sp=380+rr()*300, ph=rr()*1400, x=((t*sp+ph)%1400)-200, y=560+rr()*480; // lose Dinge fliegen von Anfang an
+    s+=G(i%3===0?trash(0,0,0.35,0):i%3===1?box(0,0,0.5,['#c98f4e','#ff5d73','#4ea8ff'][i%3]):`<rect x="-30" y="-8" width="60" height="16" rx="4" fill="#c9cdf0"/><rect x="-6" y="-40" width="12" height="40" fill="#8a8fb0"/>`,{x,y,r:t*200+i*40}); }
   s+=G(`<path d="M0,0 H200 M140,-50 L200,0 L140,50" stroke="${PAL.red}" stroke-width="20" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`+T(100,90,'OSTEN',{size:34,font:'Mono',w:700,fill:PAL.red}),{x:760,y:470,s:E.outBack(h.p(t,h.wt('osten')-0.1,h.wt('osten')+0.2))});
   items.forEach(([w,art],i)=>{ const tw=h.wt(w); if(t<tw-0.2) return; const p=(t-tw+0.2); const x=-150+p*700, y=[880,980,1000][i]-Math.sin(Math.min(p,1.4)*2)*120;
     s+=G(art,{x:x%1300,y,r:p*200*(i===1?1:0.6)}); });
@@ -74,6 +79,7 @@ oceans(t,d,S,h){
   const band=300*(1-k*0.75); // Wasser zieht sich zu den Polen zurück
   s+=`<rect x="-310" y="-310" width="620" height="${310-band*0.35}" fill="#2f6fd6"/><rect x="-310" y="${band*0.35}" width="620" height="${310-band*0.35}" fill="#2f6fd6"/>`;
   s+=`<rect x="-310" y="${-band*0.35}" width="620" height="${band*0.7}" fill="#2f6fd6" opacity="${1-k}"/>`;
+  s+=[[-150,-120,90,60],[60,-60,120,70],[-60,110,80,50],[170,150,60,40]].map(([cx,cy,rx,ry])=>`<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="#3a8a4a"/>`).join('');
   s+=`</g><circle r="300" fill="none" stroke="#9fb0ff" stroke-width="4" opacity=".5"/></g>`;
   [['NORDPOL',-1],['SÜDPOL',1]].forEach(([l,sg])=>{ s+=T(540,760+sg*360+(sg<0?-10:30),l,{size:24,font:'Mono',w:700,fill:'#8fb8e8'}); for(let i=0;i<3;i++){ const p=((t*0.8)+i/3)%1; s+=`<path d="M${400+i*140},${760+sg*(60+p*180)} l0,${sg*30}" stroke="#bfe3ff" stroke-width="6" opacity="${(1-p)*k}"/>`; } });
   if(t>ko) s+=G(tag('NEUER KONTINENT',PAL.green,400),{x:540,y:760,s:E.outBack(h.p(t,ko,ko+0.3))*0.85});
