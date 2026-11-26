@@ -8,8 +8,8 @@ NAME="$(basename "$PROJ")"
 
 python3 -c "import edge_tts, numpy, scipy" 2>/dev/null || pip install -q edge-tts numpy scipy
 
-if ! grep -q '"voiceover": *true' "$PROJ/script.json"; then
-  echo "== 1/4 Kein Voice-over (Standard): Zeitleiste aus dem Skripttext =="
+if grep -q '"voiceover": *false' "$PROJ/script.json"; then
+  echo "== 1/4 Kein Voice-over (auf Wunsch): Zeitleiste aus dem Skripttext =="
   python3 "$ENGINE/timeline_text.py" "$PROJ"
 elif grep -q '"tts": *"orpheus"' "$PROJ/script.json"; then
   echo "== 1/4 Voice-over (Orpheus, Stimme Thomas) =="

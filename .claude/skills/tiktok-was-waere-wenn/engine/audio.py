@@ -319,7 +319,7 @@ def main(proj):
           "[1:a]volume=0.72[mus];[mus][key]sidechaincompress=threshold=0.04:ratio=4:attack=20:release=350[duck];"
           "[2:a]volume=0.7[fx];"
           "[v][duck][fx]amix=inputs=3:normalize=0:duration=longest,loudnorm=I=-14:TP=-1:LRA=9,aformat=sample_rates=48000:channel_layouts=stereo[out]")
-    if not sc.get("voiceover", False):
+    if not sc.get("voiceover", True):
         # Wunsch des Creators (26.11.2026): kein Voice-over, nur Soundeffekte.
         # Kein loudnorm (würde Stille hochziehen), nur sanft begrenzen; Effekte etwa auf -3 dBFS Spitze.
         pk = float(np.max(np.abs(sfx))) if np.max(np.abs(sfx)) > 0 else 1.0  # sfx.wav ist auf 0.8 normiert
