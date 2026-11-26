@@ -53,8 +53,30 @@ Alter Stil (bunte 2D-Navy-Welt mit farbigen Untertiteln, „FORTSETZUNG FOLGT“
 - Vorgabe des Creators: Er will **kein Voice-over** und **keine Hintergrundmusik**, nur Soundeffekte (`"voiceover": false`, `"background_music": false` sind Standard).
 - `build.sh` erzeugt dann keine Stimme. `engine/timeline_text.py` schätzt die Zeitleiste aus dem Skripttext (`wpm`, Standard 165). `"hold": 1.0` lässt eine Szene länger stehen. Der Mix enthält nur Soundeffekte mit Spitze −3 dBFS, ohne Lautheits-Normalisierung, damit Stille still bleibt.
 - Der Text in `script.json` bestimmt weiter das Tempo und landet in `transkript.txt`. Der Creator kann ihn selbst einsprechen.
-- **Bei jeder Lieferung mitschicken:** das Video **und das Voice-over-Skript als Text** (`voiceover.txt`, ohne Zeitstempel, ein Absatz pro Segment). Das Skript gehört als Datei dazu und zusätzlich als Codeblock in die Antwort. Wunsch des Creators vom 26.11.2026.
+- **Bei jeder Lieferung mitschicken:** das Video **und das Voice-over-Skript als Text** (`voiceover.txt` im Abschnitts-Format aus 2c). Das Skript gehört als Datei dazu und zusätzlich als Codeblock in die Antwort. Wunsch des Creators vom 26.11.2026.
 - Weil keine Stimme die Geschichte trägt, müssen **Bild und Schlüsselsätze** (`kicker`, Zahlen, Pillen) die Aussage allein verständlich machen.
+
+### 2c. Skript-Format (Pflicht bei Millionärs-/Denkfehler-Videos und allen Skripten im Mono-Stil)
+
+Vorgabe des Creators vom 26.11.2026: „So soll es auch immer aussehen bei dieser Art von Videos.“ Das Skript (`voiceover.txt` und der Codeblock in der Antwort) hat genau vier Abschnitte. Die Sekunden sind die **echten Zeiten im fertigen Video**:
+
+```
+[HOOK – 0–5 Sek.]
+Ein Satz, der sofort packt.
+
+[HAUPTTEIL – 5–45 Sek.]
+Problem → konkrete Zahlen/Beispiele → Gegenbild („Reiche Menschen …“).
+
+[WENDEPUNKT – 45–55 Sek.]
+Die eine Erkenntnis, oft „Nicht X. Sondern Y.“
+
+[ABSCHLUSS – 55–60 Sek.]
+Die Frage, die hängen bleibt.
+```
+
+- Jedes Segment in `script.json` trägt `"section": "HOOK" | "HAUPTTEIL" | "WENDEPUNKT" | "ABSCHLUSS"`. `transcript.py` fasst die Segmente zu diesen Abschnitten zusammen und schreibt die Zeiten aus der Zeitleiste dazu.
+- Liefert der Creator ein Roh-Skript, darf und soll es geschärft werden („pass es an, wenn du es nicht stark genug findest“): kürzere Sätze, eine konkrete Rechnung statt „viele Menschen“, ein Kontrastsatz pro Abschnitt. Sagen, was geändert wurde.
+- Zahlen in Rechenbeispielen nachrechnen und mit „keine Garantie“ o. ä. kennzeichnen, wenn es um Rendite geht.
 
 ## 2b. Stimme (nur wenn `"voiceover": true`)
 
@@ -69,11 +91,11 @@ Alter Stil (bunte 2D-Navy-Welt mit farbigen Untertiteln, „FORTSETZUNG FOLGT“
 
 ## 3. Workflow für ein neues Video
 
-1. Ordner `videos/<slug>/`. Die Nummer (`nr`) ist die nächste freie Seriennummer (bisher: 1 Geld, 2 Verschwunden, 3 Roboter-Jobs, 4 Roboter-Kontrolle, 5 Todeszeitpunkt, 6 Bewusstsein, 7 Russland-Gas, 8 Erde stoppt, 9 Regen).
+1. Ordner `videos/<slug>/`. Die Nummer (`nr`) ist die nächste freie Seriennummer (bisher: 1 Geld, 2 Verschwunden, 3 Roboter-Jobs, 4 Roboter-Kontrolle, 5 Todeszeitpunkt, 6 Bewusstsein, 7 Russland-Gas, 8 Erde stoppt, 9 Regen). Eigene Reihe **„Millionärs Edition“** (`"series": "Millionärs Edition"`): 1 Entscheidung (`millionaer-entscheidung`), 2 Denkfehler (`denkfehler-arm`).
 2. `script.json` (Vorlage: `videos/regen-1000/script.json`):
    - Kopf: `"theme": "mono"`, `"captions": false`, `"series"`, `"nr"`, `"tagline"`, `"tts": "orpheus"`, `"voice": "thomas"`, `end_card: {icon, dur}`
    - 9–12 Segmente, ~150–170 Wörter, Gesamtlänge ≤ 70 s inklusive Endkarte
-   - Pro Segment: `scene`, `text`, `say`, optional `chip` (Pille), `counter` (`label`, `from`, `to`, `fmt`: int/pct/eur/m1, `at`: span|w:wort, `sub`), `kicker`, `sfx`, `music: [pad, bass, arp, kick]`
+   - Pro Segment: `section` (siehe 2c), `scene`, `text`, `say`, optional `chip` (Pille), `counter` (`label`, `from`, `to`, `fmt`: int/pct/eur/eur0 (ganze Euro mit €)/m1, `at`: span|w:wort, `sub`), `kicker`, `sfx`, `music: [pad, bass, arp, kick]`
 3. `scenes.js`: eine Funktion pro Szene `(t, d, S, h) => SVG`.
    - Bildbereich y ≈ 420–1250, Kicker oben bei y ≈ 300, unten ~450 px frei für die TikTok-Oberfläche.
    - Pro Szene eine klare Hauptsache in der Mitte, viel Schwarz drumherum.

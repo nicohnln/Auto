@@ -1,0 +1,63 @@
+{
+  "title": "Der größte Denkfehler, der dich dein Leben lang arm hält",
+  "theme": "mono",
+  "captions": false,
+  "voiceover": false,
+  "background_music": false,
+  "series": "Millionärs Edition",
+  "nr": 2,
+  "tagline": "Nicht mehr verdienen. Mehr behalten.",
+  "wpm": 165,
+  "lead_in": 0.3,
+  "end_card": { "icon": "€", "dur": 2.4 },
+  "segments": [
+    { "id": "hook", "scene": "hook", "section": "HOOK",
+      "kicker": { "small": "Der größte Denkfehler", "big": "„Ich brauche einfach<br>mehr Geld.“" },
+      "text": "Der größte Denkfehler, der dich dein Leben lang arm hält, ist ein einziger Satz: „Ich brauche einfach mehr Geld.“",
+      "sfx": [["start", "riser_short"]] },
+
+    { "id": "belief", "scene": "belief", "section": "HAUPTTEIL",
+      "text": "Du glaubst, mit mehr Gehalt wirst du automatisch reich. Genau da liegt das Problem.",
+      "sfx": [["w:problem", "impact"]] },
+
+    { "id": "salary", "scene": "salary", "section": "HAUPTTEIL",
+      "text": "Erst verdienst du 3.000 Euro. Dann 4.000. Irgendwann 5.000.",
+      "sfx": [["w:3000", "coin"], ["w:4000", "coin"], ["w:5000", "coin"]] },
+
+    { "id": "what", "scene": "what", "section": "HAUPTTEIL",
+      "text": "Und was passiert?", "hold": 0.4,
+      "sfx": [["start", "tick"]] },
+
+    { "id": "spend", "scene": "spend", "section": "HAUPTTEIL",
+      "text": "Ein teureres Auto. Eine größere Wohnung. Mehr Luxus.",
+      "sfx": [["w:auto", "pop"], ["w:wohnung", "pop"], ["w:luxus", "pop"]] },
+
+    { "id": "zero", "scene": "zero", "section": "HAUPTTEIL",
+      "counter": { "label": "Am Monatsende", "from": "…", "to": "0 €", "fmt": "int", "at": "w:nichts" },
+      "text": "Und am Monatsende bleibt: nichts.",
+      "sfx": [["w:nichts", "buzz"]] },
+
+    { "id": "grow", "scene": "grow", "section": "HAUPTTEIL",
+      "text": "Dein Einkommen ist gewachsen. Deine Ausgaben sind einfach mitgewachsen." },
+
+    { "id": "question", "scene": "question", "section": "HAUPTTEIL", "chip": "Reiche fragen anders",
+      "text": "Reiche Menschen stellen eine andere Frage. Nicht: „Wie verdiene ich mehr?“ Sondern: „Wie arbeitet mein Geld für mich?“",
+      "sfx": [["w:nicht", "pop"], ["w:sondern", "chime"]] },
+
+    { "id": "proof", "scene": "proof", "section": "HAUPTTEIL",
+      "counter": { "label": "Nach 10 Jahren", "from": 0, "to": 86542, "fmt": "eur0", "at": "span", "sub": "500 € / Monat · 7 % p. a. · keine Garantie" },
+      "text": "Wer nur 500 Euro im Monat behält und anlegt, hat bei sieben Prozent im Jahr nach zehn Jahren rund 86.000 Euro.",
+      "sfx": [["w:86000", "impact"]] },
+
+    { "id": "turn", "scene": "turn", "section": "WENDEPUNKT",
+      "kicker": { "small": "Reich wirst du nicht durch mehr Gehalt", "big": "Sondern durch das,<br>was du behältst.", "at": "w:sondern" },
+      "text": "Reich wirst du nicht dadurch, dass du immer mehr verdienst. Sondern dadurch, dass du einen Teil behältst und für dich arbeiten lässt.",
+      "sfx": [["w:sondern", "chime"]] },
+
+    { "id": "end", "scene": "end", "section": "ABSCHLUSS",
+      "kicker": { "small": "Die entscheidende Frage", "big": "Wie viel bleibt für<br>deine Zukunft übrig?", "at": "w:wie" },
+      "text": "Die entscheidende Frage ist also nicht, wie viel du verdienst. Sondern: Wie viel davon bleibt für deine Zukunft übrig?",
+      "hold": 0.6,
+      "sfx": [["w:zukunft", "hit"]] }
+  ]
+}

@@ -122,6 +122,7 @@ function fmtVal(v,f){
   if(f==='m1') return v.toFixed(1).replace('.',',')+' m';
   if(f==='eur'){ const s=v<0?'-':''; v=Math.abs(v); const [a,b]=v.toFixed(2).split('.'); return s+a.replace(/\B(?=(\d{3})+(?!\d))/g,'.')+','+b+' €'; }
   if(f==='pct') return Math.round(v)+' %';
+  if(f==='eur0') return Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.')+' €';
   return Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');
 }
 function renderHud(t,seg,lt){

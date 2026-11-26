@@ -29,13 +29,25 @@ def main(proj):
             card = f"{sc.get('series', 'Was wäre wenn').upper()} · Nr. {sc.get('nr', '')} – {sc.get('tagline', '')}"
         txt.append(f"[{ts(e['start'])} – {ts(t['duration'])}] (Einblendung ohne Sprache) {card}")
     open(os.path.join(proj, "transkript.txt"), "w", encoding="utf-8").write("\n".join(txt) + "\n")
-    # Voice-over-Skript als reiner Text (ohne Zeitstempel) – wird bei jedem Video mitgeschickt
-    try:
-        sc = json.load(open(os.path.join(proj, "script.json"), encoding="utf-8"))
-        vo = [s["text"] for s in sc["segments"]]
-    except Exception:
-        vo = [s["text"] for s in t["segments"]]
-    open(os.path.join(proj, "voiceover.txt"), "w", encoding="utf-8").write("\n\n".join(vo) + "\n")
+    # Voice-over-Skript als Text – wird bei jedem Video mitgeschickt.
+    # Format des Creators: Abschnitte [HOOK – 0–5 Sek.] / [HAUPTTEIL – …] / [WENDEPUNKT – …] / [ABSCHLUSS – …],
+    # darunter die Sätze als eigene Absätze. Zeiten = echte Zeiten im fertigen Video.
+    out, cur_sec, buf = [], None, []
+    def flush():
+        if cur_sec is not None:
+            out.append(f"[{cur_sec[0]} – {round(cur_sec[1])}–{round(cur_sec[2])} Sek.]\n\n" + "\n\n".join(buf))
+    for s in t["segments"]:
+        sec = s.get("section")
+        if sec is None:
+            buf.append(s["text"]); continue
+        if cur_sec is None or cur_sec[0] != sec:
+            flush(); cur_sec = [sec, s["start"], s["end"]]; buf = []
+        cur_sec[2] = s["end"]; buf.append(s["text"])
+    if cur_sec is not None:
+        flush(); vo = "\n\n".join(out)
+    else:
+        vo = "\n\n".join(buf)
+    open(os.path.join(proj, "voiceover.txt"), "w", encoding="utf-8").write(vo + "\n")
     open(os.path.join(proj, "transkript.srt"), "w", encoding="utf-8").write("\n".join(srt))
     print("\n".join(txt))
 
