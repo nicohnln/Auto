@@ -19,7 +19,15 @@ def main(proj):
         srt.append(f"{i}\n{ts(a, 1)} --> {ts(b, 1)}\n{s['text']}\n")
     e = t.get("end_card")
     if e:
-        txt.append(f"[{ts(e['start'])} – {ts(t['duration'])}] (Einblendung ohne Sprache) {e['text']} – {e.get('sub', '')}")
+        try:
+            sc = json.load(open(os.path.join(proj, "script.json"), encoding="utf-8"))
+        except Exception:
+            sc = {}
+        if "text" in e:
+            card = f"{e['text']} – {e.get('sub', '')}"
+        else:  # Mono-Serienkarte
+            card = f"{sc.get('series', 'Was wäre wenn').upper()} · Nr. {sc.get('nr', '')} – {sc.get('tagline', '')}"
+        txt.append(f"[{ts(e['start'])} – {ts(t['duration'])}] (Einblendung ohne Sprache) {card}")
     open(os.path.join(proj, "transkript.txt"), "w", encoding="utf-8").write("\n".join(txt) + "\n")
     open(os.path.join(proj, "transkript.srt"), "w", encoding="utf-8").write("\n".join(srt))
     print("\n".join(txt))
