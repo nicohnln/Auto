@@ -1,0 +1,79 @@
+{
+  "title": "Was wäre, wenn die Erde plötzlich stehen bleibt?",
+  "tts": "orpheus",
+  "voice": "thomas",
+  "max_pause": 0.55,
+  "lead_in": 0.3,
+  "end_card": { "text": "FORTSETZUNG FOLGT …", "sub": "Was würdest du in der 6-Monats-Nacht machen?", "dur": 2.4 },
+  "music": { "bpm": 80 },
+  "segments": [
+    { "id": "hook", "scene": "hook", "chip": "TAG 1 · 12:00:00",
+      "music": [1, 0, 0, 0],
+      "text": "Stell dir vor, die Erde hört plötzlich auf, sich zu drehen. Von einer Sekunde auf die andere.",
+      "hl": { "erde": "blue", "plötzlich": "red", "sekunde": "yellow" }, "sfx": [["start", "riser_short"], ["w:drehen", "glitch"]] },
+
+    { "id": "speed", "scene": "speed", "chip": "TAG 1 · 12:00:00",
+      "counter": { "label": "DEINE GESCHWINDIGKEIT · KM/H", "from": 0, "to": 1000, "fmt": "int", "color": "yellow", "at": "span" },
+      "music": [1, 0.8, 0, 0.5],
+      "text": "Weißt du, wie schnell du gerade unterwegs bist? In Deutschland rund 1.000 Kilometer pro Stunde.",
+      "say": "Weißt du, wie schnell du gerade unterwegs bist? In Deutschland rund tausend Kilometer pro Stunde.",
+      "hl": { "schnell": "yellow", "deutschland": "blue", "1000": "yellow", "kilometer": "yellow" }, "sfx": [["w:kilometer", "whoosh"]] },
+
+    { "id": "stop", "scene": "stop", "chip": "TAG 1 · 12:00:01", "tint": "red",
+      "music": [1, 1, 0, 1],
+      "text": "Die Erde stoppt. Aber du nicht.",
+      "say": "Die Erde stoppt. Aber du … nicht. <gasp>",
+      "hl": { "stoppt": "red", "du": "yellow", "nicht": "red" }, "sfx": [["w:stoppt", "hit"], ["w:nicht", "whoosh"]] },
+
+    { "id": "fling", "scene": "fling", "chip": "TAG 1 · 12:00:02",
+      "list": ["ERDE STEHT"],
+      "music": [1, 1, 0.6, 1],
+      "text": "Alles, was nicht festgeschraubt ist, fliegt mit voller Wucht nach Osten. Menschen, Autos, ganze Häuser.",
+      "hl": { "festgeschraubt": "blue", "osten": "red", "menschen": "pink", "autos": "yellow", "häuser": "red" },
+      "sfx": [["w:osten", "whoosh"], ["w:menschen", "pop"], ["w:autos", "pop"], ["w:häuser", "impact"]] },
+
+    { "id": "wind", "scene": "wind", "chip": "TAG 1 · 12:05",
+      "list": ["ERDE STEHT"],
+      "music": [1, 1, 0.4, 1],
+      "text": "Die Luft bewegt sich einfach weiter. Ein Sturm, stärker als jeder Hurrikan, fegt um den ganzen Planeten.",
+      "hl": { "luft": "blue", "sturm": "red", "hurrikan": "yellow", "planeten": "blue" }, "sfx": [["start", "crowd"], ["w:sturm", "impact"]] },
+
+    { "id": "waves", "scene": "waves", "chip": "TAG 1 · 12:30",
+      "list": ["ERDE STEHT", "STURM"],
+      "music": [1, 1, 0, 1],
+      "text": "Und die Ozeane? Riesige Wellen rollen über die Küsten.",
+      "hl": { "ozeane": "blue", "riesige": "red", "küsten": "yellow" }, "sfx": [["w:wellen", "impact"]] },
+
+    { "id": "daynight", "scene": "daynight", "chip": "MONAT 1",
+      "list": ["ERDE STEHT", "STURM", "FLUTWELLEN"],
+      "music": [0.9, 0.4, 0.6, 0],
+      "text": "Wer das überlebt, hat das nächste Problem: Ein Tag dauert jetzt ein ganzes Jahr. Sechs Monate Sonne. Sechs Monate Nacht.",
+      "say": "Wer das überlebt, hat das nächste Problem: Ein Tag dauert jetzt ein ganzes Jahr. <sigh> Sechs Monate Sonne. Sechs Monate Nacht.",
+      "hl": { "tag": "yellow", "jahr": "red", "sonne": "yellow", "nacht": "blue" }, "sfx": [["w:jahr", "stamp"]] },
+
+    { "id": "oceans", "scene": "oceans", "chip": "JAHRZEHNTE SPÄTER",
+      "list": ["ERDE STEHT", "STURM", "FLUTWELLEN", "1 TAG = 1 JAHR"],
+      "music": [1, 1, 1, 0.6],
+      "text": "Und ohne Drehung fließt das Meer langsam zu den Polen. Am Äquator taucht ein riesiger Kontinent auf.",
+      "hl": { "meer": "blue", "polen": "blue", "äquator": "yellow", "kontinent": "green" }, "sfx": [["w:kontinent", "chime"]] },
+
+    { "id": "twist", "scene": "twist", "chip": "FAKT",
+      "music": [1, 0, 0, 0],
+      "text": "Klingt verrückt? Dann halt dich fest: Die Erde wird wirklich langsamer.",
+      "say": "Klingt verrückt? <chuckle> Dann halt dich fest: Die Erde wird wirklich langsamer.",
+      "hl": { "verrückt": "pink", "wirklich": "red", "langsamer": "yellow" }, "sfx": [["w:langsamer", "impact"]] },
+
+    { "id": "dino", "scene": "dino", "chip": "VOR 70 MIO. JAHREN",
+      "counter": { "label": "STUNDEN PRO TAG", "from": "24 H", "to": "23,5 H", "fmt": "int", "color": "green", "at": "w:dinosaurier" },
+      "music": [1, 1, 0.8, 0.8],
+      "text": "Zur Zeit der Dinosaurier hatte ein Tag nur 23,5 Stunden.",
+      "say": "Zur Zeit der Dinosaurier hatte ein Tag nur dreiundzwanzigeinhalb Stunden.",
+      "hl": { "dinosaurier": "green", "235": "yellow", "stunden": "yellow" }, "sfx": [["w:dinosaurier", "pop"]] },
+
+    { "id": "end", "scene": "end", "chip": "HEUTE · JETZT",
+      "music": [1, 0.8, 0.6, 0.5],
+      "text": "Sie bremst jeden Tag ein winziges bisschen. Du merkst es nicht. Genau wie die 1.000 Kilometer pro Stunde, mit denen du gerade unterwegs bist.",
+      "say": "Sie bremst jeden Tag ein winziges bisschen. Du merkst es nicht. Genau wie die tausend Kilometer pro Stunde, mit denen du gerade unterwegs bist.",
+      "hl": { "bremst": "red", "merkst": "yellow", "1000": "yellow", "unterwegs": "blue" }, "sfx": [["w:unterwegs", "hit"]] }
+  ]
+}
