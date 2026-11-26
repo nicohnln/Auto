@@ -43,12 +43,12 @@ Alter Stil (bunte 2D-Navy-Welt mit farbigen Untertiteln, „FORTSETZUNG FOLGT“
 
 ## 2. Stimme
 
-**Standard: `"tts": "orpheus"`, `"voice": "thomas"`**, vom Creator am 25.11.2026 im Hör-Casting gewählt.
+**Standard seit 26.11.2026: Frauenstimme `"tts": "orpheus"`, `"voice": "jana"`, `"temp": 0.6`.** Der Creator wollte Frauenstimmen und hat Jana im Frauen-Casting (`videos/_casting3/`) gewählt. Davor war Thomas die Stimme, Casting vom 25.11.2026, Videos Nr. 5–8.
 - Modell: deutsches Orpheus 3B (Canopy Labs, Apache-2.0), lokal über llama.cpp mit SNAC-Decoder (MIT). Dateien: `engine/orpheus_de.py`, `engine/tts_orpheus.py`.
 - Jedes Segment wird am Stück gesprochen. **Keine** Tonhöhen- oder Tempo-Tricks.
 - `"say"` = gesprochener Text: Zahlen als Wörter, optionale Tags `<sigh>` `<chuckle>` `<gasp>`. `"text"` = sauberer Text für Prüfung und Zeitstempel.
 - **Prüfung:** Whisper hört jedes Segment nach. Sauber ist es nur, wenn jedes Wort stimmt. Füllaute, Ziffern und Getrenntschreibung zählen nicht als Fehler. Wiederholungen und gedehnte Wörter werden erkannt. Bis zu 4 Versuche, der beste gewinnt. Schwierige Wörter umformulieren statt hoffen.
-- **Casting 2 (26.11.2026), gemessen gegen die Mono-Referenzen:** Die Hauptreferenz geld.gesetze liegt bei ~99 Hz, 3,7 Halbtönen Melodie und 183 W/min. Keine freie Stimme trifft das genau. Am nächsten ist Chatterbox mit unveränderter Thorsten-Referenz (125 Hz / 3,9 HT / 178 W/min, Einstellungen: `voice_style: emotional`, `ex: 0.45`, `cfg: 0.5`, `tempo: 1.0`, `voice_pitch: 0`). Danach folgt Orpheus Thomas ruhig (`temp` 0.45). Proben liegen in `videos/_casting2/`. Die Wahl des Creators steht noch aus.
+- **Casting 2 (26.11.2026), gemessen gegen die Mono-Referenzen:** Die Hauptreferenz geld.gesetze liegt bei ~99 Hz, 3,7 Halbtönen Melodie und 183 W/min. Keine freie Stimme trifft das genau. Am nächsten ist Chatterbox mit unveränderter Thorsten-Referenz (125 Hz / 3,9 HT / 178 W/min, Einstellungen: `voice_style: emotional`, `ex: 0.45`, `cfg: 0.5`, `tempo: 1.0`, `voice_pitch: 0`). Danach folgt Orpheus Thomas ruhig (`temp` 0.45). Proben liegen in `videos/_casting2/`. Danach wollte der Creator **Frauenstimmen** und hat Jana gewählt (siehe oben).
 - **Lehre:** Claude kann Audio nicht hören. Stimmen nie nach Messwerten „optimieren“. Bei Stimmfragen ein nummeriertes Hör-Casting schicken. Die menschlichste Option ist die eigene Aufnahme des Creators.
 - Ältere Engines (nur Notlösung): `"tts": "chatterbox"` (`engine/tts_chatterbox.py`), edge-tts (`engine/tts.py`).
 

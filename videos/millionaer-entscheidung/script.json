@@ -6,8 +6,8 @@
   "series": "Millionärs Edition",
   "nr": 1,
   "tagline": "Kein Glück. Ein Anfang.",
-  "tts": "chatterbox",
-  "voice": "thomas",
+  "tts": "orpheus",
+  "voice": "jana",
   "max_pause": 0.5,
   "lead_in": 0.3,
   "end_card": {
@@ -141,11 +141,5 @@
       "say": "Reich wird man nicht an dem Tag, an dem das Geld kommt. Sondern an dem Tag, an dem man sich entscheidet. … Das war die Millionärs Edition, Nummer eins."
     }
   ],
-  "voice_style": "emotional",
-  "refs_dir": "/home/user/models/thorsten/refs",
-  "emotion": "neutral",
-  "ex": 0.45,
-  "cfg": 0.5,
-  "tempo": 1.0,
-  "voice_pitch": 0.0
+  "temp": 0.6
 }

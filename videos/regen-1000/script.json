@@ -6,70 +6,168 @@
   "nr": 9,
   "tagline": "Kein Unwetter. Ein Test.",
   "tts": "orpheus",
-  "voice": "thomas",
+  "voice": "jana",
   "max_pause": 0.55,
   "lead_in": 0.3,
-  "end_card": { "icon": "?", "dur": 2.4 },
-  "music": { "bpm": 70 },
+  "end_card": {
+    "icon": "?",
+    "dur": 2.4
+  },
   "segments": [
-    { "id": "hook", "scene": "hook",
-      "kicker": { "small": "1.000 Jahre Regen", "big": "Wasser wäre nicht<br>das Problem." },
-      "music": [1, 0, 0.3, 0],
+    {
+      "id": "hook",
+      "scene": "hook",
+      "kicker": {
+        "small": "1.000 Jahre Regen",
+        "big": "Wasser wäre nicht<br>das Problem."
+      },
       "text": "Wenn es tausend Jahre regnen würde, wäre Wasser nicht unser größtes Problem.",
-      "sfx": [["start", "riser_short"]] },
-
-    { "id": "day1", "scene": "day1", "chip": "Tag 1",
-      "music": [1, 0.2, 0.4, 0],
+      "sfx": [
+        [
+          "start",
+          "riser_short"
+        ]
+      ]
+    },
+    {
+      "id": "day1",
+      "scene": "day1",
+      "chip": "Tag 1",
       "text": "Am ersten Tag merkst du kaum etwas. Regenschirm, nasse Schuhe, schlechte Laune.",
-      "sfx": [["w:regenschirm", "pop"]] },
-
-    { "id": "week", "scene": "flood", "chip": "Nach 1 Woche",
-      "counter": { "label": "Pegel in deiner Straße", "from": 0, "to": 0.4, "fmt": "m1", "at": "span" },
-      "music": [1, 0.4, 0.4, 0],
-      "text": "Nach einer Woche laufen die Keller voll." },
-
-    { "id": "month", "scene": "flood2", "chip": "Nach 1 Monat",
-      "counter": { "label": "Pegel in deiner Straße", "from": 0.4, "to": 2.3, "fmt": "m1", "at": "span" },
-      "music": [1, 0.6, 0.4, 0.3],
+      "sfx": [
+        [
+          "w:regenschirm",
+          "pop"
+        ]
+      ]
+    },
+    {
+      "id": "week",
+      "scene": "flood",
+      "chip": "Nach 1 Woche",
+      "counter": {
+        "label": "Pegel in deiner Straße",
+        "from": 0,
+        "to": 0.4,
+        "fmt": "m1",
+        "at": "span"
+      },
+      "text": "Nach einer Woche laufen die Keller voll."
+    },
+    {
+      "id": "month",
+      "scene": "flood2",
+      "chip": "Nach 1 Monat",
+      "counter": {
+        "label": "Pegel in deiner Straße",
+        "from": 0.4,
+        "to": 2.3,
+        "fmt": "m1",
+        "at": "span"
+      },
       "text": "Nach einem Monat stehen ganze Dörfer unter Wasser.",
-      "sfx": [["w:dörfer", "impact"]] },
-
-    { "id": "adapt", "scene": "adapt", "chip": "Die meisten denken",
-      "music": [1, 0.6, 0.8, 0.3],
+      "sfx": [
+        [
+          "w:dörfer",
+          "impact"
+        ]
+      ]
+    },
+    {
+      "id": "adapt",
+      "scene": "adapt",
+      "chip": "Die meisten denken",
       "text": "Aber Menschen sind gut darin, sich anzupassen. Wir bauen Dämme, Pumpen und Häuser auf Stelzen.",
-      "sfx": [["w:dämme", "pop"], ["w:pumpen", "pop"], ["w:stelzen", "pop"]] },
-
-    { "id": "problem", "scene": "problem", "chip": "Das Problem",
-      "music": [1, 0, 0.3, 0],
+      "sfx": [
+        [
+          "w:dämme",
+          "pop"
+        ],
+        [
+          "w:pumpen",
+          "pop"
+        ],
+        [
+          "w:stelzen",
+          "pop"
+        ]
+      ]
+    },
+    {
+      "id": "problem",
+      "scene": "problem",
+      "chip": "Das Problem",
       "text": "Das echte Problem kommt leise. Es fehlt die Sonne.",
-      "sfx": [["w:sonne", "impact"]] },
-
-    { "id": "food", "scene": "food",
-      "counter": { "label": "Ernte", "from": 100, "to": 10, "fmt": "pct", "at": "span", "sub": "Szenario" },
-      "music": [1, 0.5, 0.6, 0.2],
-      "text": "Ohne Sonne wachsen keine Felder. Und ohne Felder gibt es kein Essen." },
-
-    { "id": "mood", "scene": "mood",
-      "music": [0.8, 0, 0.4, 0],
+      "sfx": [
+        [
+          "w:sonne",
+          "impact"
+        ]
+      ]
+    },
+    {
+      "id": "food",
+      "scene": "food",
+      "counter": {
+        "label": "Ernte",
+        "from": 100,
+        "to": 10,
+        "fmt": "pct",
+        "at": "span",
+        "sub": "Szenario"
+      },
+      "text": "Ohne Sonne wachsen keine Felder. Und ohne Felder gibt es kein Essen."
+    },
+    {
+      "id": "mood",
+      "scene": "mood",
       "text": "Auch der Kopf leidet. Schon ein grauer Winter drückt bei vielen auf die Stimmung.",
-      "say": "Auch der Kopf leidet. <sigh> Schon ein grauer Winter drückt bei vielen auf die Stimmung." },
-
-    { "id": "catch", "scene": "catch", "chip": "Der Haken",
-      "counter": { "label": "Regen-Vorrat der Luft", "from": "?", "to": "≈ 9 Tage", "fmt": "int", "at": "w:neun" },
-      "music": [1, 0.6, 0.6, 0.4],
+      "say": "Auch der Kopf leidet. <sigh> Schon ein grauer Winter drückt bei vielen auf die Stimmung."
+    },
+    {
+      "id": "catch",
+      "scene": "catch",
+      "chip": "Der Haken",
+      "counter": {
+        "label": "Regen-Vorrat der Luft",
+        "from": "?",
+        "to": "≈ 9 Tage",
+        "fmt": "int",
+        "at": "w:neun"
+      },
       "text": "Dabei könnte es so gar nicht passieren. Die ganze Luft enthält nur Wasser für etwa neun Tage Regen.",
-      "sfx": [["w:neun", "chime"]] },
-
-    { "id": "carnian", "scene": "carnian", "chip": "Vor 233 Mio. Jahren",
-      "music": [1, 0.8, 0.8, 0.4],
+      "sfx": [
+        [
+          "w:neun",
+          "chime"
+        ]
+      ]
+    },
+    {
+      "id": "carnian",
+      "scene": "carnian",
+      "chip": "Vor 233 Mio. Jahren",
       "text": "Und trotzdem gab es so etwas schon: Vor rund 233 Millionen Jahren regnete es etwa eine Million Jahre lang deutlich mehr. Danach begann der Aufstieg der Dinosaurier.",
       "say": "Und trotzdem gab es so etwas schon: Vor rund zweihundertdreiunddreißig Millionen Jahren regnete es etwa eine Million Jahre lang deutlich mehr. Danach begann der Aufstieg der Dinosaurier.",
-      "sfx": [["w:dinosaurier", "impact"]] },
-
-    { "id": "end", "scene": "end",
-      "kicker": { "small": "Regen zerstört keine Welt", "big": "Er zeigt, wer sich<br>anpassen kann.", "at": "w:zeigt" },
-      "music": [1, 0.4, 0.6, 0],
+      "sfx": [
+        [
+          "w:dinosaurier",
+          "impact"
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "scene": "end",
+      "kicker": {
+        "small": "Regen zerstört keine Welt",
+        "big": "Er zeigt, wer sich<br>anpassen kann.",
+        "at": "w:zeigt"
+      },
       "text": "Regen zerstört keine Welt. Er zeigt nur, wer sich anpassen kann. Das war Was wäre wenn, Nummer neun.",
-      "say": "Regen zerstört keine Welt. Er zeigt nur, wer sich anpassen kann. … Das war Was wäre wenn, Nummer neun." }
-  ]
+      "say": "Regen zerstört keine Welt. Er zeigt nur, wer sich anpassen kann. … Das war Was wäre wenn, Nummer neun."
+    }
+  ],
+  "temp": 0.6,
+  "background_music": false
 }
