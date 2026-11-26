@@ -41,7 +41,14 @@ Referenzen (vom Creator am 26.11.2026 vorgegeben, ersetzen die alten): „geld.g
 
 Alter Stil (bunte 2D-Navy-Welt mit farbigen Untertiteln, „FORTSETZUNG FOLGT“) bleibt als `"theme": "navy"` verfügbar. Alle Videos bis Nr. 8 sind in diesem Stil.
 
-## 2. Stimme
+## 2. Ton: **kein Voice-over, nur Soundeffekte** (Standard seit 26.11.2026)
+
+- Vorgabe des Creators: Er will **kein Voice-over** und **keine Hintergrundmusik**, nur Soundeffekte (`"voiceover": false`, `"background_music": false` sind Standard).
+- `build.sh` erzeugt dann keine Stimme. `engine/timeline_text.py` schätzt die Zeitleiste aus dem Skripttext (`wpm`, Standard 165). `"hold": 1.0` lässt eine Szene länger stehen. Der Mix enthält nur Soundeffekte mit Spitze −3 dBFS, ohne Lautheits-Normalisierung, damit Stille still bleibt.
+- Der Text in `script.json` bestimmt weiter das Tempo und landet in `transkript.txt`. Der Creator kann ihn selbst einsprechen.
+- Weil keine Stimme die Geschichte trägt, müssen **Bild und Schlüsselsätze** (`kicker`, Zahlen, Pillen) die Aussage allein verständlich machen.
+
+## 2b. Stimme (nur wenn `"voiceover": true`)
 
 **Standard seit 26.11.2026: Frauenstimme `"tts": "orpheus"`, `"voice": "jana"`, `"temp": 0.6`.** Der Creator wollte Frauenstimmen und hat Jana im Frauen-Casting (`videos/_casting3/`) gewählt. Davor war Thomas die Stimme, Casting vom 25.11.2026, Videos Nr. 5–8.
 - Modell: deutsches Orpheus 3B (Canopy Labs, Apache-2.0), lokal über llama.cpp mit SNAC-Decoder (MIT). Dateien: `engine/orpheus_de.py`, `engine/tts_orpheus.py`.

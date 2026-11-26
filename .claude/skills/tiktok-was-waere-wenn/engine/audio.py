@@ -319,6 +319,14 @@ def main(proj):
           "[1:a]volume=0.72[mus];[mus][key]sidechaincompress=threshold=0.04:ratio=4:attack=20:release=350[duck];"
           "[2:a]volume=0.7[fx];"
           "[v][duck][fx]amix=inputs=3:normalize=0:duration=longest,loudnorm=I=-14:TP=-1:LRA=9,aformat=sample_rates=48000:channel_layouts=stereo[out]")
+    if not sc.get("voiceover", False):
+        # Wunsch des Creators (26.11.2026): kein Voice-over, nur Soundeffekte.
+        # Kein loudnorm (würde Stille hochziehen), nur sanft begrenzen; Effekte etwa auf -3 dBFS Spitze.
+        pk = float(np.max(np.abs(sfx))) if np.max(np.abs(sfx)) > 0 else 1.0  # sfx.wav ist auf 0.8 normiert
+        fc = f"[0:a]volume={10**(-3/20)/0.8:.3f},pan=stereo|c0=c0|c1=c0,aresample=48000[out]"  # Spitze -3 dBFS, Mono 1:1 auf beide Kanäle
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", os.path.join(b, "sfx.wav"), "-filter_complex", fc,
+                        "-map", "[out]", "-t", f"{total:.3f}", os.path.join(b, "mix.wav")], check=True)
+        print("Audio-Mix (nur Soundeffekte) ->", os.path.join(b, "mix.wav")); return
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", os.path.join(b, "voice.wav"), "-i", os.path.join(b, "music.wav"),
                     "-i", os.path.join(b, "sfx.wav"), "-filter_complex", fc, "-map", "[out]", "-t", f"{total:.3f}",
                     os.path.join(b, "mix.wav")], check=True)
