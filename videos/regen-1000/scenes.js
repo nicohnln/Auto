@@ -40,8 +40,8 @@ flood2(t,d,S,h){
 adapt(t,d,S,h){
   const items=[['dämme',220,dam(1.2),'Dämme'],['pumpen',540,pump(1.3,t),'Pumpen'],['stelzen',860,stilt(1.4),'Stelzen']];
   let s=mRain(t,0.6)+mGround(GY);
-  items.forEach(([w,x,art,lab])=>{ const tw=h.wt(w), k=E.outBack(h.p(t,tw-0.15,tw+0.2)); if(k<=0) return;
-    s+=mCard(x,700,250,300,G(art,{y:-30})+MCAPS(0,110,lab,{size:22,fill:MW}),{s:k})+mCheck(x+95,580,0.9*k); });
+  items.forEach(([w,x,art,lab])=>{ const tw=h.wt(w), k=E.out(h.p(t,tw-0.15,tw+0.2));
+    s+=mCard(x,700,250,300,G(art,{y:-30,op:0.35+0.65*k})+MCAPS(0,110,lab,{size:22,fill:MW,op:0.35+0.65*k}),{s:0.94+0.06*k,dim:k<0.5}); if(k>0) s+=mCheck(x+95,580,0.9*E.outBack(h.p(t,tw-0.15,tw+0.2))); });
   s+=mPerson(540,GY,0.9,{bob:0});
   return s;
 },
@@ -82,9 +82,10 @@ catch(t,d,S,h){
 carnian(t,d,S,h){
   const di=h.wt('dinosaurier'), mi=h.wt('million'), km=h.p(t,0.2,mi);
   let s=mRain(t,0.5*(1-h.p(t,di,di+1)))+mGround(GY);
-  s+=mTimeline(540,520,820,['−233 Mio.','−200','−150','−100','−50','heute'],0.0+0*km);
-  s+=`<rect x="${130}" y="500" width="${60*E.out(km)}" height="40" rx="8" fill="${MW}" opacity=".85" filter="url(#glowS)"/>`+MCAPS(160,480,'1 Mio. Jahre Regen',{size:16,anchor:'start',fill:MW,op:E.out(km)});
-  const kd=E.outBack(h.p(t,di-0.3,di+0.2)); if(kd>0) s+=G(dinoLine(0,0,1.1,t),{x:470,y:GY,s:kd});
+  s+=mTimeline(540,820,900,['−233 Mio.','−200','−150','−100','−50','heute'],null);
+  s+=`<rect x="90" y="798" width="${Math.max(6,40*E.out(km))}" height="44" rx="8" fill="${MW}" opacity=".9" filter="url(#glowS)"/>`+MCAPS(90,770,'Regenzeit',{size:18,anchor:'start',fill:MW,op:E.out(km)});
+  s+=mNumber(540,620,'Regenzeit',fmtVal(1000000*E.inOut(km),'int')+' Jahre',{size:78,op:1-h.p(t,di-0.4,di)});
+  const kd=E.outBack(h.p(t,di-0.3,di+0.2)); if(kd>0) s+=G(dinoLine(0,0,1.1,t),{x:470,y:GY,s:kd})+mPill(540,560,'Aufstieg der Dinosaurier',{s:kd});
   return s;
 },
 end(t,d,S,h){

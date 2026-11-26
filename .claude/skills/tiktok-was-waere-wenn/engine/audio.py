@@ -267,6 +267,8 @@ def main(proj):
     total = tl["duration"]; n = int(total * SR)
     segs = tl["segments"]
     m = music(total, segs, sc.get("music", {}).get("bpm", 84))
+    if not sc.get("background_music", False):
+        m[:] = 0  # Wunsch des Creators: keine Hintergrundmusik, nur Soundeffekte
     endc = tl.get("end_card")
     if endc:  # Musik beim Abspann abreißen lassen
         i = int(endc["start"] * SR); m[i:] *= np.exp(-np.arange(n - i) / SR * 6)
@@ -290,7 +292,7 @@ def main(proj):
     if endc:
         put(SFX["hit"](), endc["start"], 1.0)
     sfx = sfx[:n]
-    norm = lambda x: x / (np.max(np.abs(x)) + 1e-9)
+    norm = lambda x: x / (np.max(np.abs(x)) + 1e-9) if np.max(np.abs(x)) > 0 else x
     wavfile.write(os.path.join(b, "music.wav"), SR, (norm(m) * 0.8 * 32767).astype(np.int16))
     wavfile.write(os.path.join(b, "sfx.wav"), SR, (norm(sfx) * 0.8 * 32767).astype(np.int16))
     # Mix: Stimme aufbereiten, Musik unter Stimme ducken, Lautheit auf -14 LUFS
