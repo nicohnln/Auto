@@ -41,7 +41,14 @@ Referenzen (vom Creator am 26.11.2026 vorgegeben, ersetzen die alten): „geld.g
 
 Alter Stil (bunte 2D-Navy-Welt mit farbigen Untertiteln, „FORTSETZUNG FOLGT“) bleibt als `"theme": "navy"` verfügbar. Alle Videos bis Nr. 8 sind in diesem Stil.
 
-## 2. Ton: **kein Voice-over, nur Soundeffekte** (Standard seit 26.11.2026)
+## 2. Ton: **Voice-over mit Jana „entrauscht“ + Soundeffekte, keine Musik**
+
+- Voice-over ist wieder Standard. Der Creator hat den Versuch ohne Stimme verworfen: „Das ist Quatsch“.
+- Stimme: Orpheus `jana` (`temp` 0.6) mit der **Entrauschungs-Kette** in `audio.py`. Der Creator hat sie im Deutlichkeits-Casting gewählt, Probe 1 in `videos/_casting3/`. Die Kette senkt das Codec-Zischeln über 8 kHz von ~8,5 % auf ~2 %, dazu mehr Präsenz bei 2,8 kHz und weniger Dröhnen bei 280 Hz.
+- Keine Hintergrundmusik, nur Soundeffekte. Endmix −14 LUFS.
+- Zu jedem Video gehört das **Voice-over-Skript als Text** (`voiceover.txt` und als Codeblock in der Antwort).
+
+### 2a. Ohne Voice-over (nur auf ausdrücklichen Wunsch: `"voiceover": false`)
 
 - Vorgabe des Creators: Er will **kein Voice-over** und **keine Hintergrundmusik**, nur Soundeffekte (`"voiceover": false`, `"background_music": false` sind Standard).
 - `build.sh` erzeugt dann keine Stimme. `engine/timeline_text.py` schätzt die Zeitleiste aus dem Skripttext (`wpm`, Standard 165). `"hold": 1.0` lässt eine Szene länger stehen. Der Mix enthält nur Soundeffekte mit Spitze −3 dBFS, ohne Lautheits-Normalisierung, damit Stille still bleibt.

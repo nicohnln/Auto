@@ -298,10 +298,12 @@ def main(proj):
     # Mix: Stimme aufbereiten, Musik unter Stimme ducken, Lautheit auf -14 LUFS
     # Stimme "menschlich" machen: Nahbesprechungs-Wärme, weniger digitale Schärfe, kleiner Raum statt steriler Studio-Luft
     if sc.get("tts") == "orpheus":
-        # Orpheus klingt schon natürlich: nur sanft säubern und präsent machen, keine Effekte
+        # Orpheus/Jana "entrauscht" (vom Creator im Deutlichkeits-Casting gewählt, 26.11.2026):
+        # Codec-Zischeln > 8 kHz raus (FFT-Entrauschung + Tiefpass 11 kHz), Dröhnen 280 Hz runter,
+        # Sprachpräsenz 2,8 kHz rauf, De-Esser, sanfte Kompression. Kein Hall.
         room = sc.get("voice_room", 0.0)
-        vchain = ("highpass=f=70,equalizer=f=3000:t=q:w=1.2:g=1.5,deesser=i=0.3,"
-                  "acompressor=threshold=-20dB:ratio=2.5:attack=10:release=150:makeup=2")
+        vchain = ("afftdn=nr=14:nf=-50:tn=1,lowpass=f=11000,highpass=f=90,equalizer=f=280:t=q:w=1.2:g=-2.5,"
+                  "equalizer=f=2800:t=q:w=1.2:g=3,deesser=i=0.5,acompressor=threshold=-22dB:ratio=3:attack=6:release=120:makeup=3")
     elif sc.get("voice_style", "doku" if sc.get("tts") == "chatterbox" else "edge") == "doku":
         # Doku-Erzähler wie in den Referenzen: trocken, präsent, hell, kräftig komprimiert
         room = sc.get("voice_room", 0.0)
