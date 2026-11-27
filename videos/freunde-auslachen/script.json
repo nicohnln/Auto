@@ -1,0 +1,58 @@
+{
+  "title": "Wenn deine Freunde dich für deine Träume auslachen, solltest du aufpassen",
+  "theme": "mono",
+  "captions": false,
+  "voiceover": false,
+  "background_music": false,
+  "series": "Millionärs Edition",
+  "nr": 5,
+  "tagline": "Träum groß. Umgib dich richtig.",
+  "wpm": 165,
+  "lead_in": 0.3,
+  "end_card": { "icon": "€", "dur": 2.4 },
+  "segments": [
+    { "id": "hook", "scene": "hook", "section": "HOOK",
+      "kicker": { "small": "Sie lachen über deine Träume?", "big": "Dann pass auf,<br>wer dich umgibt.", "at": "w:solltest" },
+      "text": "Wenn deine Freunde dich für deine großen Träume auslachen, solltest du über deinen Freundeskreis nachdenken.",
+      "sfx": [["start", "riser_short"], ["w:auslachen", "glitch"], ["w:freundeskreis", "impact"]] },
+
+    { "id": "tell", "scene": "tell", "section": "HAUPTTEIL",
+      "text": "Stell dir vor, du erzählst deinen Freunden, dass du Millionär werden willst.",
+      "sfx": [["start", "pop"], ["w:millionär", "coin"]] },
+
+    { "id": "dream", "scene": "dream", "section": "HAUPTTEIL",
+      "text": "Ein eigenes Unternehmen. Finanziell frei sein. Ein Leben, von dem andere nur träumen.",
+      "sfx": [["w:unternehmen", "pop"], ["w:finanziell", "pop"], ["w:leben", "chime"]] },
+
+    { "id": "laugh", "scene": "laugh", "section": "HAUPTTEIL",
+      "text": "Doch statt Unterstützung hörst du nur: „Träum weiter.“ „Das schaffst du sowieso nicht.“ „Bleib mal auf dem Boden.“",
+      "sfx": [["w:träum", "buzz"], ["w:das", "buzz"], ["w:bleib", "buzz"]] },
+
+    { "id": "doubt", "scene": "doubt", "section": "HAUPTTEIL",
+      "text": "Und irgendwann fängst du an, an dir selbst zu zweifeln.",
+      "sfx": [["start", "heartbeat"]] },
+
+    { "id": "understand", "scene": "understand", "section": "HAUPTTEIL",
+      "chip": "Versteh das",
+      "text": "Aber weißt du was? Nicht jeder wird deine Ziele verstehen. Vor allem nicht, wenn er selbst nie versucht hat, seine eigenen zu erreichen.",
+      "sfx": [["start", "tick"], ["w:nie", "stamp"]] },
+
+    { "id": "push", "scene": "push", "section": "WENDEPUNKT",
+      "kicker": { "small": "Menschen mit großen Zielen", "big": "lachen nicht.<br>Sie pushen dich.", "at": "w:sie" },
+      "text": "Menschen mit großen Zielen lachen dich nicht aus. Sie bringen dich dazu, noch größer zu denken.",
+      "sfx": [["start", "riser_short"], ["w:größer", "whoosh"]] },
+
+    { "id": "surround", "scene": "surround", "section": "WENDEPUNKT",
+      "text": "Umgib dich deshalb mit Menschen, die dich herausfordern und an dich glauben.", "hold": 0.3,
+      "sfx": [["w:herausfordern", "pop"], ["w:glauben", "stamp"]] },
+
+    { "id": "end1", "scene": "end1", "section": "ABSCHLUSS",
+      "text": "Und vergiss nie: Du brauchst keine Freunde, die deine Träume verstehen.",
+      "sfx": [["start", "tick"], ["w:keine", "hit"]] },
+
+    { "id": "end2", "scene": "end2", "section": "ABSCHLUSS",
+      "kicker": { "small": "Vergiss nie", "big": "Menschen, die dich<br>nie aufgeben lassen." },
+      "text": "Du brauchst Menschen, die dich daran erinnern, warum du niemals aufgeben solltest.", "hold": 0.8,
+      "sfx": [["start", "chime"], ["w:niemals", "hit"]] }
+  ]
+}

@@ -91,7 +91,7 @@ Die Frage, die hängen bleibt.
 
 ## 3. Workflow für ein neues Video
 
-1. Ordner `videos/<slug>/`. Die Nummer (`nr`) ist die nächste freie Seriennummer (bisher: 1 Geld, 2 Verschwunden, 3 Roboter-Jobs, 4 Roboter-Kontrolle, 5 Todeszeitpunkt, 6 Bewusstsein, 7 Russland-Gas, 8 Erde stoppt, 9 Regen). Eigene Reihe **„Millionärs Edition“** (`"series": "Millionärs Edition"`): 1 Entscheidung (`millionaer-entscheidung`), 2 Denkfehler (`denkfehler-arm`), 3 Umfeld (`umfeld-millionaere`), 4 Ärmster im Raum (`aermster-im-raum`).
+1. Ordner `videos/<slug>/`. Die Nummer (`nr`) ist die nächste freie Seriennummer (bisher: 1 Geld, 2 Verschwunden, 3 Roboter-Jobs, 4 Roboter-Kontrolle, 5 Todeszeitpunkt, 6 Bewusstsein, 7 Russland-Gas, 8 Erde stoppt, 9 Regen). Eigene Reihe **„Millionärs Edition“** (`"series": "Millionärs Edition"`): 1 Entscheidung (`millionaer-entscheidung`), 2 Denkfehler (`denkfehler-arm`), 3 Umfeld (`umfeld-millionaere`), 4 Ärmster im Raum (`aermster-im-raum`), 5 Freunde lachen (`freunde-auslachen`).
 2. `script.json` (Vorlage: `videos/regen-1000/script.json`):
    - Kopf: `"theme": "mono"`, `"captions": false`, `"series"`, `"nr"`, `"tagline"`, `"tts": "orpheus"`, `"voice": "thomas"`, `end_card: {icon, dur}`
    - 9–12 Segmente, ~150–170 Wörter, Gesamtlänge ≤ 70 s inklusive Endkarte
