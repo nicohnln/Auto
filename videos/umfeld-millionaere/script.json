@@ -1,0 +1,63 @@
+{
+  "title": "Wenn du mit 2 Millionären abhängst, wirst du der 3.",
+  "theme": "mono",
+  "captions": false,
+  "voiceover": false,
+  "background_music": false,
+  "series": "Millionärs Edition",
+  "nr": 3,
+  "tagline": "Dein Umfeld ist deine Zukunft.",
+  "wpm": 165,
+  "lead_in": 0.3,
+  "end_card": { "icon": "€", "dur": 2.4 },
+  "segments": [
+    { "id": "hook", "scene": "hook", "section": "HOOK",
+      "kicker": { "small": "Merk dir diesen Satz", "big": "Zwei Millionäre.<br>Du wirst der Dritte." , "at": "w:wenn" },
+      "text": "Es gibt einen Satz, den du nie vergessen solltest: Wenn du mit zwei Millionären abhängst, wirst du wahrscheinlich der Dritte.",
+      "sfx": [["start", "riser_short"], ["w:dritte", "impact"]] },
+
+    { "id": "why", "scene": "why", "section": "HAUPTTEIL",
+      "chip": "Warum?",
+      "text": "Warum? Weil dein Umfeld deine Denkweise verändert.",
+      "sfx": [["start", "tick"], ["w:denkweise", "chime"]] },
+
+    { "id": "talk", "scene": "talk", "section": "HAUPTTEIL",
+      "text": "Deine alten Freunde reden darüber, wie teuer alles geworden ist. Millionäre reden darüber, wie sie neue Einnahmequellen aufbauen.",
+      "sfx": [["start", "pop"], ["w:millionäre", "whoosh"], ["w:einnahmequellen", "coin"]] },
+
+    { "id": "plan", "scene": "plan", "section": "HAUPTTEIL",
+      "text": "Andere planen ihr Wochenende. Sie planen ihr nächstes Geschäft.",
+      "sfx": [["start", "pop"], ["w:sie", "whoosh"], ["w:geschäft", "pop"]] },
+
+    { "id": "questions", "scene": "questions", "section": "HAUPTTEIL",
+      "text": "Irgendwann stellst du andere Fragen.",
+      "sfx": [["w:fragen", "pop"]] },
+
+    { "id": "see", "scene": "see", "section": "HAUPTTEIL",
+      "text": "Du siehst Möglichkeiten, wo du vorher nur Probleme gesehen hast.",
+      "sfx": [["start", "whoosh"], ["w:probleme", "glitch"]] },
+
+    { "id": "goals", "scene": "goals", "section": "HAUPTTEIL",
+      "text": "Und Ziele, die früher unmöglich wirkten, fühlen sich plötzlich normal an.",
+      "sfx": [["w:unmöglich", "buzz"], ["w:normal", "chime"]] },
+
+    { "id": "truth", "scene": "truth", "section": "WENDEPUNKT",
+      "kicker": { "small": "Aber hier ist die Wahrheit", "big": "Reiche zu kennen<br>macht dich nicht reich.", "at": "w:nur" },
+      "text": "Aber hier ist die Wahrheit: Nur reiche Menschen zu kennen, macht dich nicht reich.",
+      "sfx": [["start", "riser_short"], ["w:nicht", "hit"]] },
+
+    { "id": "act", "scene": "act", "section": "WENDEPUNKT",
+      "text": "Du musst ihre Gewohnheiten übernehmen, von ihnen lernen und selbst handeln.", "hold": 0.4,
+      "sfx": [["w:gewohnheiten", "pop"], ["w:lernen", "pop"], ["w:handeln", "stamp"]] },
+
+    { "id": "invest", "scene": "invest", "section": "ABSCHLUSS",
+      "kicker": { "small": "Die wichtigste Investition", "big": "Die Menschen, mit denen<br>du Zeit verbringst.", "at": "w:sondern" },
+      "text": "Denn manchmal ist die wichtigste Investition nicht dein Geld. Sondern die Menschen, mit denen du deine Zeit verbringst.",
+      "sfx": [["w:geld", "coin"], ["w:sondern", "chime"]] },
+
+    { "id": "end", "scene": "end", "section": "ABSCHLUSS",
+      "kicker": { "small": "Schau dir dein Umfeld an", "big": "Es könnte deine<br>Zukunft bestimmen.", "at": "w:es" },
+      "text": "Schau dir dein Umfeld an. Es könnte deine Zukunft bestimmen.", "hold": 0.6,
+      "sfx": [["w:zukunft", "hit"]] }
+  ]
+}
