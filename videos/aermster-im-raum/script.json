@@ -1,0 +1,66 @@
+{
+  "title": "Wenn du der Ärmste in einem Raum voller Millionäre bist, bist du am richtigen Ort",
+  "theme": "mono",
+  "captions": false,
+  "voiceover": false,
+  "background_music": false,
+  "series": "Millionärs Edition",
+  "nr": 4,
+  "tagline": "Geh dorthin, wo du lernst.",
+  "wpm": 165,
+  "lead_in": 0.3,
+  "end_card": { "icon": "€", "dur": 2.4 },
+  "segments": [
+    { "id": "hook", "scene": "hook", "section": "HOOK",
+      "kicker": { "small": "Der Ärmste im Raum?", "big": "Dann verlass diesen<br>Raum niemals.", "at": "w:dann" },
+      "text": "Wenn du der Ärmste in einem Raum voller Millionäre bist, dann verlass diesen Raum niemals.",
+      "sfx": [["start", "riser_short"], ["w:niemals", "impact"]] },
+
+    { "id": "why", "scene": "why", "section": "HAUPTTEIL",
+      "chip": "Warum?",
+      "text": "Warum? Weil du plötzlich von Menschen umgeben bist, die ganz anders denken als du.",
+      "sfx": [["start", "tick"], ["w:anders", "chime"]] },
+
+    { "id": "afford", "scene": "afford", "section": "HAUPTTEIL",
+      "text": "Du überlegst, ob du dir etwas leisten kannst. Sie überlegen, wie sie es sich leisten können.",
+      "sfx": [["start", "pop"], ["w:überlegen", "whoosh"], ["w:können", "coin"]] },
+
+    { "id": "talk", "scene": "talk", "section": "HAUPTTEIL",
+      "text": "Du sprichst über dein Gehalt. Sie sprechen über Investments, Unternehmen und neue Möglichkeiten.",
+      "sfx": [["w:gehalt", "pop"], ["w:investments", "pop"], ["w:unternehmen", "pop"], ["w:möglichkeiten", "chime"]] },
+
+    { "id": "head", "scene": "head", "section": "HAUPTTEIL",
+      "text": "Und genau das verändert etwas in deinem Kopf.",
+      "sfx": [["w:kopf", "ding"]] },
+
+    { "id": "questions", "scene": "questions", "section": "HAUPTTEIL",
+      "text": "Du stellst Fragen, auf die du vorher nie gekommen wärst.",
+      "sfx": [["w:fragen", "pop"], ["w:nie", "pop"]] },
+
+    { "id": "chances", "scene": "chances", "section": "HAUPTTEIL",
+      "text": "Du erkennst Chancen, die du früher übersehen hast.",
+      "sfx": [["w:chancen", "chime"]] },
+
+    { "id": "goals", "scene": "goals", "section": "HAUPTTEIL",
+      "text": "Und deine eigenen Ziele wirken plötzlich nicht mehr unerreichbar.",
+      "sfx": [["w:plötzlich", "whoosh"], ["w:unerreichbar", "stamp"]] },
+
+    { "id": "truth", "scene": "truth", "section": "WENDEPUNKT",
+      "kicker": { "small": "Jetzt kommt das Entscheidende", "big": "Daneben sitzen<br>macht dich nicht reich.", "at": "w:du" },
+      "text": "Aber jetzt kommt das Entscheidende: Du wirst nicht reich, nur weil du neben reichen Menschen sitzt.",
+      "sfx": [["start", "riser_short"], ["w:nicht", "hit"]] },
+
+    { "id": "act", "scene": "act", "section": "WENDEPUNKT",
+      "text": "Du musst zuhören, lernen und irgendwann selbst anders handeln.", "hold": 0.4,
+      "sfx": [["w:zuhören", "pop"], ["w:lernen", "pop"], ["w:handeln", "stamp"]] },
+
+    { "id": "end1", "scene": "end1", "section": "ABSCHLUSS",
+      "text": "Merk dir eins: Geh nicht dorthin, wo du der Erfolgreichste bist.",
+      "sfx": [["start", "tick"], ["w:erfolgreichste", "buzz"]] },
+
+    { "id": "end2", "scene": "end2", "section": "ABSCHLUSS",
+      "kicker": { "small": "Merk dir eins", "big": "Geh dorthin, wo du<br>am meisten lernst." },
+      "text": "Geh dorthin, wo du am meisten lernen kannst.", "hold": 0.8,
+      "sfx": [["start", "chime"], ["w:lernen", "hit"]] }
+  ]
+}
