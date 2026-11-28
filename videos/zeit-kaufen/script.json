@@ -1,0 +1,59 @@
+{
+  "title": "Millionäre kaufen sich etwas, das du nicht im Laden findest: Zeit",
+  "theme": "mono",
+  "captions": false,
+  "voiceover": false,
+  "background_music": false,
+  "series": "Millionärs Edition",
+  "nr": 6,
+  "tagline": "Kauf dir deine Zeit zurück.",
+  "wpm": 165,
+  "lead_in": 0.3,
+  "end_card": { "icon": "€", "dur": 2.4 },
+  "segments": [
+    { "id": "hook", "scene": "hook", "section": "HOOK",
+      "kicker": { "small": "Was Millionäre wirklich kaufen", "big": "Zeit.", "at": "w:zeit" },
+      "text": "Weißt du, was Millionäre anders machen? Sie versuchen nicht, möglichst viel Geld auszugeben. Sie kaufen sich Zeit zurück.",
+      "sfx": [["start", "riser_short"], ["w:zeit", "impact"]] },
+
+    { "id": "two", "scene": "two", "section": "SPANNUNGSAUFBAU",
+      "text": "Stell dir zwei Menschen vor. Beide verdienen 3.000 Euro im Monat.",
+      "sfx": [["start", "pop"], ["w:3000", "coin"]] },
+
+    { "id": "a", "scene": "a", "section": "SPANNUNGSAUFBAU",
+      "text": "Person A arbeitet jeden Tag für mehr Geld. Und gibt es genauso schnell wieder aus.",
+      "sfx": [["w:arbeitet", "tick"], ["w:gibt", "whoosh"], ["w:aus", "buzz"]] },
+
+    { "id": "b", "scene": "b", "section": "SPANNUNGSAUFBAU",
+      "text": "Person B nutzt einen Teil davon, um zu lernen, zu investieren und neue Einnahmequellen aufzubauen.",
+      "sfx": [["w:lernen", "pop"], ["w:investieren", "pop"], ["w:einnahmequellen", "chime"]] },
+
+    { "id": "diff", "scene": "diff", "section": "WENDEPUNKT",
+      "chip": "Der Unterschied",
+      "text": "Der Unterschied? Person A verkauft jeden Monat ihre Zeit für Geld.",
+      "sfx": [["start", "tick"], ["w:verkauft", "coin"]] },
+
+    { "id": "system", "scene": "system", "section": "WENDEPUNKT",
+      "text": "Person B baut sich Schritt für Schritt ein System, das irgendwann Geld verdient, auch wenn sie nicht arbeitet.",
+      "sfx": [["w:schritt", "pop"], ["w:system", "chime"], ["w:geld", "coin"]] },
+
+    { "id": "value1", "scene": "value1", "section": "WENDEPUNKT",
+      "text": "Deshalb ist Zeit für viele Unternehmer wertvoller als Luxus.",
+      "sfx": [["w:wertvoller", "stamp"]] },
+
+    { "id": "value2", "scene": "value2", "section": "WENDEPUNKT",
+      "kicker": { "small": "Geld kannst du zurückverdienen", "big": "Eine Stunde deines<br>Lebens nie.", "at": "w:eine" },
+      "text": "Denn Geld kannst du zurückverdienen. Eine Stunde deines Lebens nie.",
+      "sfx": [["w:geld", "coin"], ["w:nie", "hit"]] },
+
+    { "id": "question", "scene": "question", "section": "ABSCHLUSS",
+      "chip": "Die richtige Frage",
+      "text": "Frag dich also nicht nur: Wie verdiene ich mehr Geld? Sondern: Wie verdiene ich Geld, ohne meine ganze Lebenszeit dafür zu verkaufen?",
+      "sfx": [["w:wie", "pop"], ["w:sondern", "chime"]] },
+
+    { "id": "end", "scene": "end", "section": "ABSCHLUSS",
+      "kicker": { "small": "Wahrer Reichtum", "big": "Selbst über deine<br>Zeit entscheiden.", "at": "w:sondern" },
+      "text": "Denn wahrer Reichtum ist nicht, alles kaufen zu können. Sondern selbst zu entscheiden, wie du deine Zeit verbringst.", "hold": 0.8,
+      "sfx": [["w:sondern", "chime"], ["w:zeit", "hit"]] }
+  ]
+}
